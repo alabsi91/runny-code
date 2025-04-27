@@ -55,7 +55,12 @@ export function initAddEditCommandDialog() {
 
 /** Adjust the command input height to fit the content */
 function updateCommandInputSize() {
-  const cmdInput = getElement<HTMLInputElement>("#add-command-command");
+  const cmdInput = addEditDialog.commandInput;
+
+  if (!cmdInput.value) {
+    cmdInput.style.removeProperty("height");
+    return;
+  }
 
   cmdInput.style.removeProperty("height");
   cmdInput.style.height = cmdInput.scrollHeight + 2 + "px";
@@ -205,6 +210,7 @@ function switchBetweenAddAndEdit() {
   addEditDialog.groupNameInput.value = isEditMode ? command.group : "";
   addEditDialog.descriptionInput.value = isEditMode ? command.description : "";
   addEditDialog.commandInput.value = isEditMode ? command.command : "";
+  updateCommandInputSize();
 }
 
 /** When the user clicks on a variable on the command input, parse the variable string under the cursor and fill the form */

@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"os"
+	"slices"
 	"strings"
 )
 
@@ -35,6 +36,9 @@ var Webhook_Route_Env = os.Getenv("WEBHOOK_ROUTE")
 var SessionToken = generateToken(32)
 
 func InitDefaults() {
+	Include_Patterns_Env = slices.DeleteFunc(Include_Patterns_Env, func(s string) bool { return s == "" })
+	Exclude_Patterns_Env = slices.DeleteFunc(Exclude_Patterns_Env, func(s string) bool { return s == "" })
+
 	if App_ENV == "" {
 		App_ENV = "production"
 	}
