@@ -1,6 +1,6 @@
 services:
   runny-code:
-    image: runny-code:latest
+    image: alabsi91/runny-code:latest
     container_name: runny-code
     ports:
       - 3333:8080
