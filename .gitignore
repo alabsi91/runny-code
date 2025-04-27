@@ -1,6 +1,6 @@
-webui/node_modules
-config
-files
+**/node_modules/**
+/config
+/files
 
 .*
 !.gitignore
