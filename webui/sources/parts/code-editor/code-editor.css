@@ -10,14 +10,6 @@
 
   height: calc(100% - 2em);
 
-  &::part(wrapper) {
-    height: 100%;
-  }
-
-  &::part(container) {
-    height: 100%;
-  }
-
   .editor-header {
     position: relative;
     padding: 0.6em;

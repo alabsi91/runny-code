@@ -51,6 +51,9 @@
 }
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border-radius: var(--sz-border-radius);
   background-color: var(--clr-background);
   border: 1px solid var(--clr-border);
@@ -66,15 +69,22 @@
 
 .container {
   position: relative;
+  flex: 1;
   display: flex;
   padding: var(--sz-padding);
 }
 
+.floating-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-start: 0.4rem;
+}
+
 .floating-btn {
   place-items: center;
-  position: absolute;
-  inset-inline-end: 0.4rem;
-  inset-block-start: 0.4rem;
   border: solid 1px var(--clr-border);
   padding: 0.4rem;
   border-radius: 8px;
@@ -100,7 +110,6 @@
 
 .wrap-btn {
   display: grid;
-  inset-inline-end: 3.2rem;
 }
 
 .textarea {
@@ -163,7 +172,7 @@
 .lines {
   .line {
     display: inline-block;
-    width: 100%;
+    padding-inline-end: var(--sz-padding);
   }
 
   .line.active {
@@ -186,7 +195,6 @@
 
   .container {
     padding: 0;
-    padding-right: var(--sz-padding);
   }
 
   .box {

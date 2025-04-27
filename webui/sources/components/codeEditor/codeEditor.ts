@@ -262,7 +262,7 @@ class CodeEditor extends HTMLElement implements IWebComponent {
     this.#editorEl.addEventListener("focus", this.#onFocus, { signal });
     this.#editorEl.addEventListener("blur", this.#onBlur, { signal });
     this.#copyButtonEl.addEventListener("click", this.#copyHandler, { signal });
-    this.#wrapButtonEl.addEventListener("click", () => (this.wrap = !this.wrap), { signal });
+    this.#wrapButtonEl.addEventListener("click", () => (this.wrap = !this.#wrap), { signal });
 
     this.#resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
       const entry = entries[0];
@@ -274,6 +274,7 @@ class CodeEditor extends HTMLElement implements IWebComponent {
       this.#highlightedEl.style.height = `${entry.contentRect.height}px`;
 
       this.#highlightedEl.style.top = `${this.#editorEl.offsetTop}px`;
+      this.#linesContainer.style.width = this.#editorEl.scrollWidth + "px";
     });
 
     this.#resizeObserver.observe(this.#editorEl);
@@ -378,7 +379,6 @@ class CodeEditor extends HTMLElement implements IWebComponent {
   #onScrollHandler = () => {
     this.#highlightedEl.scrollTop = this.#editorEl.scrollTop;
     this.#highlightedEl.scrollLeft = this.#editorEl.scrollLeft;
-    this.#linesContainer.style.width = this.#editorEl.scrollWidth + "px";
   };
 
   /** Select a word without the trailing spaces when double clicked */
