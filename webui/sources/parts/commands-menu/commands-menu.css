@@ -1,0 +1,84 @@
+.commands-menu {
+  .add-command-container {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5em;
+  }
+
+  .add-command {
+    display: block;
+    text-align: center;
+    background-color: var(--card-color);
+    box-sizing: border-box;
+
+    svg {
+      display: block;
+      margin: auto;
+      width: 1em;
+      height: 1em;
+      fill: var(--text-color-dim);
+    }
+  }
+
+  .cmd-menu-group {
+    padding-block: 0.5em;
+
+    .cmd-menu-group-title {
+      margin-top: 0;
+      margin-left: 0.5em;
+      margin-bottom: 0.2em;
+    }
+
+    &:not(:last-child) {
+      border-bottom: solid 1px var(--border-color);
+      margin-bottom: 0.5em;
+    }
+
+    &[data-hidden="true"] {
+      display: none;
+    }
+
+    &:has(+ .cmd-menu-group[data-hidden="true"]) {
+      border-bottom: none;
+    }
+  }
+
+  .cmd-menu-option-container {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: #3b3b3b;
+    }
+  }
+
+  .cmd-menu-option-action-btn {
+    flex: unset;
+    padding: 0.2em;
+    margin-inline-end: 0.5em;
+
+    svg {
+      display: block;
+      margin: auto;
+      width: 1.2em;
+      height: 1.2em;
+      fill: currentcolor;
+    }
+  }
+
+  select-option {
+    flex: 1;
+
+    &::part(option) {
+      padding-left: 0.8em;
+    }
+
+    &[data-hidden="true"] {
+      display: none;
+    }
+  }
+
+  select-option::part(option):hover {
+    background-color: inherit;
+  }
+}

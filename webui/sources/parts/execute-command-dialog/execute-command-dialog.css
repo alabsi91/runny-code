@@ -1,0 +1,104 @@
+.execute-command-dialog {
+  .cmd-dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-height: 70svh;
+    margin-top: 1.2em;
+  }
+
+  .cmd-dialog-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0;
+  }
+
+  .dialog-sub-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 1em;
+  }
+
+  &:not(:has(label)) .arg-title.dialog-sub-title {
+    display: none;
+  }
+
+  .cmd-dialog-inputs-container {
+    display: grid;
+    grid-template-columns: auto minmax(100px, 1fr);
+    align-items: center;
+    gap: 1em;
+
+    input {
+      flex: 1;
+      background-color: var(--card-color);
+      border-radius: 0.375rem;
+      border-color: #3ecf8e4d;
+      border-width: 1px;
+      border-style: solid;
+      outline: none;
+      margin: 0;
+      padding: 0.5em;
+      transition: border-color 200ms ease;
+
+      &:focus {
+        border-color: #3ecf8e;
+      }
+    }
+  }
+
+  .cmd-param-input-container:last-child {
+    margin-bottom: 2em;
+  }
+
+  .cmd-desc {
+    margin: 0;
+
+    span {
+      color: var(--text-color-dim);
+    }
+  }
+
+  .cmd-output,
+  .cmd-display {
+    color: var(--text-color-dim);
+    background-color: var(--foreground-color);
+    padding: 1em;
+    border-radius: 0.375rem;
+    border: solid 1px var(--text-color-dim);
+    margin: 0;
+    overflow: auto;
+    min-height: 1.2em;
+    scrollbar-width: thin;
+  }
+
+  .cmd-output.success {
+    border-color: #3ecf8e;
+  }
+
+  .cmd-output.error {
+    border-color: #f00;
+  }
+
+  .exec-cmd-dialog-btns-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+
+  .primary-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .execute-command-dialog {
+    .cmd-dialog-inputs-container {
+      grid-template-columns: minmax(100px, 1fr);
+    }
+  }
+}

@@ -1,0 +1,101 @@
+<dialog-component id="add-command-dialog" class="add-command-dialog" backdrop-close="false">
+  <div class="add-command-dialog-container">
+    <h1 class="add-command-dialog-title">Add a new command</h1>
+    <form id="add-command-form" class="add-command-form">
+      <label for="add-command-command-name" class="required-input-label">Command Name</label>
+      <input
+        type="text"
+        id="add-command-command-name"
+        name="commandName"
+        placeholder="E.g. List Files"
+        autocomplete="off"
+        required
+      />
+
+      <label for="add-command-group-name">Group Name</label>
+      <input
+        type="text"
+        id="add-command-group-name"
+        name="groupName"
+        placeholder="E.g. File Operations"
+        autocomplete="off"
+        list="add-command-groups-datalist"
+      />
+      <datalist id="add-command-groups-datalist"></datalist>
+
+      <label for="add-command-description">Description</label>
+      <input
+        type="text"
+        id="add-command-description"
+        name="description"
+        placeholder="E.g. List files in a specific directory."
+        autocomplete="off"
+      />
+
+      <label for="add-command-command" class="required-input-label">Command</label>
+      <textarea
+        id="add-command-command"
+        name="command"
+        placeholder="E.g. ls ${path}"
+        rows="1"
+        autocomplete="off"
+        required
+      ></textarea>
+    </form>
+
+    <accordion-component>
+      <p slot="summary">
+        <strong>Add Variable</strong>
+      </p>
+
+      <form id="add-command-variables-form" class="add-command-variable-container">
+        <label for="add-variables-name" class="required-input-label">Name</label>
+        <input type="text" id="add-variables-name" name="name" placeholder="E.g. path" autocomplete="off" required />
+
+        <label for="add-variables-default">Default Value</label>
+        <input type="text" id="add-variables-default" name="defaultValue" placeholder="E.g. /home" autocomplete="off" />
+
+        <label for="add-variables-type">Type</label>
+        <menu-component id="add-variables-type" class="add-variable-type-menu" name="type" value="any" match-trigger-width="true">
+          <select-option value="any">Any</select-option>
+          <select-option value="int">Integer</select-option>
+          <select-option value="float">Float</select-option>
+          <select-option value="number">Number</select-option>
+          <select-option value="non-numeric">Non-numeric</select-option>
+          <select-option value="boolean">Boolean</select-option>
+          <select-option value="password">Password</select-option>
+          <select-option value="url">URL</select-option>
+          <select-option value="path">File Path</select-option>
+          <select-option value="flag">Command Flag</select-option>
+          <select-option value="optional">Command Option</select-option>
+        </menu-component>
+
+        <label for="add-variables-values">Values</label>
+        <input
+          type="text"
+          id="add-variables-values"
+          name="values"
+          placeholder="E.g. ~|/home|/root (separated by |)"
+          autocomplete="off"
+        />
+
+        <label for="add-variables-restricted" id="add-variables-restricted-label">Restricted Values</label>
+        <toggle-checkbox id="add-variables-restricted" name="restricted"></toggle-checkbox>
+        <tooltip-component for="#add-variables-restricted-label" prefer-direction="right">
+          Only allow values from the list.
+          <br />
+          Unrestricted values provide suggestions only.
+        </tooltip-component>
+
+        <label for="add-variables-optional">Optional</label>
+        <toggle-checkbox id="add-variables-optional" name="optional"></toggle-checkbox>
+
+        <button type="button" id="add-variables-insert-button" class="primary-btn add-variables-insert">Insert Variable</button>
+      </form>
+    </accordion-component>
+
+    <br />
+
+    <button type="button" id="add-command-btn" class="primary-btn add-command-btn">Add Command</button>
+  </div>
+</dialog-component>

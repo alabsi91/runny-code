@@ -1,0 +1,54 @@
+<layout src="@layouts/main.layout.html" title="Runny Code" description="Runny Code App">
+  <body>
+    <main>
+      <div class="top">
+        <h1>Runny Code</h1>
+
+        <div class="buttons-container">
+          <button id="save" class="primary-btn ctrl-btn">Save</button>
+          <tooltip-component for="#save" prefer-direction="top">Save the current changes</tooltip-component>
+
+          <part src="@parts/files-menu/files-menu.part.html"></part>
+          <part src="@parts/commands-menu/commands-menu.part.html"></part>
+        </div>
+      </div>
+
+      <part src="@parts/code-editor/code-editor.part.html"></part>
+    </main>
+
+    <part src="@parts/add-edit-command-dialog/add-edit-command-dialog.part.html"></part>
+    <part src="@parts/execute-command-dialog/execute-command-dialog.part.html"></part>
+    <part src="@parts/confirm-dialog/confirm-dialog.part.html"></part>
+    <part src="@parts/command-actions-dialog/command-actions-dialog.part.html"></part>
+
+    <alert-component stack-style="list"></alert-component>
+
+    <script type="module" bundle="include-packages" inline>
+      import "@components/codeEditor/codeEditor.ts";
+      import "@components/alert/alert.ts";
+      import "@components/tooltip/tooltip.ts";
+      import "@components/selectOption/selectOption.ts";
+      import "@components/menu/menu.ts";
+      import "@components/toggleCheckbox/toggleCheckbox.ts";
+      import "@components/dialog/dialog.ts";
+      import "@components/accordion/accordion.ts";
+      import "@scripts/mainPage/main.ts";
+    </script>
+  </body>
+</layout>
+
+<insert selector="head">
+  <link rel="stylesheet" href="@styles/main.css" inline />
+  <link rel="stylesheet" href="@parts/code-editor/code-editor.css" inline />
+  <link rel="stylesheet" href="@parts/commands-menu/commands-menu.css" inline />
+  <link rel="stylesheet" href="@parts/add-edit-command-dialog/add-edit-command-dialog.css" inline />
+  <link rel="stylesheet" href="@parts/execute-command-dialog/execute-command-dialog.css" inline />
+  <link rel="stylesheet" href="@parts/confirm-dialog/confirm-dialog.css" inline />
+  <link rel="stylesheet" href="@parts/command-actions-dialog/command-actions-dialog.css" inline />
+  <link
+    rel="stylesheet"
+    class="code-highlight"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/night-owl.css"
+    inline
+  />
+</insert>

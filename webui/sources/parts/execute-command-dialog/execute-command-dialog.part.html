@@ -1,0 +1,21 @@
+<dialog-component id="exec-cmd-dialog" class="execute-command-dialog" backdrop-close="false">
+  <div class="cmd-dialog-container">
+    <p class="cmd-dialog-title">Execute Command</p>
+    <p class="cmd-desc"></p>
+    <pre id="cmd-display" class="cmd-display"></pre>
+
+    <p class="arg-title dialog-sub-title">Command Arguments:</p>
+    <form class="cmd-dialog-inputs-container"></form>
+
+    <p class="output-title dialog-sub-title">Command Output:</p>
+    <pre id="cmd-output" class="cmd-output"></pre>
+
+    <div class="exec-cmd-dialog-btns-container">
+      <button id="execute-cmd" class="primary-btn">Execute</button>
+      <button type="button" id="copy-webhook-url" class="primary-btn">Copy Webhook URL</button>
+      <tooltip-component id="copy-webhook-url-tooltip" for="#copy-webhook-url" prefer-direction="bottom">
+        Copy the webhook URL with the currently entered arguments to the clipboard.
+      </tooltip-component>
+    </div>
+  </div>
+</dialog-component>

@@ -1,0 +1,32 @@
+<layout src="@layouts/main.layout.html" title="Runny Code Login" description="Runny Code Login Page">
+  <body>
+    <main>
+      <h1 style="margin: 0; margin-top: 2em">Runny Code</h1>
+      <div class="card">
+        <h2 style="text-align: center">Login</h2>
+        <div class="form">
+          <form id="loginForm">
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="Username" autocomplete="username" required />
+
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Password" required />
+            <br />
+            <button type="submit" class="primary-btn">Login</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <alert-component stack-style="list"></alert-component>
+
+    <script type="module" bundle inline>
+      import "@components/alert/alert.ts";
+      import "@scripts/loginPage/login.ts";
+    </script>
+  </body>
+</layout>
+
+<insert selector="head">
+  <link rel="stylesheet" href="@styles/auth.css" inline />
+</insert>

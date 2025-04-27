@@ -1,0 +1,30 @@
+services:
+  runny-code:
+    image: runny-code:latest
+    container_name: runny-code
+    ports:
+      - 3333:8080
+      #- 3334:8080 # Expose the webhook port when running separately on a different port
+    volumes:
+      - ./files:/runny-code/files # Mount only directories, not files to avoid sync issues
+      - ./config:/runny-code/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PORT=8080
+      - ALLOW_COMMAND_MANIPULATION=true # Allow Add/Edit/Delete commands
+      # Auth
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=admin
+      # For file filtering (DO NOT SURROUND WITH QUOTES)
+      - INCLUDED_PATTERNS=**/* # separated by ` | `
+      - EXCLUDED_PATTERNS=**/.* # separated by ` | `
+      # For running command on remote server
+      - SSH_USERNAME=
+      - SSH_PASSWORD=
+      - SSH_PORT=22
+      - SSH_HOST=192.168.0.0
+      # For webhook
+      - WEBHOOK_PORT=8080 # Run on the same port as the server to use only when logged in, or use a different port to run separately
+      - DOMAIN=http://127.0.0.1:8080 # For generating webhook urls
+      - WEBHOOK_ROUTE=/webhook # For generating and serving webhook urls

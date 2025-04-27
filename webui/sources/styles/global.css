@@ -1,0 +1,111 @@
+:root {
+  --primary-color: #00c573;
+  --text-color: #fafafa;
+  --text-color-dim: #b4b4b4;
+  --card-color: #171717;
+  --foreground-color: #242424;
+  --background-color: #121212;
+  --border-color: #2e2e2e;
+  --border-radius: 12px;
+  --base-font-size: 10px;
+  --max-width: 1300px;
+
+  @media screen and (max-width: 800px) {
+    --base-font-size: 12px;
+  }
+}
+
+html {
+  --width: min(0.3906vw, 7.5px);
+
+  font-size: calc(var(--base-font-size) + var(--width));
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: monospace;
+  color: rgb(var(--text-color));
+  background-color: var(--background-color);
+  background-image: radial-gradient(#282828 0.75px, var(--background-color) 0.75px);
+  background-size: 15px 15px;
+}
+
+button,
+input {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 4rem;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primary-btn {
+  flex: 1;
+  background-color: #006239;
+  color: var(--text-color);
+  border-radius: 0.375rem;
+  border-color: #3ecf8e4d;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #3ecf8e80;
+    border-color: #3ecf8e;
+  }
+}
+
+.danger-btn {
+  background-color: #9d001e;
+  border-color: #f00;
+
+  &:not(:disabled):hover {
+    background-color: #ba0123;
+    border-color: #ff6767;
+  }
+}
+
+.gray-btn {
+  background-color: var(--card-color);
+  border-color: var(--border-color);
+  color: var(--text-color-dim);
+
+  &:not(:disabled):hover {
+    background-color: #3ecf8e80;
+    border-color: #3ecf8e;
+    color: var(--text-color);
+  }
+}
+
+.required-input-label {
+  position: relative;
+}
+
+.required-input-label::after {
+  content: "*";
+  position: absolute;
+  top: 0;
+  left: 0;
+  translate: -75% -75%;
+  font-size: 0.6rem;
+  color: #e63904;
+}

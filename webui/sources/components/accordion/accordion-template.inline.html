@@ -1,0 +1,21 @@
+<!-- @part - The accordion main container element. -->
+<div id="accordion" class="container" part="container" role="group">
+  <!-- @part - The trigger button element. -->
+  <button class="accordion-trigger" part="trigger" aria-controls="expander" aria-expanded="false" aria-describedby="summary">
+    <!-- @part - The accordion marker svg icon. -->
+    <svg class="marker" part="marker" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 -960 960 960">
+      <path d="M480-360 280-560h400z"></path>
+    </svg>
+
+    <!-- @slot - the summary/title of the accordion component. -->
+    <slot name="summary" id="summary"></slot>
+  </button>
+
+  <div class="expander" id="expander">
+    <!-- @part - The content container of he accordion component. -->
+    <div class="content" part="content" style="visibility: collapse">
+      <!-- @slot - The content of the accordion component. -->
+      <slot></slot>
+    </div>
+  </div>
+</div>

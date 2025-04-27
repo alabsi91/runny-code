@@ -1,0 +1,52 @@
+.file-code-editor {
+  --clr-background: var(--card-color);
+  --clr-border: var(--border-color);
+  --clr-text-selection-bg: #005532;
+  --clr-active-line: #3ecf8e10;
+  --clr-line-numbers-background: var(--foreground-color);
+  --clr-line-numbers-txt: #4d4d4d;
+  --clr-line-numbers-active-txt: var(--primary-color);
+  --sz-border-radius: var(--border-radius);
+
+  height: calc(100% - 2em);
+
+  &::part(wrapper) {
+    height: 100%;
+  }
+
+  &::part(container) {
+    height: 100%;
+  }
+
+  .editor-header {
+    position: relative;
+    padding: 0.6em;
+    border-bottom: solid 1px var(--border-color);
+    background-color: var(--foreground-color);
+
+    p {
+      text-align: center;
+      color: #00c573;
+      overflow-wrap: anywhere;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .editor-header-reload-btn {
+      display: none;
+      position: absolute;
+      inset-inline-start: 0.2em;
+      inset-block-start: 0.2em;
+      border-radius: 0.6em;
+      padding: 0.4em;
+
+      svg {
+        display: block;
+        margin: auto;
+        width: 1em;
+        height: 1em;
+        fill: currentcolor;
+      }
+    }
+  }
+}

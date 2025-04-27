@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./sources/*"],
+      "@assets/*": ["./sources/assets/*"],
+      "@scripts/*": ["./sources/scripts/*"],
+      "@styles/*": ["./sources/styles/*"],
+      "@layouts/*": ["./sources/layouts/*"],
+      "@parts/*": ["./sources/parts/*"],
+      "@components/*": ["./sources/components/*"],
+      "@utils/*": ["./sources/scripts/utils/*"],
+      "@types": ["./sources/types"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [],
+    "strict": true,
+    "alwaysStrict": true,
+    "target": "ES2022",
+    "module": "Preserve",
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "verbatimModuleSyntax": true,
+    "jsxImportSource": "preact"
+  },
+  "include": ["sources"]
+}

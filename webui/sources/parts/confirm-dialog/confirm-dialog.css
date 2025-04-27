@@ -1,0 +1,25 @@
+.confirm-dialog {
+  .confirm-dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    margin-top: 1.2em;
+  }
+
+  .confirm-dialog-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: start;
+    margin: 0;
+  }
+
+  .confirm-dialog-msg{
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .confirm-dialog-btns-container {
+    display: flex;
+    gap:2em;
+  }
+}

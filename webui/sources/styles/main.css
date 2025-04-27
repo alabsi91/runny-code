@@ -1,0 +1,116 @@
+main {
+  display: grid;
+  grid-template-rows: auto 5fr;
+  gap: 2em;
+  height: 100dvh;
+  max-width: 1200px;
+  padding-inline: 2em;
+  margin: auto;
+}
+
+toggle-checkbox {
+  --clr-active: var(--primary-color);
+  --clr-inactive: var(--card-color);
+  --clr-border: #3ecf8e80;
+  --sz-checkbox: 1.6em;
+}
+
+menu-component {
+  --clr-background: var(--foreground-color);
+
+  &::part(container) {
+    border-radius: 0.375rem;
+  }
+
+  &::part(trigger) {
+    flex: 1;
+    background-color: #006239;
+    color: var(--text-color);
+    border-radius: 0.375rem;
+    border-color: #3ecf8e4d;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 1rem;
+    word-break: break-all;
+    font-family: monospace;
+    min-width: 0;
+    transition: background-color 200ms ease;
+    transition: border-color 200ms ease;
+  }
+
+  &::part(trigger):hover {
+    background-color: #3ecf8e80;
+    border-color: #3ecf8e;
+  }
+}
+
+select-option {
+  --clr-active: #006239;
+  --clr-txt: var(--text-color-dim);
+  --clr-active-txt: var(--text-color);
+
+  &::part(option) {
+    font-family: monospace;
+    border-radius: 0;
+    text-align: left;
+    padding: 0.5em;
+  }
+}
+
+.menu-search-container {
+  position: sticky;
+  top: 0;
+  background-color: var(--foreground-color);
+  padding: 1em;
+}
+
+.menu-search {
+  background-color: var(--card-color);
+  border-radius: 0.375rem;
+  border-color: #3ecf8e4d;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.cmd-input-menu {
+  --clr-background: var(--card-color);
+
+  &::part(trigger) {
+    background-color: var(--card-color);
+    text-align: start;
+  }
+
+  &::part(container) {
+    margin-top: 0.4em;
+  }
+}
+
+alert-component {
+  --clr-background: var(--foreground-color);
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .ctrl-btn {
+    min-width: 200px;
+  }
+
+  menu-component {
+    &::part(trigger) {
+      min-width: 200px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    padding-inline: 0.5em;
+  }
+}

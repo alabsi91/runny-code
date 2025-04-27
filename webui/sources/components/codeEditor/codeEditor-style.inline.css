@@ -1,0 +1,290 @@
+:host {
+  /* The default font family of the code editor. */
+  --font-family: monospace;
+
+  /* The default font size of the code editor. */
+  --font-weight: normal;
+
+  /* The default font size of the code editor. */
+  --sz-font: 1rem;
+
+  /* The default line height of the code editor. */
+  --line-height: 1.8;
+
+  /* The default background color of the code editor. */
+  --clr-background: #1f1f1f;
+
+  /* The background color of the selected text. */
+  --clr-text-selection-bg: #3a3a9e;
+
+  /* The text color of the selected text. */
+  --clr-text-selection-txt: #fff;
+
+  /* The color of the scrollbar. */
+  --clr-scrollbar: #292929;
+
+  /* The color of the border. */
+  --clr-border: #ffffff1a;
+
+  /* The width of the line numbers column. */
+  --sz-line-numbers-width: calc(var(--sz-font) * 3);
+
+  /* The background color of the line numbers. */
+  --clr-line-numbers-background: #8a8a8a;
+
+  /* The text color of the line numbers. */
+  --clr-line-numbers-txt: #ffffff1a;
+
+  /* The background color of the active line number. */
+  --clr-line-numbers-active-txt: #fff;
+
+  /* The background color of the active line. */
+  --clr-active-line: #3a3a9e6f;
+
+  /* The padding of the code editor. */
+  --sz-padding: 0.5rem;
+
+  /* The border radius of the code editor. */
+  --sz-border-radius: 4px;
+
+  display: block;
+}
+
+.wrapper {
+  border-radius: var(--sz-border-radius);
+  background-color: var(--clr-background);
+  border: 1px solid var(--clr-border);
+  box-shadow: 0 0.1rem 1rem -0.5rem #0006;
+  box-sizing: border-box;
+  transition: background-color 100ms linear;
+  overflow: clip;
+
+  &:has(.textarea:focus:not(:read-only)) {
+    background-color: hsl(from var(--clr-background) h s calc(l * 0.8));
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  padding: var(--sz-padding);
+}
+
+.floating-btn {
+  place-items: center;
+  position: absolute;
+  inset-inline-end: 0.4rem;
+  inset-block-start: 0.4rem;
+  border: solid 1px var(--clr-border);
+  padding: 0.4rem;
+  border-radius: 8px;
+  background-color: hsl(from var(--clr-background) h s calc(l * 0.9));
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 200ms linear;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: currentcolor;
+  }
+}
+
+.copy-btn {
+  display: none;
+}
+
+.wrap-btn {
+  display: grid;
+  inset-inline-end: 3.2rem;
+}
+
+.textarea {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: transparent;
+  caret-color: #cacaca;
+  resize: none;
+  overscroll-behavior: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::selection {
+    color: var(--clr-text-selection-bg);
+    background-color: var(--clr-text-selection-bg);
+  }
+
+  /* stylelint-disable-next-line selector-no-vendor-prefix */
+  &::-moz-selection {
+    color: var(--clr-text-selection-bg);
+    background-color: var(--clr-text-selection-bg);
+  }
+}
+
+.highlight {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.box {
+  border: none;
+  text-align: left;
+  vertical-align: middle;
+  white-space: pre;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-size: var(--sz-font);
+  line-height: var(--line-height);
+}
+
+.wrap {
+  white-space: pre-wrap;
+}
+
+.line-numbers-placeholder {
+  display: none;
+  position: relative;
+  width: var(--sz-line-numbers-width);
+  background-color: var(--clr-line-numbers-background);
+}
+
+.lines {
+  .line {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .line.active {
+    --border-clr: hsl(from var(--clr-active-line) h s l / calc(alpha * 1.4));
+
+    background: linear-gradient(
+      0deg,
+      var(--border-clr) 2px,
+      var(--clr-active-line) 2px,
+      var(--clr-active-line) calc(100% - 2px),
+      var(--border-clr) calc(100% - 2px)
+    );
+  }
+}
+
+.linenumbers {
+  .line-numbers-placeholder {
+    display: block;
+  }
+
+  .container {
+    padding: 0;
+    padding-right: var(--sz-padding);
+  }
+
+  .box {
+    padding-left: var(--sz-padding);
+    padding-block: var(--sz-padding);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    padding-left: var(--sz-line-numbers-width);
+    counter-reset: list-item;
+
+    .line {
+      position: relative;
+      counter-increment: list-item;
+    }
+
+    .line::before {
+      content: counter(list-item) " ";
+      position: sticky;
+      left: calc(var(--sz-padding) * -1);
+      display: inline-block;
+      height: 100%;
+      text-align: right;
+      width: calc(var(--sz-line-numbers-width) - var(--sz-padding));
+      margin-right: var(--sz-padding);
+      margin-left: calc((var(--sz-line-numbers-width) + var(--sz-padding)) * -1);
+      padding-left: var(--sz-padding);
+      font-family: var(--font-family);
+      font-weight: var(--font-weight);
+      font-size: var(--sz-font);
+      line-height: var(--line-height);
+      color: var(--clr-line-numbers-txt);
+      background-color: var(--clr-line-numbers-background);
+      transition-property: color;
+      transition-duration: 100ms;
+      transition-timing-function: linear;
+    }
+
+    .line:first-child::before {
+      margin-top: calc(var(--sz-padding) * -1);
+      padding-top: var(--sz-padding);
+    }
+
+    .line:last-child::before {
+      margin-bottom: calc(var(--sz-padding) * -1);
+      padding-bottom: var(--sz-padding);
+    }
+
+    .line.active::before {
+      font-weight: bold;
+      color: var(--clr-line-numbers-active-txt);
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  @supports (scrollbar-width: thin) {
+    .textarea {
+      scrollbar-width: thin;
+      scrollbar-color: var(--clr-scrollbar);
+      scrollbar-base-color: #3a3a9e;
+      scrollbar-track-color: #3a3a9e;
+    }
+  }
+
+  .textarea::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .textarea::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .textarea::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .textarea::-webkit-scrollbar-thumb {
+    background: var(--clr-scrollbar);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.hidden-scrollbar {
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+    cursor: unset;
+    pointer-events: none;
+  }
+}

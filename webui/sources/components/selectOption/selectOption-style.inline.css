@@ -1,0 +1,58 @@
+:host {
+  /* The background color of the option element. */
+  --clr-background: #333;
+
+  /* The background color of the option element when it is active. */
+  --clr-active: #2196f3;
+
+  /* The text color of the option element. */
+  --clr-txt: #c8c8c8;
+
+  /* The text color of the option element when it is active. */
+  --clr-active-txt: #fff;
+
+  /* The background color of the option element when it is hovered. */
+  --clr-hover: #3b3b3b;
+
+  display: block;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  word-break: break-all;
+  color: var(--clr-txt);
+  transition: background-color 300ms ease;
+
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
+}
+
+.option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: unset;
+}
+
+.option[aria-selected="true"],
+.option[aria-checked="true"] {
+  background-color: var(--clr-active);
+  color: var(--clr-active-txt);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option:not([aria-selected="true"], [aria-checked="true"]):hover {
+    background-color: var(--clr-hover);
+  }
+}
+
+::slotted(svg) {
+  width: 24px;
+  height: 24px;
+  fill: currentcolor;
+}

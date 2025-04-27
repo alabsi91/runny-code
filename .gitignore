@@ -1,0 +1,11 @@
+webui/node_modules
+config
+files
+
+.*
+!.gitignore
+!.vscode
+!.prettierrc
+!.static.json
+!.stylelintrc.json
+!.github
