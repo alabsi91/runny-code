@@ -9,6 +9,7 @@
       "url": ".vscode/configSchema.json"
     }
   ],
+  "cssVariables.lookupFiles": ["./webui/**/*.css"],
   "html.customData": [
     ".vscode/static.html-data.json",
     "./webui/sources/components/codeEditor/codeEditor.html-data.json",
