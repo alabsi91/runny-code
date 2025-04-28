@@ -173,6 +173,7 @@
   .line {
     display: inline-block;
     padding-inline-end: var(--sz-padding);
+    width: 100%;
   }
 
   .line.active {
