@@ -35,6 +35,7 @@ export default [
       "@html-eslint/indent": 0,
       "@html-eslint/no-extra-spacing-attrs": 0,
       "@html-eslint/require-closing-tags": 0,
+      "@html-eslint/use-baseline": "warn",
       // a11y
     },
   },
