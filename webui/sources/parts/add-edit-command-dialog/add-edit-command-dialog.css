@@ -1,10 +1,10 @@
 .add-command-dialog {
   .add-command-dialog-container {
-    margin-top: 1.2em;
+    color: var(--clr-text);
   }
 
   .add-command-dialog-title {
-    font-size: 2rem;
+    font-size: var(--typ-font-size-3xl);
     font-weight: bold;
     text-align: start;
     margin-top: 0;
@@ -12,16 +12,17 @@
   }
 
   textarea {
-    font-family: monospace;
-    font-size: 1rem;
+    font-family: var(--typ-font-family-base);
+    font-size: var(--typ-font-size-md);
     resize: none;
   }
 
   input,
   textarea {
-    background-color: var(--card-color);
-    border-radius: 0.375rem;
-    border-color: #3ecf8e4d;
+    color: var(--clr-text);
+    background-color: var(--clr-surface-2);
+    border-radius: var(--brd-radius-md);
+    border-color: var(--clr-accent-border);
     border-width: 1px;
     border-style: solid;
     outline: none;
@@ -31,7 +32,7 @@
     box-sizing: border-box;
 
     &:focus {
-      border-color: #3ecf8e;
+      border-color: var(--clr-accent-border-hover);
     }
   }
 
@@ -40,10 +41,10 @@
   }
 
   accordion-component {
-    --clr-content-background: #222;
+    --clr-content-background: var(--clr-surface-0);
 
     &::part(trigger) {
-      background-color: #222;
+      background-color: var(--clr-surface-0);
     }
   }
 
@@ -60,10 +61,9 @@
     padding-inline-end: 1em;
   }
 
-  .add-variable-type-menu {
-    &::part(trigger) {
-      background-color: var(--card-color);
-    }
+  .add-variable-type-menu::part(trigger) {
+    background-color: var(--clr-surface-2);
+    color: var(--clr-text);
   }
 
   .add-variables-insert {

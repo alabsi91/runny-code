@@ -47,12 +47,12 @@ A tooltip component that displays a message when hovered over.
 
 **CSS Properties**
 
-- `--clr-background` The background color of the tooltip.
-- `--clr-border` The border color of the tooltip.
-- `--sz-arrow` The size of the arrow that points to the element that the tooltip is attached to.
-- `--clr-arrow` The color of the arrow that points to the element that the tooltip is attached to.
-- `--dur-anim` The easing function of the show/hide animation.
-- `--ease-anim` The easing function of the show/hide animation.
+- `--wc-clr-background` The background color of the tooltip.
+- `--wc-clr-border` The border color of the tooltip.
+- `--wc-sz-arrow` The size of the arrow that points to the element that the tooltip is attached to.
+- `--wc-clr-arrow` The color of the arrow that points to the element that the tooltip is attached to.
+- `--wc-dur-anim` The easing function of the show/hide animation.
+- `--wc-ease-anim` The easing function of the show/hide animation.
 
 **CSS Parts**
 

@@ -14,6 +14,9 @@
   /* The default background color of the code editor. */
   --clr-background: #1f1f1f;
 
+  /* The editor background when focused */
+  --clr-focused: hsl(from var(--clr-background) h s calc(l * 0.8));
+
   /* The background color of the selected text. */
   --clr-text-selection-bg: #3a3a9e;
 
@@ -63,7 +66,7 @@
   overflow: clip;
 
   &:has(.textarea:focus:not(:read-only)) {
-    background-color: hsl(from var(--clr-background) h s calc(l * 0.8));
+    background-color: var(--clr-focused);
   }
 }
 

@@ -40,10 +40,11 @@ const closeFn = alertComponent.alert({
 
 **CSS Properties**
 
-- `--clr-background` The background color of the alert items
-- `--clr-text` The text color of the alert items
-- `--dur-anim` The duration of the reveal/hide animation
-- `--sp-gap` The gap between the alert items
+- `--wc-clr-background` The background color of the alert items
+- `--wc-clr-text` The text color of the alert items
+- `--wc-dur-anim` The duration of the reveal/hide animation
+- `--wc-clr-border` The item container border color
+- `--wc-sp-gap` The gap between the alert items
 
 **CSS Parts**
 

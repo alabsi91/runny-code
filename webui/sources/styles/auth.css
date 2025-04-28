@@ -12,10 +12,10 @@ main {
   flex-direction: column;
   gap: 1em;
   padding: 1em;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background-color: #17171778;
-  color: var(--text-color);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--brd-radius-lg);
+  background-color: var(--clr-surface-1);
+  color: var(--clr-text);
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
@@ -30,17 +30,19 @@ form {
 
 input {
   flex: 1;
-  background-color: var(--card-color);
-  border-radius: 0.375rem;
-  border-color: #3ecf8e4d;
+  background-color: var(--clr-surface-2);
+  border-radius: var(--brd-radius-md);
+  border-color: var(--clr-accent-border);
   border-width: 1px;
   border-style: solid;
   outline: none;
   margin: 0;
   padding: 0.5em;
-  transition: border-color 200ms ease;
+  transition-property: border-color;
+  transition-duration: var(--anim-duration-short);
+  transition-timing-function: ease-out;
 
   &:focus {
-    border-color: #3ecf8e;
+    border-color: var(--clr-accent-border-hover);
   }
 }

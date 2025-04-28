@@ -1,21 +1,21 @@
 .execute-command-dialog {
   .cmd-dialog-container {
+    color: var(--clr-text);
     display: flex;
     flex-direction: column;
     gap: 1em;
     max-height: 70svh;
-    margin-top: 1.2em;
   }
 
   .cmd-dialog-title {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: var(--typ-font-size-2xl);
     font-weight: bold;
     margin-top: 0;
   }
 
   .dialog-sub-title {
-    font-size: 1rem;
+    font-size: var(--typ-font-size-md);
     font-weight: bold;
     margin: 0;
     margin-top: 1em;
@@ -33,18 +33,21 @@
 
     input {
       flex: 1;
-      background-color: var(--card-color);
-      border-radius: 0.375rem;
-      border-color: #3ecf8e4d;
+      color: var(--clr-text);
+      background-color: var(--clr-surface-2);
+      border-radius: var(--brd-radius-md);
+      border-color: var(--clr-accent-border);
       border-width: 1px;
       border-style: solid;
       outline: none;
       margin: 0;
       padding: 0.5em;
-      transition: border-color 200ms ease;
+      transition-property: border-color;
+      transition-duration: var(--anim-duration-short);
+      transition-timing-function: ease-out;
 
       &:focus {
-        border-color: #3ecf8e;
+        border-color: var(--clr-accent-border-hover);
       }
     }
   }
@@ -57,17 +60,17 @@
     margin: 0;
 
     span {
-      color: var(--text-color-dim);
+      color: var(--clr-text-dim);
     }
   }
 
   .cmd-output,
   .cmd-display {
-    color: var(--text-color-dim);
-    background-color: var(--foreground-color);
+    color: var(--clr-text-dim);
+    background-color: var(--clr-surface-0);
     padding: 1em;
-    border-radius: 0.375rem;
-    border: solid 1px var(--text-color-dim);
+    border-radius: var(--brd-radius-md);
+    border: solid 1px var(--clr-text-dim);
     margin: 0;
     overflow: auto;
     min-height: 1.2em;
@@ -75,11 +78,11 @@
   }
 
   .cmd-output.success {
-    border-color: #3ecf8e;
+    border-color: var(--clr-success);
   }
 
   .cmd-output.error {
-    border-color: #f00;
+    border-color: var(--clr-error);
   }
 
   .exec-cmd-dialog-btns-container {
@@ -92,6 +95,20 @@
     display: block;
     width: 100%;
     margin-top: 1em;
+  }
+
+  .cmd-input-menu {
+    --clr-background: var(--clr-surface-1);
+
+    &::part(trigger) {
+      background-color: var(--clr-surface-1);
+      color: var(--clr-text);
+      text-align: start;
+    }
+
+    &::part(container) {
+      margin-top: 0.4em;
+    }
   }
 }
 

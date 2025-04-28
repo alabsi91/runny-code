@@ -66,6 +66,7 @@ editor.highlighter = code => hljs.highlight(code, { language: "typescript" }).va
 - `--sz-font` The default font size of the code editor.
 - `--line-height` The default line height of the code editor.
 - `--clr-background` The default background color of the code editor.
+- `--clr-focused` The editor background when focused
 - `--clr-text-selection-bg` The background color of the selected text.
 - `--clr-text-selection-txt` The text color of the selected text.
 - `--clr-scrollbar` The color of the scrollbar.
@@ -85,8 +86,8 @@ editor.highlighter = code => hljs.highlight(code, { language: "typescript" }).va
 - `::part(box)` The code editor box element (textarea and highlight elements).
 - `::part(textarea)` The code editor textarea element.
 - `::part(highlight)` The code editor highlight container element.
-- `::part(copy-button)` The copy button.
 - `::part(wrap-button)` The wrap button.
+- `::part(copy-button)` The copy button.
 
 **CSS States**
 

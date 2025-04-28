@@ -326,9 +326,9 @@ class TooltipComponent extends HTMLElement implements IWebComponent {
 
     this.#setTooltipPos();
     const computedStyle = getComputedStyle(this);
-    const durationStr = computedStyle.getPropertyValue("--dur-anim") ?? "0.3s";
+    const durationStr = computedStyle.getPropertyValue("--wc-dur-anim") ?? "0.3s";
     const duration = parseFloat(durationStr) * (durationStr.endsWith("ms") ? 1 : 1000);
-    const easing = computedStyle.getPropertyValue("--ease-anim") ?? "ease-out";
+    const easing = computedStyle.getPropertyValue("--wc-ease-anim") ?? "ease-out";
 
     this.#popoverEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing });
   };
@@ -341,9 +341,9 @@ class TooltipComponent extends HTMLElement implements IWebComponent {
     window.removeEventListener("resize", this.#setTooltipPos);
 
     const computedStyle = getComputedStyle(this);
-    const durationStr = computedStyle.getPropertyValue("--dur-anim") ?? "0.3s";
+    const durationStr = computedStyle.getPropertyValue("--wc-dur-anim") ?? "0.3s";
     const duration = parseFloat(durationStr) * (durationStr.endsWith("ms") ? 1 : 1000);
-    const easing = computedStyle.getPropertyValue("--ease-anim") ?? "ease-out";
+    const easing = computedStyle.getPropertyValue("--wc-ease-anim") ?? "ease-out";
 
     const animation = this.#popoverEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing, fill: "backwards" });
     animation.onfinish = () => {

@@ -1,20 +1,20 @@
 .confirm-dialog {
   .confirm-dialog-container {
+    color: var(--clr-text);
     display: flex;
     flex-direction: column;
-    gap: 2em;
-    margin-top: 1.2em;
+    gap: 1em;
   }
 
   .confirm-dialog-title {
-    font-size: 2rem;
+    font-size: var(--typ-font-size-3xl);
     font-weight: bold;
     text-align: start;
     margin: 0;
   }
 
   .confirm-dialog-msg{
-    font-size: 1.1rem;
+    font-size: var(--typ-font-size-md);
     line-height: 1.5;
   }
 

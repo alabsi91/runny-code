@@ -1,20 +1,23 @@
 :host {
   /* The background color of the alert items */
-  --clr-background: #333;
+  --wc-clr-background: #333;
 
   /* The text color of the alert items */
-  --clr-text: #fff;
+  --wc-clr-text: #fff;
 
   /* The duration of the reveal/hide animation */
-  --dur-anim: 0.3s;
+  --wc-dur-anim: 0.3s;
+
+  /* The item container border color */
+  --wc-clr-border: rgb(255 255 255 / 10%);
 
   /* The gap between the alert items */
-  --sp-gap: 1rem;
+  --wc-sp-gap: 1rem;
 
   display: contents;
 
   @media (prefers-reduced-motion) {
-    --dur-anim: 0s;
+    --wc-dur-anim: 0s;
   }
 }
 
@@ -37,7 +40,7 @@
 .alert-container {
   display: flex;
   flex-direction: column-reverse;
-  margin: var(--sp-gap);
+  margin: var(--wc-sp-gap);
   overflow: hidden;
 
   &.stacked-3d {
@@ -57,19 +60,18 @@
   gap: 1rem;
   border-radius: 12px;
   padding: 1rem;
-  border: solid 1px rgb(255 255 255 / 10%);
-  background-color: var(--clr-background);
+  border: solid 1px var(--wc-clr-border);
+  background-color: var(--wc-clr-background);
   box-sizing: border-box;
-  box-shadow: 0 0.1rem 1rem -0.5rem rgb(0 0 0 / 40%);
-  animation: item-show var(--dur-anim) ease-out backwards;
+  animation: item-show var(--wc-dur-anim) ease-out backwards;
 
   &:not(:last-child) {
-    margin-top: var(--sp-gap);
+    margin-top: var(--wc-sp-gap);
   }
 
   &.hide {
     overflow: hidden;
-    animation: item-hide var(--dur-anim) ease-out forwards;
+    animation: item-hide var(--wc-dur-anim) ease-out forwards;
   }
 
   .close-btn {
@@ -88,14 +90,14 @@
       display: block;
       width: 24px;
       height: 24px;
-      fill: var(--clr-text);
+      fill: var(--wc-clr-text);
     }
   }
 
   .divider {
     align-self: stretch;
     width: 1px;
-    background-color: var(--clr-text);
+    background-color: var(--wc-clr-text);
   }
 
   .item-message {
@@ -103,7 +105,7 @@
     margin: 0;
     text-align: center;
     overflow-wrap: anywhere;
-    color: var(--clr-text);
+    color: var(--wc-clr-text);
   }
 
   &.error {
@@ -133,7 +135,7 @@
   filter: blur(calc(0.2px * var(--order)));
   margin-bottom: calc(12px * var(--order));
   transition-property: transform, opacity, margin-bottom, filter;
-  transition-duration: var(--dur-anim);
+  transition-duration: var(--wc-dur-anim);
   pointer-events: none;
 
   &:nth-last-child(1) {
@@ -214,7 +216,7 @@
   p {
     margin: 0;
     font-weight: bold;
-    color: var(--clr-text);
+    color: var(--wc-clr-text);
   }
 }
 

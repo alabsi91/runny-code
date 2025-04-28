@@ -1,24 +1,31 @@
+
+/* Rename css variable */
+:has(.file-code-editor) {
+  --color-border: var(--clr-border);
+}
+
 .file-code-editor {
-  --clr-background: var(--card-color);
-  --clr-border: var(--border-color);
-  --clr-text-selection-bg: #005532;
-  --clr-active-line: #3ecf8e10;
-  --clr-line-numbers-background: var(--foreground-color);
-  --clr-line-numbers-txt: #4d4d4d;
-  --clr-line-numbers-active-txt: var(--primary-color);
-  --sz-border-radius: var(--border-radius);
+  --clr-background: var(--clr-surface-2);
+  --clr-focused: var(--clr-surface-2);
+  --clr-border: var(--color-border);
+  --clr-text-selection-bg: var(--clr-accent);
+  --clr-active-line: hsl(from var(--clr-accent) h s l / 10%);
+  --clr-line-numbers-background: var(--clr-surface-1);
+  --clr-line-numbers-txt: var(--clr-text-dim);
+  --clr-line-numbers-active-txt: var(--clr-accent);
+  --sz-border-radius: var(--brd-radius-lg);
 
   height: calc(100% - 2em);
 
   .editor-header {
     position: relative;
     padding: 0.6em;
-    border-bottom: solid 1px var(--border-color);
-    background-color: var(--foreground-color);
+    border-bottom: solid 1px var(--clr-border);
+    background-color: var(--clr-surface-1);
 
     p {
       text-align: center;
-      color: #00c573;
+      color: var(--clr-text-accent);
       overflow-wrap: anywhere;
       margin: 0;
       pointer-events: none;
@@ -29,7 +36,7 @@
       position: absolute;
       inset-inline-start: 0.2em;
       inset-block-start: 0.2em;
-      border-radius: 0.6em;
+      border-radius: var(--brd-radius-lg);
       padding: 0.4em;
 
       svg {

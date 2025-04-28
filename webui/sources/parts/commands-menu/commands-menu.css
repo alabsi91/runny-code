@@ -8,15 +8,15 @@
   .add-command {
     display: block;
     text-align: center;
-    background-color: var(--card-color);
     box-sizing: border-box;
+    border-color: var(--clr-accent-border);
 
     svg {
       display: block;
       margin: auto;
       width: 1em;
       height: 1em;
-      fill: var(--text-color-dim);
+      fill: currentcolor;
     }
   }
 
@@ -24,13 +24,14 @@
     padding-block: 0.5em;
 
     .cmd-menu-group-title {
+      color: var(--clr-text);
       margin-top: 0;
       margin-left: 0.5em;
       margin-bottom: 0.2em;
     }
 
     &:not(:last-child) {
-      border-bottom: solid 1px var(--border-color);
+      border-bottom: solid 1px var(--clr-border);
       margin-bottom: 0.5em;
     }
 
@@ -46,9 +47,12 @@
   .cmd-menu-option-container {
     display: flex;
     align-items: center;
+    transition-property: background-color;
+    transition-duration: var(--anim-duration-short);
+    transition-timing-function: ease-out;
 
     &:hover {
-      background-color: #3b3b3b;
+      background-color: var(--clr-surface-0);
     }
   }
 
