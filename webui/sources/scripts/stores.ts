@@ -1,4 +1,5 @@
 import { atom } from "nanostores";
+import { persistentAtom } from "@nanostores/persistent";
 
 import { type Command } from "./api/commands";
 
@@ -16,3 +17,6 @@ export const $editingCommand = atom<Command | null>(null);
 
 /** Indicates whether command manipulation (add/edit/delete) is allowed */
 export const $isCommandManipulationAllowed = atom(true);
+
+/** The current color scheme */
+export const $colorScheme = persistentAtom<"light" | "dark" | "auto">("color-scheme", "auto");

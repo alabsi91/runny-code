@@ -9,6 +9,7 @@ import { getCommandsList, isCommandManipulationAllowed } from "@scripts/api/comm
 import { writeFile } from "@scripts/api/files";
 import { $commands, $isCommandManipulationAllowed, $selectedFilePath } from "@scripts/stores";
 import { errorMsg, getElement, successMsg } from "@scripts/utils/utils";
+import { initColorScheme } from "../../parts/color-scheme-btn/colorScheme";
 
 const isAuthenticated = await isLoggedIn();
 if (!isAuthenticated) {
@@ -31,6 +32,7 @@ $isCommandManipulationAllowed.set(isAllowed);
 
 $commands.set(availableCommands);
 
+initColorScheme();
 initCodeEditor();
 await initFilesMenu();
 await initCommandsMenu();

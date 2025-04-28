@@ -2,6 +2,7 @@
   "name": "runny-code",
   "type": "module",
   "dependencies": {
+    "@nanostores/persistent": "^1.0.0",
     "highlight.js": "^11.11.1",
     "nanostores": "^1.0.1"
   },

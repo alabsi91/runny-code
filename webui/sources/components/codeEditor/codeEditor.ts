@@ -194,6 +194,7 @@ class CodeEditor extends HTMLElement implements IWebComponent {
     if (newStyleEl instanceof HTMLLinkElement) {
       shadow.appendChild(newStyleEl.cloneNode(true));
       currentStyleTag.textContent = "";
+      styleLinkTags.forEach(link => link.remove());
       return;
     }
   }

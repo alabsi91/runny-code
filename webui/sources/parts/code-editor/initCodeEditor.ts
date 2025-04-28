@@ -15,7 +15,7 @@ import java from "highlight.js/lib/languages/java";
 
 import { readFile } from "@scripts/api/files";
 import { errorMsg, getElement, successMsg } from "@scripts/utils/utils";
-import { $selectedFilePath } from "~/sources/scripts/stores";
+import { $colorScheme, $selectedFilePath } from "~/sources/scripts/stores";
 
 const codeEditorEls = {
   codeEditor: getElement<CodeEditor>("code-editor"),
@@ -46,6 +46,15 @@ export function initCodeEditor() {
   $selectedFilePath.listen(async newValue => {
     codeEditorEls.reloadFileBtn.style.display = newValue ? "block" : "none";
     if (newValue) await updateCodeEditor();
+  });
+
+  $colorScheme.subscribe(colorScheme => {
+    if (colorScheme === "auto") {
+      const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      codeEditorEls.codeEditor.stylesheet = isDark ? ".code-highlight-dark" : ".code-highlight-light";
+      return;
+    }
+    codeEditorEls.codeEditor.stylesheet = colorScheme === "dark" ? ".code-highlight-dark" : ".code-highlight-light";
   });
 }
 

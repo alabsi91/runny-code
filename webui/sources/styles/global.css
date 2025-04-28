@@ -86,7 +86,7 @@ html {
   --width: min(0.3906vw, 7.5px);
 
   font-size: calc(var(--base-font-size) + var(--width));
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 body {
@@ -252,4 +252,20 @@ alert-component {
   translate: -75% -75%;
   font-size: var(--typ-font-size-xs);
   color: #c0172d;
+}
+
+.color-scheme-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5em;
+  aspect-ratio: 1;
+  border-radius: var(--brd-radius-full);
+
+  svg {
+    display: none;
+    width: 1.5em;
+    height: 1.5em;
+    fill: currentcolor
+  }
 }
