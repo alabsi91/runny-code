@@ -1,7 +1,18 @@
 {
   "root": ".",
   "pagesDir": "pages",
-  "jsx": "preact",
+  "jsx": "custom",
+  "customJSX": {
+    "autoImport": {
+      "module": "@jsx",
+      "import": "createElement",
+      "export": "createElement"
+    },
+    "transformJsx": {
+      "pragma": "createElement",
+      "pragmaFrag": "\"fragment\""
+    }
+  },
   "ignorePatterns": ["dist/**", "backend/**"],
   "browserslist": [
     "last 2 Chrome versions",
@@ -22,7 +33,7 @@
     "minify": true,
     "cleanOutDir": true,
     "removeUnusedFiles": true,
-    "unusedIgnorePatterns": ["**/sitemap.xml", "**/robots.txt"],
+    "unusedIgnorePatterns": ["**/sitemap.xml", "**/robots.txt", "sources/assets/icons/*"],
     "nodeModulesOutDir": "sources/packages",
     "webP": {
       "enabled": true,

@@ -2,7 +2,7 @@ import type { IWebComponent, WComponent } from "../wc";
 
 type ExtraAttributes = {
   "initial-state": AccordionState;
-  onchange: (e: CustomEvent) => void;
+  onstatechange?: (e: CustomEvent) => void;
 };
 
 type ComponentTypes = WComponent<typeof AccordionComponent, ExtraAttributes>;
@@ -50,9 +50,10 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
   readonly #expanderEl: HTMLDivElement;
 
   /** Emitted when the accordion changes the expand state open/close. */
-  readonly #change = new CustomEvent("change");
+  readonly #change = new CustomEvent("statechange");
 
   //#region Public Props
+  test = "";
   #group: string = "";
   /** The group name. Components with the same group name will only allow one to be opened at a time. */
   get group(): string {
@@ -197,5 +198,11 @@ declare global {
 
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: AccordionComponent;
+  }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
   }
 }

@@ -396,4 +396,10 @@ declare global {
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: SelectOption;
   }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
+  }
 }

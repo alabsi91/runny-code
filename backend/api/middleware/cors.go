@@ -12,7 +12,8 @@ func CorsMiddleware(next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 		if common.App_ENV == "development" {
-			w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:3000")
+			origin := r.Header.Get("Origin")
+			w.Header().Set("Access-Control-Allow-Origin", origin)
 		}
 
 		// Handle preflight request

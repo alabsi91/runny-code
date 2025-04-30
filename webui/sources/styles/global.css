@@ -83,10 +83,11 @@
 }
 
 html {
-  --width: min(0.3906vw, 7.5px);
+  --width: min(0.3906vw, 6px);
 
   font-size: calc(var(--base-font-size) + var(--width));
   color-scheme: light dark;
+  overscroll-behavior: contain;
 }
 
 body {
@@ -99,6 +100,7 @@ body {
   background-color: var(--clr-bg);
   background-image: radial-gradient(var(--clr-pattern) 0.75px, var(--clr-bg) 0.75px);
   background-size: 15px 15px;
+  overscroll-behavior: contain;
 }
 
 button,
@@ -208,11 +210,6 @@ alert-component {
     color: var(--clr-btn-txt-dim);
     cursor: not-allowed;
   }
-
-  &:not(:disabled):hover {
-    background-color: var(--clr-accent-hover);
-    border-color: var(--clr-accent-border-hover);
-  }
 }
 
 .danger-btn {
@@ -223,19 +220,26 @@ alert-component {
     background-color: var(--clr-danger-disabled);
     border-color: var(--clr-danger-border-disabled);
   }
-
-  &:not(:disabled):hover {
-    background-color: var(--clr-danger-hover);
-    border-color: var(--clr-danger-border-hover);
-  }
 }
 
 .gray-btn {
   background-color: var(--clr-surface-2);
   border-color: var(--clr-border);
   color: var(--clr-text-dim);
+}
 
-  &:not(:disabled):hover {
+@media (hover: hover) and (pointer: fine) {
+  .primary-btn:not(:disabled):hover {
+    background-color: var(--clr-accent-hover);
+    border-color: var(--clr-accent-border-hover);
+  }
+
+  .danger-btn:not(:disabled):hover {
+    background-color: var(--clr-danger-hover);
+    border-color: var(--clr-danger-border-hover);
+  }
+
+  .gray-btn:not(:disabled):hover {
     color: var(--clr-btn-txt);
   }
 }
@@ -266,6 +270,6 @@ alert-component {
     display: none;
     width: 1.5em;
     height: 1.5em;
-    fill: currentcolor
+    fill: currentcolor;
   }
 }

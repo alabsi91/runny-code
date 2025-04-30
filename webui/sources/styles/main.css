@@ -3,9 +3,11 @@ main {
   grid-template-rows: auto 5fr;
   gap: 2em;
   height: 100dvh;
+  width: 100%;
   max-width: 1200px;
   padding-inline: 2em;
   margin: auto;
+  box-sizing: border-box;
 }
 
 menu-component::part(trigger) {

@@ -6,7 +6,7 @@ export function initColorScheme() {
 
   const getNextColorScheme = (colorScheme: "auto" | "light" | "dark") => {
     return colorScheme === "auto" ? "light" : colorScheme === "light" ? "dark" : "auto";
-  }
+  };
 
   colorSchemeBtn.addEventListener("click", () => {
     const colorScheme = $colorScheme.get();

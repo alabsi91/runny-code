@@ -98,10 +98,10 @@
   }
 
   .cmd-input-menu {
-    --clr-background: var(--clr-surface-1);
+    --clr-background: var(--clr-surface-2);
 
     &::part(trigger) {
-      background-color: var(--clr-surface-1);
+      background-color: var(--clr-surface-2);
       color: var(--clr-text);
       text-align: start;
     }

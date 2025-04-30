@@ -235,4 +235,10 @@ declare global {
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: DialogComponent;
   }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
+  }
 }

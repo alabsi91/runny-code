@@ -62,8 +62,9 @@
   border: 1px solid var(--clr-border);
   box-shadow: 0 0.1rem 1rem -0.5rem #0006;
   box-sizing: border-box;
-  transition: background-color 100ms linear;
   overflow: clip;
+
+  /* transition: background-color 100ms linear; */
 
   &:has(.textarea:focus:not(:read-only)) {
     background-color: var(--clr-focused);

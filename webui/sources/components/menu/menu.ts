@@ -11,6 +11,7 @@ type ExtraAttributes = {
   "close-on-select": BooleanString;
   "popover-role": string;
   "popover-label": string;
+  name: string;
   onchange: (e: CustomEvent) => void;
   onopen: (e: CustomEvent) => void;
   onclose: (e: CustomEvent) => void;
@@ -966,5 +967,11 @@ declare global {
 
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: MenuComponent;
+  }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
   }
 }

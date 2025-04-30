@@ -373,4 +373,10 @@ declare global {
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: TooltipComponent;
   }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
+  }
 }

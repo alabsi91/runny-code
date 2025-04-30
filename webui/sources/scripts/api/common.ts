@@ -1,4 +1,4 @@
-export const baseUrl = _production ? "" : "http://127.0.0.1:8080";
+export const baseUrl = _production ? "" : "http://192.168.1.113:8080";
 
 export async function safeFetch(
   outputType: "response",

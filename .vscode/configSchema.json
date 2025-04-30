@@ -16,22 +16,66 @@
     },
     "jsx": {
       "type": "string",
-      "enum": [
-        "react",
-        "preact",
-        "solid",
-        "none"
-      ],
+      "enum": ["react", "preact", "solid", "custom", "none"],
       "description": "Process JSX with Babel.\n\n**Choices**: `\"react\" | \"preact\" | \"solid\" | \"none\"`\n\n**Default**: `\"none\"`",
       "markdownDescription": "Process JSX with Babel.\n\n**Choices**: `\"react\" | \"preact\" | \"solid\" | \"none\"`\n\n**Default**: `\"none\"`"
+    },
+    "customJSX": {
+      "type": "object",
+      "properties": {
+        "autoImport": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string"
+            },
+            "import": {
+              "type": "string"
+            },
+            "export": {
+              "type": "string"
+            }
+          },
+          "required": ["module", "import", "export"],
+          "additionalProperties": false,
+          "description": "Auto import JSX modules.",
+          "markdownDescription": "Auto import JSX modules."
+        },
+        "transformJsx": {
+          "type": "object",
+          "properties": {
+            "pragma": {
+              "type": "string"
+            },
+            "pragmaFrag": {
+              "type": "string"
+            },
+            "useSpread": {
+              "type": "boolean"
+            },
+            "runtime": {
+              "type": "string",
+              "enum": ["automatic", "classic"]
+            },
+            "importSource": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["transformJsx"],
+      "additionalProperties": false,
+      "description": "Custom JSX transformations using Babel. Use `jsx: \"custom\"\"` with this options.",
+      "markdownDescription": "Custom JSX transformations using Babel. Use `jsx: \"custom\"\"` with this options."
     },
     "ignorePatterns": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of glob patterns to ignore.\n\n**Default**: `[\"node_modules/**\",\"package.json\",\"package-lock.json\",\"tsconfig.json\",\"eslint.config.mjs\"]`",
-      "markdownDescription": "List of glob patterns to ignore.\n\n**Default**: `[\"node_modules/**\",\"package.json\",\"package-lock.json\",\"tsconfig.json\",\"eslint.config.mjs\"]`"
+      "description": "List of glob patterns to ignore.\n\n**Default**: `[\"node_modules/**\",\"package.json\",\"package-lock.json\",\"tsconfig.json\",\"eslint.config.mjs\",\".git/**\"]`",
+      "markdownDescription": "List of glob patterns to ignore.\n\n**Default**: `[\"node_modules/**\",\"package.json\",\"package-lock.json\",\"tsconfig.json\",\"eslint.config.mjs\",\".git/**\"]`"
     },
     "browserslist": {
       "type": "array",
@@ -123,14 +167,7 @@
             },
             "preset": {
               "type": "string",
-              "enum": [
-                "default",
-                "photo",
-                "picture",
-                "drawing",
-                "icon",
-                "text"
-              ],
+              "enum": ["default", "photo", "picture", "drawing", "icon", "text"],
               "description": "WebP preset.\n\n**Choices:** `\"default\" | \"picture\" | \"photo\" | \"drawing\" | \"icon\" | \"text\"`.\n\n**Default**: `\"default\"`",
               "markdownDescription": "WebP preset.\n\n**Choices:** `\"default\" | \"picture\" | \"photo\" | \"drawing\" | \"icon\" | \"text\"`.\n\n**Default**: `\"default\"`"
             }
@@ -140,9 +177,7 @@
           "markdownDescription": "WebP options"
         }
       },
-      "required": [
-        "webP"
-      ],
+      "required": ["webP"],
       "additionalProperties": false,
       "description": "Build options",
       "markdownDescription": "Build options"
@@ -272,9 +307,7 @@
                 }
               }
             },
-            "required": [
-              "userAgent"
-            ],
+            "required": ["userAgent"],
             "additionalProperties": false
           },
           "description": "Generate `robots.txt`",
@@ -304,9 +337,7 @@
               "markdownDescription": "Whether the entry point supports ESM. Default: `true`"
             }
           },
-          "required": [
-            "path"
-          ],
+          "required": ["path"],
           "additionalProperties": false
         },
         "description": "**Example:**\n ```json\n\"packages\": {\n    \"react-dom\": {\n      \"./client\": {\n        \"path\": \"./cjs/react-dom.production.min.js\",\n        \"esm\": false\n      }\n    }\n}\n```",

@@ -21,6 +21,8 @@ const codeEditorEls = {
   codeEditor: getElement<CodeEditor>("code-editor"),
   reloadFileBtn: getElement<HTMLButtonElement>("#code-editor-reload-btn"),
   editorTitle: getElement(".editor-header-title"),
+  codeStyleLight: getElement<HTMLStyleElement>(".code-highlight-light"),
+  codeStyleDark: getElement<HTMLStyleElement>(".code-highlight-dark"),
 };
 
 export function initCodeEditor() {
@@ -52,8 +54,10 @@ export function initCodeEditor() {
     if (colorScheme === "auto") {
       const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       codeEditorEls.codeEditor.stylesheet = isDark ? ".code-highlight-dark" : ".code-highlight-light";
+      swapSiblingElements(codeEditorEls.codeStyleDark, codeEditorEls.codeStyleLight, isDark);
       return;
     }
+    swapSiblingElements(codeEditorEls.codeStyleDark, codeEditorEls.codeStyleLight, colorScheme === "dark");
     codeEditorEls.codeEditor.stylesheet = colorScheme === "dark" ? ".code-highlight-dark" : ".code-highlight-light";
   });
 }
@@ -72,6 +76,27 @@ async function updateCodeEditor() {
 
   codeEditorEls.editorTitle.textContent = filePath;
   codeEditorEls.codeEditor.value = fileContent;
+}
 
-  successMsg(`The file "${filePath}" loaded.`);
+function swapSiblingElements(ElShouldBeFirst: HTMLElement, ElShouldBeSecond: HTMLElement, reverse = false) {
+  const parent = ElShouldBeFirst.parentNode;
+  if (!parent) return;
+
+  const siblings = Array.from(parent.childNodes);
+  const firstElementIndex = siblings.indexOf(ElShouldBeFirst);
+  const secondElementIndex = siblings.indexOf(ElShouldBeSecond);
+  if (firstElementIndex === -1 || secondElementIndex === -1) return;
+
+  const firstElement = parent.removeChild(ElShouldBeFirst);
+  const secondElement = parent.removeChild(ElShouldBeSecond);
+
+  // Re-insert them in swapped order
+  if (reverse) {
+    parent.insertBefore(secondElement, parent.childNodes[firstElementIndex + 1]);
+    parent.insertBefore(firstElement, parent.childNodes[secondElementIndex + 1]);
+    return;
+  }
+
+  parent.insertBefore(firstElement, parent.childNodes[secondElementIndex + 1]);
+  parent.insertBefore(secondElement, parent.childNodes[firstElementIndex + 1]);
 }

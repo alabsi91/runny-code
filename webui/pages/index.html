@@ -1,20 +1,26 @@
 <layout src="@layouts/main.layout.html" title="Runny Code" description="Runny Code App">
   <body>
-    <main>
-      <div class="top">
-        <h1>Runny Code</h1>
+    <div class="layout">
+      <part src="@parts/file-navigator/file-navigator.part.html" />
+      <main>
+        <div class="top">
+          <br />
+          <br />
+          <br />
+          <br />
+          <!-- <h1>Runny Code</h1> -->
 
-        <div class="buttons-container">
-          <button id="save" class="primary-btn ctrl-btn">Save</button>
-          <tooltip-component for="#save" prefer-direction="top">Save the current changes</tooltip-component>
+          <div class="buttons-container">
+            <button id="save" class="primary-btn ctrl-btn">Save</button>
+            <tooltip-component for="#save" prefer-direction="top">Save the current changes</tooltip-component>
 
-          <part src="@parts/files-menu/files-menu.part.html"></part>
-          <part src="@parts/commands-menu/commands-menu.part.html"></part>
+            <part src="@parts/commands-menu/commands-menu.part.html"></part>
+          </div>
         </div>
-      </div>
 
-      <part src="@parts/code-editor/code-editor.part.html"></part>
-    </main>
+        <part src="@parts/code-editor/code-editor.part.html"></part>
+      </main>
+    </div>
 
     <part src="@parts/color-scheme-btn/color-scheme-btn.part.html"></part>
     <part src="@parts/add-edit-command-dialog/add-edit-command-dialog.part.html"></part>
@@ -46,6 +52,7 @@
   <link rel="stylesheet" href="@parts/execute-command-dialog/execute-command-dialog.css" inline />
   <link rel="stylesheet" href="@parts/confirm-dialog/confirm-dialog.css" inline />
   <link rel="stylesheet" href="@parts/command-actions-dialog/command-actions-dialog.css" inline />
+  <link rel="stylesheet" href="@parts/file-navigator/file-navigator.css" inline />
   <link
     rel="stylesheet"
     class="code-highlight-dark"

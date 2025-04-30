@@ -27,7 +27,7 @@
 .popover {
   padding: 0;
   margin: 1rem 0;
-  border: solid 1px rgba(255 255 255 / 10%);
+  border: solid 1px rgb(255 255 255 / 10%);
   border-radius: 12px;
   background-color: var(--clr-background);
   overflow: hidden auto;
@@ -38,7 +38,7 @@
 
 .popover::backdrop {
   display: none;
-  background: rgba(0 0 0 / 40%);
+  background: rgb(0 0 0 / 40%);
   opacity: 0;
   backdrop-filter: blur(0);
   transition-property: opacity, backdrop-filter;
@@ -59,7 +59,7 @@
 
 .trigger {
   background-color: #3b3b3b;
-  border: solid 1px rgba(255 255 255 / 10%);
+  border: solid 1px rgb(255 255 255 / 10%);
   border-radius: 4px;
   padding: 0.5rem;
   cursor: pointer;

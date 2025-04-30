@@ -142,6 +142,7 @@ class CodeEditor extends HTMLElement implements IWebComponent {
     this.#editorEl.classList.toggle("wrap", val);
     this.#highlightedEl.classList.toggle("wrap", val);
     this.#update();
+    this.#linesContainer.style.width = `calc(${this.#editorEl.scrollWidth}px - var(--sz-padding))`;
   }
 
   #copyButton = false;
@@ -275,7 +276,7 @@ class CodeEditor extends HTMLElement implements IWebComponent {
       this.#highlightedEl.style.height = `${entry.contentRect.height}px`;
 
       this.#highlightedEl.style.top = `${this.#editorEl.offsetTop}px`;
-      this.#linesContainer.style.width = this.#editorEl.scrollWidth + "px";
+      this.#linesContainer.style.width = `calc(${this.#editorEl.scrollWidth}px - var(--sz-padding))`;
     });
 
     this.#resizeObserver.observe(this.#editorEl);
@@ -546,5 +547,11 @@ declare global {
 
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: CodeEditor;
+  }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
   }
 }

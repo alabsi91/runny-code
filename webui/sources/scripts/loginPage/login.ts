@@ -1,6 +1,6 @@
 import { login } from "@scripts/api/auth";
 import { errorMsg } from "@scripts/utils/utils";
-import { initColorScheme } from "../../parts/color-scheme-btn/colorScheme";
+import { initColorScheme } from "@parts/color-scheme-btn/colorScheme";
 
 initColorScheme();
 loginHandler();

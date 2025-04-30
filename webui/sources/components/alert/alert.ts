@@ -234,4 +234,10 @@ declare global {
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: AlertComponent;
   }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
+  }
 }

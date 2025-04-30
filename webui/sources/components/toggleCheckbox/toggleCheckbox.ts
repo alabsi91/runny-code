@@ -1,6 +1,7 @@
 import type { IWebComponent, WComponent } from "../wc";
 
 type ExtraAttributes = {
+  name: string;
   onchange: (e: CustomEvent) => void;
 };
 
@@ -236,5 +237,11 @@ declare global {
 
   interface HTMLElementTagNameMap {
     [COMPONENT_NAME]: ToggleCheckbox;
+  }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      [COMPONENT_NAME]: ComponentTypes["JSX"];
+    }
   }
 }

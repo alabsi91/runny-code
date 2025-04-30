@@ -24,6 +24,10 @@ func InitServer() error {
 	mux.HandleFunc("GET /files-list", apiFiles.ReadDirHandle)
 	mux.HandleFunc("GET /file/", apiFiles.ReadFileHandle)
 	mux.HandleFunc("PUT /file/", apiFiles.WriteFileHandle)
+	mux.HandleFunc("POST /move-path/", apiFiles.MoveToPathHandle)
+	mux.HandleFunc("DELETE /delete-path/", apiFiles.DeletePathHandle)
+	mux.HandleFunc("PUT /create-folder/", apiFiles.CreateFolderHandle)
+	mux.HandleFunc("PUT /create-file/", apiFiles.CreateFileHandle)
 
 	mux.HandleFunc("GET /command/", apiCommands.GetCommandsListHandle)
 	mux.HandleFunc("POST /command/", apiCommands.ExecuteCommandHandle)

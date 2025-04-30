@@ -34,7 +34,7 @@ A simple accordion web component.
 
 **Events**
 
-- `change` Emitted when the accordion changes the expand state open/close.
+- `state-change` Emitted when the accordion changes the expand state open/close.
 
 **Slots**
 

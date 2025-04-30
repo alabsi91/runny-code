@@ -11,6 +11,7 @@
       "@parts/*": ["./sources/parts/*"],
       "@components/*": ["./sources/components/*"],
       "@utils/*": ["./sources/scripts/utils/*"],
+      "@jsx": ["./sources/scripts/jsx"],
       "@types": ["./sources/types"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -21,8 +22,7 @@
     "module": "Preserve",
     "esModuleInterop": true,
     "jsx": "preserve",
-    "verbatimModuleSyntax": true,
-    "jsxImportSource": "preact"
+    "verbatimModuleSyntax": true
   },
-  "include": ["sources"]
+  "include": ["sources", "sources/jsx.d.ts"]
 }

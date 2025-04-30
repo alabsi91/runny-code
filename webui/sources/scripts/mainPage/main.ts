@@ -1,19 +1,24 @@
-import { initAddEditCommandDialog } from "~/sources/parts/add-edit-command-dialog/addEditCommandDialog";
+import { initAddEditCommandDialog } from "@parts/add-edit-command-dialog/addEditCommandDialog";
 import { initCodeEditor } from "@parts/code-editor/initCodeEditor";
+import { initColorScheme } from "@parts/color-scheme-btn/colorScheme";
 import { initCommandActionsDialog } from "@parts/command-actions-dialog/commandActionsDialog";
 import { initCommandsMenu } from "@parts/commands-menu/initCommandsMenu";
 import { confirmDialog, initConfirmDialog } from "@parts/confirm-dialog/confirmDialog";
-import { initFilesMenu } from "@parts/files-menu/initFilesMenu";
+import { initFileNavigator } from "@parts/file-navigator/fileNavigator";
 import { isLoggedIn } from "@scripts/api/auth";
 import { getCommandsList, isCommandManipulationAllowed } from "@scripts/api/commands";
-import { writeFile } from "@scripts/api/files";
-import { $commands, $isCommandManipulationAllowed, $selectedFilePath } from "@scripts/stores";
+import { getFilesList, writeFile } from "@scripts/api/files";
+import { $commands, $files, $isCommandManipulationAllowed, $selectedFilePath } from "@scripts/stores";
 import { errorMsg, getElement, successMsg } from "@scripts/utils/utils";
-import { initColorScheme } from "../../parts/color-scheme-btn/colorScheme";
 
 const isAuthenticated = await isLoggedIn();
 if (!isAuthenticated) {
   window.location.href = "/auth/";
+}
+const [availableFiles, getFilesListError] = await getFilesList();
+if (getFilesListError !== null) {
+  errorMsg(getFilesListError.message);
+  throw getFilesListError;
 }
 
 const [availableCommands, error] = await getCommandsList();
@@ -28,18 +33,18 @@ if (error2 !== null) {
   throw error2;
 }
 
-$isCommandManipulationAllowed.set(isAllowed);
-
+$files.set(availableFiles);
 $commands.set(availableCommands);
+$isCommandManipulationAllowed.set(isAllowed);
 
 initColorScheme();
 initCodeEditor();
-await initFilesMenu();
+initFileNavigator();
 await initCommandsMenu();
 initSaveFileBtn();
 initCommandActionsDialog();
 initAddEditCommandDialog();
-initConfirmDialog();
+initConfirmDialog(); 
 
 // ----
 

@@ -1,6 +1,4 @@
-import type React from "react";
-
-type Prettify<T> = { [K in keyof T]: T[K] } & {};
+// type Prettify<T> = { [K in keyof T]: T[K] } & {};
 
 type NumberString = `${number}`;
 type BooleanString = "true" | "false";
@@ -30,13 +28,12 @@ interface WComponent<T extends IWebComponentStatic, ExtendAttr extends Record<st
   ObservedAttributes: T["observedAttributes"] extends infer U extends readonly string[] ? U[number] : never;
   ObserverAttributesRecord: Record<this["ObservedAttributes"], string>;
   Props: OmitReadonlyProps<OmitElementNativeProps<this["Instance"]>>;
-  Attributes: Prettify<
-    Partial<
-      Omit<this["ObserverAttributesRecord"], keyof this["Props"] | keyof ExtendAttr> & Omit<this["Props"], keyof ExtendAttr>
-    > &
+  Attributes: Partial<
+    Omit<this["ObserverAttributesRecord"], keyof this["Props"] | keyof ExtendAttr> &
+      Omit<this["Props"], keyof ExtendAttr> &
       ExtendAttr
   >;
-  JSX: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & this["Attributes"], this["Instance"]>;
+  JSX: JSX.HTMLAttributes & this["Attributes"];
 }
 
 export { NumberString, BooleanString, IWebComponent, WComponent };
