@@ -47,9 +47,8 @@ func DownloadHandle(w http.ResponseWriter, r *http.Request) {
 	sendFile(w, r, fullPath, fileInfo.Name())
 }
 
-
 func zipDirectory(sourceDir string) (string, error) {
-	zipFilePath := sourceDir + ".zip"
+	zipFilePath := path.Join(os.TempDir(), path.Base(sourceDir)+".zip")
 	zipFile, err := os.Create(zipFilePath)
 	if err != nil {
 		return "", fmt.Errorf("failed to create zip file: %w", err)
