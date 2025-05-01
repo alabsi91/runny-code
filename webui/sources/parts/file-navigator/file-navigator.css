@@ -15,7 +15,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: var(--clr-surface-2);
+  background: linear-gradient(to bottom, var(--clr-surface-2) 50%, var(--clr-surface-1));
   max-height: 100dvh;
   transition-property: translate;
   transition-duration: var(--anim-duration-md);
@@ -23,19 +23,6 @@
 
   &.closed {
     translate: -100% 0;
-  }
-
-  .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
-    padding: 0.5em;
-    padding-block-end: 2em;
-    overflow-y: auto;
-    max-height: 100%;
-    box-sizing: border-box;
-    scrollbar-width: thin;
   }
 
   .file-navigator-header {
@@ -90,34 +77,86 @@
     }
   }
 
-  .file-navigator-trash-aria {
-    text-align: center;
-    background-color: var(--clr-danger);
+  .file-navigator-search-container {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .file-navigator-search {
+    flex-shrink: 1;
+    background-color: var(--clr-surface-2);
+    border-radius: var(--brd-radius-md);
+    border-color: var(--clr-accent-border);
+    border-width: 1px;
+    border-style: solid;
+    outline: none;
+    width: 100%;
+    margin: 0.5em;
+    padding: 0.5rem;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
     padding: 0.5em;
+    padding-block-end: 2em;
+    overflow-y: auto;
+    max-height: 100%;
     box-sizing: border-box;
-    color: var(--clr-btn-txt);
-    overflow: clip;
-    transition-property: max-height, opacity;
-    transition-duration: var(--anim-duration-long);
-    transition-timing-function: ease-out;
-    max-height: 0;
-    opacity: 0;
+    scrollbar-width: thin;
+  }
 
-    &.show {
-      max-height: 4em;
-      opacity: 1;
+  .file-navigator-drop-aria-container {
+    display: flex;
+
+    .drop-aria {
+      text-align: center;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: var(--clr-accent);
+      border: var(--brd-width-thin) solid var(--clr-border);
+      color: var(--clr-btn-txt);
+      overflow: clip;
+      visibility: hidden;
+      transition-behavior: allow-discrete;
+      transition-property: max-height, opacity, padding, visibility;
+      transition-duration: var(--anim-duration-long);
+      transition-timing-function: ease-out;
+      max-height: 0;
+      opacity: 0;
+
+      &.show {
+        visibility: visible;
+        max-height: 4em;
+        padding: 0.5em;
+        opacity: 1;
+      }
+
+      .drop-icon {
+        display: block;
+        margin: auto;
+        width: 2em;
+        height: 2em;
+        fill: currentcolor;
+      }
     }
 
-    &.drag-over {
-      background-color: var(--clr-danger-hover);
+    .delete-drop-aria {
+      flex: 1;
+
+      &.drag-over {
+        background-color: var(--clr-danger-hover);
+      }
     }
 
-    svg {
-      display: block;
-      margin: auto;
-      width: 2em;
-      height: 2em;
-      fill: currentcolor;
+    .download-drop-aria {
+      flex: 0.5;
+
+      &.drag-over {
+        background-color: var(--clr-accent-hover);
+      }
     }
   }
 
@@ -161,72 +200,8 @@
   }
 
   .folder {
-    .summary {
-      display: flex;
-      align-items: center;
-      gap: 0.25em;
-      padding-inline-end: 0.2em;
-      width: 100%;
-
-      .editable {
-        margin: 0;
-        padding-block: 0.5em;
-        color: var(--clr-text-dim);
-        text-align: start;
-        font-size: var(--typ-font-size-sm);
-        font-family: var(--typ-font-family-base);
-        font-weight: bold;
-        flex-grow: 1;
-        flex-shrink: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .folder-icon {
-        width: 1em;
-        height: 1em;
-      }
-
-      .add-btn {
-        aspect-ratio: 1;
-        border: none;
-        border-radius: var(--brd-radius-md);
-        padding: 0.2em;
-        background-color: transparent;
-        cursor: pointer;
-        color: var(--clr-text-dim);
-        transition-property: color, background-color;
-        transition-duration: var(--anim-duration-short);
-        transition-timing-function: ease-out;
-
-        svg {
-          display: block;
-          width: 1.2em;
-          height: 1.2em;
-          fill: currentcolor;
-        }
-      }
-    }
-
-    @media (hover: hover) {
-      .summary .add-btn {
-        display: none;
-      }
-
-      .summary:hover .add-btn {
-        display: block;
-      }
-
-      .summary .add-btn:hover {
-        color: var(--clr-text);
-        background-color: var(--clr-surface-2);
-      }
-
-      &::part(trigger):hover {
-        background-color: var(--clr-surface-1);
-      }
-    }
+    --dur-anim: var(--anim-duration-md);
+    --ease-anim: --ease-out-quad();
 
     &::part(trigger) {
       padding: 0;
@@ -266,14 +241,77 @@
       border-inline-start: solid var(--brd-width-thin) var(--clr-border);
     }
 
-    &:state(open)::part(content) {
-      margin-block-start: 0.25em;
-    }
-
-    &:not(:has(.file)) {
+    &:not(:has(.file, .folder)) {
       &::part(marker) {
         display: none;
         pointer-events: none;
+      }
+    }
+
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: 0.25em;
+      padding-inline-end: 0.2em;
+      width: 100%;
+
+      .editable {
+        margin: 0;
+        color: var(--clr-text-dim);
+        text-align: start;
+        font-size: var(--typ-font-size-sm);
+        font-family: var(--typ-font-family-base);
+        font-weight: bold;
+        flex-grow: 1;
+        flex-shrink: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .folder-icon {
+        width: 1em;
+        height: 1em;
+        padding-block: 0.5em;
+      }
+
+      .add-btn {
+        aspect-ratio: 1;
+        border: none;
+        border-radius: var(--brd-radius-md);
+        padding: 0.2em;
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--clr-text-dim);
+        transition-property: color, background-color;
+        transition-duration: var(--anim-duration-short);
+        transition-timing-function: ease-out;
+
+        svg {
+          display: block;
+          width: 1.2em;
+          height: 1.2em;
+          fill: currentcolor;
+        }
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .summary .add-btn {
+        display: none;
+      }
+
+      .summary:hover .add-btn {
+        display: block;
+      }
+
+      .summary .add-btn:hover {
+        color: var(--clr-text);
+        background-color: var(--clr-surface-2);
+      }
+
+      &::part(trigger):hover {
+        background-color: var(--clr-surface-1);
       }
     }
   }

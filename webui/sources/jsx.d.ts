@@ -406,7 +406,9 @@ declare global {
       readonly currentTarget: Target;
     };
 
-    type EventHandler<T> = ((event: T) => void) | ((event: T) => void)[];
+    type EventHandler<T> = (event: T) => void;
+
+    type EventHandlers<T> = EventHandler<T> | (EventHandler<T> | [EventHandler<T>, boolean | AddEventListenerOptions])[];
 
     interface VNode<P = object> {
       props: P & { children: ComponentChildren };
@@ -422,109 +424,109 @@ declare global {
       dangerouslySetInnerHTML?: {
         __html: string;
       };
-      onabort?: EventHandler<UIEvent>;
-      onanimationcancel?: EventHandler<AnimationEvent>;
-      onanimationend?: EventHandler<AnimationEvent>;
-      onanimationiteration?: EventHandler<AnimationEvent>;
-      onanimationstart?: EventHandler<AnimationEvent>;
-      onauxclick?: EventHandler<MouseEvent>;
-      onbeforeinput?: EventHandler<InputEvent>;
-      onbeforetoggle?: EventHandler<Event>;
-      onblur?: EventHandler<FocusEvent>;
-      oncancel?: EventHandler<Event>;
-      oncanplay?: EventHandler<Event>;
-      oncanplaythrough?: EventHandler<Event>;
-      onchange?: EventHandler<Event>;
-      onclick?: EventHandler<MouseEvent>;
-      onclose?: EventHandler<Event>;
-      oncompositionend?: EventHandler<CompositionEvent>;
-      oncompositionstart?: EventHandler<CompositionEvent>;
-      oncompositionupdate?: EventHandler<CompositionEvent>;
-      oncontextlost?: EventHandler<Event>;
-      oncontextmenu?: EventHandler<MouseEvent>;
-      oncontextrestored?: EventHandler<Event>;
-      oncopy?: EventHandler<ClipboardEvent>;
-      oncuechange?: EventHandler<Event>;
-      oncut?: EventHandler<ClipboardEvent>;
-      ondblclick?: EventHandler<MouseEvent>;
-      ondrag?: EventHandler<DragEvent>;
-      ondragend?: EventHandler<DragEvent>;
-      ondragenter?: EventHandler<DragEvent>;
-      ondragleave?: EventHandler<DragEvent>;
-      ondragover?: EventHandler<DragEvent>;
-      ondragstart?: EventHandler<DragEvent>;
-      ondrop?: EventHandler<DragEvent>;
-      ondurationchange?: EventHandler<Event>;
-      onemptied?: EventHandler<Event>;
-      onended?: EventHandler<Event>;
-      onerror?: EventHandler<ErrorEvent>;
-      onfocus?: EventHandler<FocusEvent>;
-      onfocusin?: EventHandler<FocusEvent>;
-      onfocusout?: EventHandler<FocusEvent>;
-      onformdata?: EventHandler<FormDataEvent>;
-      ongotpointercapture?: EventHandler<PointerEvent>;
-      oninput?: EventHandler<Event>;
-      oninvalid?: EventHandler<Event>;
-      onkeydown?: EventHandler<KeyboardEvent>;
-      onkeypress?: EventHandler<KeyboardEvent>;
-      onkeyup?: EventHandler<KeyboardEvent>;
-      onload?: EventHandler<Event>;
-      onloadeddata?: EventHandler<Event>;
-      onloadedmetadata?: EventHandler<Event>;
-      onloadstart?: EventHandler<Event>;
-      onlostpointercapture?: EventHandler<PointerEvent>;
-      onmousedown?: EventHandler<MouseEvent>;
-      onmouseenter?: EventHandler<MouseEvent>;
-      onmouseleave?: EventHandler<MouseEvent>;
-      onmousemove?: EventHandler<MouseEvent>;
-      onmouseout?: EventHandler<MouseEvent>;
-      onmouseover?: EventHandler<MouseEvent>;
-      onmouseup?: EventHandler<MouseEvent>;
-      onpaste?: EventHandler<ClipboardEvent>;
-      onpause?: EventHandler<Event>;
-      onplay?: EventHandler<Event>;
-      onplaying?: EventHandler<Event>;
-      onpointercancel?: EventHandler<PointerEvent>;
-      onpointerdown?: EventHandler<PointerEvent>;
-      onpointerenter?: EventHandler<PointerEvent>;
-      onpointerleave?: EventHandler<PointerEvent>;
-      onpointermove?: EventHandler<PointerEvent>;
-      onpointerout?: EventHandler<PointerEvent>;
-      onpointerover?: EventHandler<PointerEvent>;
-      onpointerup?: EventHandler<PointerEvent>;
-      onprogress?: EventHandler<ProgressEvent>;
-      onratechange?: EventHandler<Event>;
-      onreset?: EventHandler<Event>;
-      onresize?: EventHandler<UIEvent>;
-      onscroll?: EventHandler<Event>;
-      onscrollend?: EventHandler<Event>;
-      onsecuritypolicyviolation?: EventHandler<SecurityPolicyViolationEvent>;
-      onseeked?: EventHandler<Event>;
-      onseeking?: EventHandler<Event>;
-      onselect?: EventHandler<Event>;
-      onselectionchange?: EventHandler<Event>;
-      onselectstart?: EventHandler<Event>;
-      onslotchange?: EventHandler<Event>;
-      onstalled?: EventHandler<Event>;
-      onsubmit?: EventHandler<SubmitEvent>;
-      onsuspend?: EventHandler<Event>;
-      ontimeupdate?: EventHandler<Event>;
-      ontoggle?: EventHandler<Event>;
-      ontouchcancel?: EventHandler<TouchEvent>;
-      ontouchend?: EventHandler<TouchEvent>;
-      ontouchmove?: EventHandler<TouchEvent>;
-      ontouchstart?: EventHandler<TouchEvent>;
-      ontransitioncancel?: EventHandler<TransitionEvent>;
-      ontransitionend?: EventHandler<TransitionEvent>;
-      ontransitionrun?: EventHandler<TransitionEvent>;
-      ontransitionstart?: EventHandler<TransitionEvent>;
-      onvolumechange?: EventHandler<Event>;
-      onwaiting?: EventHandler<Event>;
-      onwebkitanimationend?: EventHandler<Event>;
-      onwebkitanimationiteration?: EventHandler<Event>;
-      onwebkitanimationstart?: EventHandler<Event>;
-      onwebkittransitionend?: EventHandler<Event>;
-      onwheel?: EventHandler<WheelEvent>;
+      onabort?: EventHandlers<UIEvent>;
+      onanimationcancel?: EventHandlers<AnimationEvent>;
+      onanimationend?: EventHandlers<AnimationEvent>;
+      onanimationiteration?: EventHandlers<AnimationEvent>;
+      onanimationstart?: EventHandlers<AnimationEvent>;
+      onauxclick?: EventHandlers<MouseEvent>;
+      onbeforeinput?: EventHandlers<InputEvent>;
+      onbeforetoggle?: EventHandlers<Event>;
+      onblur?: EventHandlers<FocusEvent>;
+      oncancel?: EventHandlers<Event>;
+      oncanplay?: EventHandlers<Event>;
+      oncanplaythrough?: EventHandlers<Event>;
+      onchange?: EventHandlers<Event>;
+      onclick?: EventHandlers<MouseEvent>;
+      onclose?: EventHandlers<Event>;
+      oncompositionend?: EventHandlers<CompositionEvent>;
+      oncompositionstart?: EventHandlers<CompositionEvent>;
+      oncompositionupdate?: EventHandlers<CompositionEvent>;
+      oncontextlost?: EventHandlers<Event>;
+      oncontextmenu?: EventHandlers<MouseEvent>;
+      oncontextrestored?: EventHandlers<Event>;
+      oncopy?: EventHandlers<ClipboardEvent>;
+      oncuechange?: EventHandlers<Event>;
+      oncut?: EventHandlers<ClipboardEvent>;
+      ondblclick?: EventHandlers<MouseEvent>;
+      ondrag?: EventHandlers<DragEvent>;
+      ondragend?: EventHandlers<DragEvent>;
+      ondragenter?: EventHandlers<DragEvent>;
+      ondragleave?: EventHandlers<DragEvent>;
+      ondragover?: EventHandlers<DragEvent>;
+      ondragstart?: EventHandlers<DragEvent>;
+      ondrop?: EventHandlers<DragEvent>;
+      ondurationchange?: EventHandlers<Event>;
+      onemptied?: EventHandlers<Event>;
+      onended?: EventHandlers<Event>;
+      onerror?: EventHandlers<ErrorEvent>;
+      onfocus?: EventHandlers<FocusEvent>;
+      onfocusin?: EventHandlers<FocusEvent>;
+      onfocusout?: EventHandlers<FocusEvent>;
+      onformdata?: EventHandlers<FormDataEvent>;
+      ongotpointercapture?: EventHandlers<PointerEvent>;
+      oninput?: EventHandlers<Event>;
+      oninvalid?: EventHandlers<Event>;
+      onkeydown?: EventHandlers<KeyboardEvent>;
+      onkeypress?: EventHandlers<KeyboardEvent>;
+      onkeyup?: EventHandlers<KeyboardEvent>;
+      onload?: EventHandlers<Event>;
+      onloadeddata?: EventHandlers<Event>;
+      onloadedmetadata?: EventHandlers<Event>;
+      onloadstart?: EventHandlers<Event>;
+      onlostpointercapture?: EventHandlers<PointerEvent>;
+      onmousedown?: EventHandlers<MouseEvent>;
+      onmouseenter?: EventHandlers<MouseEvent>;
+      onmouseleave?: EventHandlers<MouseEvent>;
+      onmousemove?: EventHandlers<MouseEvent>;
+      onmouseout?: EventHandlers<MouseEvent>;
+      onmouseover?: EventHandlers<MouseEvent>;
+      onmouseup?: EventHandlers<MouseEvent>;
+      onpaste?: EventHandlers<ClipboardEvent>;
+      onpause?: EventHandlers<Event>;
+      onplay?: EventHandlers<Event>;
+      onplaying?: EventHandlers<Event>;
+      onpointercancel?: EventHandlers<PointerEvent>;
+      onpointerdown?: EventHandlers<PointerEvent>;
+      onpointerenter?: EventHandlers<PointerEvent>;
+      onpointerleave?: EventHandlers<PointerEvent>;
+      onpointermove?: EventHandlers<PointerEvent>;
+      onpointerout?: EventHandlers<PointerEvent>;
+      onpointerover?: EventHandlers<PointerEvent>;
+      onpointerup?: EventHandlers<PointerEvent>;
+      onprogress?: EventHandlers<ProgressEvent>;
+      onratechange?: EventHandlers<Event>;
+      onreset?: EventHandlers<Event>;
+      onresize?: EventHandlers<UIEvent>;
+      onscroll?: EventHandlers<Event>;
+      onscrollend?: EventHandlers<Event>;
+      onsecuritypolicyviolation?: EventHandlers<SecurityPolicyViolationEvent>;
+      onseeked?: EventHandlers<Event>;
+      onseeking?: EventHandlers<Event>;
+      onselect?: EventHandlers<Event>;
+      onselectionchange?: EventHandlers<Event>;
+      onselectstart?: EventHandlers<Event>;
+      onslotchange?: EventHandlers<Event>;
+      onstalled?: EventHandlers<Event>;
+      onsubmit?: EventHandlers<SubmitEvent>;
+      onsuspend?: EventHandlers<Event>;
+      ontimeupdate?: EventHandlers<Event>;
+      ontoggle?: EventHandlers<Event>;
+      ontouchcancel?: EventHandlers<TouchEvent>;
+      ontouchend?: EventHandlers<TouchEvent>;
+      ontouchmove?: EventHandlers<TouchEvent>;
+      ontouchstart?: EventHandlers<TouchEvent>;
+      ontransitioncancel?: EventHandlers<TransitionEvent>;
+      ontransitionend?: EventHandlers<TransitionEvent>;
+      ontransitionrun?: EventHandlers<TransitionEvent>;
+      ontransitionstart?: EventHandlers<TransitionEvent>;
+      onvolumechange?: EventHandlers<Event>;
+      onwaiting?: EventHandlers<Event>;
+      onwebkitanimationend?: EventHandlers<Event>;
+      onwebkitanimationiteration?: EventHandlers<Event>;
+      onwebkitanimationstart?: EventHandlers<Event>;
+      onwebkittransitionend?: EventHandlers<Event>;
+      onwheel?: EventHandlers<WheelEvent>;
     }
 
     // All the WAI-ARIA 1.1 attributes from https://www.w3.org/TR/wai-aria-1.1/
@@ -905,7 +907,7 @@ declare global {
       | "none presentation";
 
     // All the Digital Publishing WAI-ARIA 1.0 role attribute values from https://www.w3.org/TR/dpub-aria-1.0/#role_definitions
-    export type DPubAriaRole =
+    type DPubAriaRole =
       | "doc-abstract"
       | "doc-acknowledgments"
       | "doc-afterword"
@@ -946,9 +948,9 @@ declare global {
       | "doc-tip"
       | "doc-toc";
 
-    export type AriaRole = WAIAriaRole | DPubAriaRole;
+    type AriaRole = WAIAriaRole | DPubAriaRole;
 
-    export interface AllHTMLAttributes extends DOMAttributes, AriaAttributes {
+    interface AllHTMLAttributes extends DOMAttributes, AriaAttributes {
       // Standard HTML Attributes
       accept?: string | undefined;
       acceptCharset?: string | undefined;
@@ -1183,7 +1185,7 @@ declare global {
       itemref?: string | undefined;
     }
 
-    export interface HTMLAttributes extends DOMAttributes, AriaAttributes {
+    interface HTMLAttributes extends DOMAttributes, AriaAttributes {
       // Standard HTML Attributes
       accesskey?: string | undefined;
       accessKey?: string | undefined;

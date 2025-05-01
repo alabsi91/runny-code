@@ -13,7 +13,7 @@
     "build": "static build",
     "fix-lint": "eslint sources/** --fix",
     "generate-doc": " static wc-docs --markdown-out README.md",
-    "fix-style": "stylelint sources/**/*.css --fix"
+    "fix-style": "stylelint sources/**/*.{css,html} --fix"
   },
   "browserslist": [
     "last 2 Chrome versions",

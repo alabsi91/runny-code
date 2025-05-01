@@ -72,7 +72,7 @@
   --anim-duration-long: 500ms;
 
   @media screen and (max-width: 800px) {
-    --base-font-size: 12px;
+    --base-font-size: 14px;
   }
 
   @media (prefers-reduced-motion) {

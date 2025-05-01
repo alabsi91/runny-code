@@ -6,8 +6,6 @@ type StyleObject = Record<keyof CSSStyleDeclaration, string | number>;
 
 type Element = HTMLElement | SVGElement;
 
-type EventHandler = ((e: Event) => void) | ((e: Event) => void)[];
-
 export function createElement(tag: string, props: Record<string, any>, ...children: Element[]) {
   props ??= {};
 
@@ -75,12 +73,17 @@ function styleProp(element: Element, styles: StyleObject) {
  * - `on` prefix is removed to match event listeners on DOM element.
  * - Attach multiple event listeners if the property value is an array.
  */
-function attachEventListeners(element: Element, eventPropName: string, eventHandler: EventHandler) {
+function attachEventListeners(element: Element, eventPropName: string, eventHandler: JSX.EventHandlers<Event>) {
   if (!eventHandler) return;
   eventPropName = eventPropName.replace(/^on/, "");
 
   if (Array.isArray(eventHandler)) {
-    for (const handler of eventHandler) element.addEventListener(eventPropName, handler);
+    for (const handlerOrArray of eventHandler) {
+      const isWithOptions = Array.isArray(handlerOrArray);
+      const handler = isWithOptions ? handlerOrArray[0] : handlerOrArray;
+      const options = isWithOptions ? handlerOrArray[1] : undefined;
+      element.addEventListener(eventPropName, handler, options);
+    }
     return;
   }
 

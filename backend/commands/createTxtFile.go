@@ -63,6 +63,11 @@ ls ${Path:path=/home}
 @group Utils
 @description Echo a message
 echo ${Message=Hello World}
+
+@name Random 32 hex characters
+@group Utils
+@description Generate random 32 hex password
+openssl rand -hex 16
 `
 	_, err = file.WriteString(content)
 	if err != nil {

@@ -10,12 +10,29 @@
     <p class="editor-header-title">Code Editor</p>
   </div>
   <pre>
-# Note:
-<!-- This is a comment to prevent prettier from formatting and breaking the code -->
-- First, load a file from the menu above.  
-- Use the save button to save your changes.  
-- Execute predefined commands from the menu above.  
-- The editor won't reflect external file changes. Ensure you use the latest file version.</pre>
+# Runny Code
+<!--  -->
+## Code Editor
+
+- Load a file using the file navigator.
+- Use the save button to save your changes.
+- The editor will not reflect external file changes. Ensure you are working with the latest file version.
+
+## Execute Command
+
+- Execute predefined commands from the menu above.
+- Use the ⚙️ icon to `delete`, `edit`, or enable a `webhook` for the command.
+- For commands requiring variables, enter the values and then press `Copy Webhook URL` to copy the URL with the values included.
+
+## File Navigator
+
+- Only files matching the `included` patterns and not the `excluded` patterns defined in `docker-compose.yml` will appear, including newly created, moved, or renamed files. Files that no longer match the patterns will not be accessible.
+- To rename, use `double click`, `F2`, or `Enter`.
+- Drag and drop files and folders to organize them.
+- Drag and drop on the delete area to remove files.
+- Drag and drop on the download area to download files or zipped folders.
+- Drag and drop files (not folders) into the file navigator to upload them.
+</pre>
 </code-editor>
 
 <tooltip-component for="#code-editor-reload-btn" prefer-direction="right">Reload the current file</tooltip-component>

@@ -12,8 +12,10 @@ func CreateFileHandle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Missing 'whereToCreate' parameter", http.StatusBadRequest)
 		return
 	}
-	
-	createdPath, err := createFile(path.Join(common.FilesDir, whereToCreate))
+
+	filePath := path.Join(common.FilesDir, whereToCreate)
+
+	createdPath, err := createFile(filePath)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -28,13 +28,14 @@ A simple accordion web component.
 
 **Props**
 
+- `test` (Get/Set)
 - `group` (Get/Set) The group name. Components with the same group name will only allow one to be opened at a time.
 - `initialState` (Get/Set) The initial state of the accordion on the first load.
 - `isExpanded` (Get) Whether if the accordion component is expanded/open.
 
 **Events**
 
-- `state-change` Emitted when the accordion changes the expand state open/close.
+- `statechange` Emitted when the accordion changes the expand state open/close.
 
 **Slots**
 

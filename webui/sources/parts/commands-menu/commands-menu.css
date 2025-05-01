@@ -50,10 +50,6 @@
     transition-property: background-color;
     transition-duration: var(--anim-duration-short);
     transition-timing-function: ease-out;
-
-    &:hover {
-      background-color: var(--clr-surface-0);
-    }
   }
 
   .cmd-menu-option-action-btn {
@@ -67,6 +63,20 @@
       width: 1.2em;
       height: 1.2em;
       fill: currentcolor;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cmd-menu-option-action-btn {
+      display: none;
+    }
+
+    .cmd-menu-option-container:hover {
+      background-color: var(--clr-surface-0);
+
+      .cmd-menu-option-action-btn {
+        display: block;
+      }
     }
   }
 

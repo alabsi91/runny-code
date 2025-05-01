@@ -1,4 +1,3 @@
-
 /* Rename css variable */
 :has(.file-code-editor) {
   --color-border: var(--clr-border);

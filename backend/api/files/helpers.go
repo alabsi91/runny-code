@@ -57,14 +57,7 @@ func readFiles(dirPath string) (rootFolder Folder, err error) {
 		entryName := entry.Name()
 		entryPath := path.Join(dirPath, entryName)
 
-		isExcluded := false
-		for _, pattern := range common.Exclude_Patterns_Env {
-			isExcluded, err = doublestar.PathMatch(pattern, entryPath)
-			if err == nil && isExcluded {
-				break
-			}
-		}
-		if isExcluded {
+		if isExcluded(entryPath) {
 			continue
 		}
 
@@ -74,14 +67,7 @@ func readFiles(dirPath string) (rootFolder Folder, err error) {
 			continue
 		}
 
-		isIncluded := false
-		for _, pattern := range common.Include_Patterns_Env {
-			isIncluded, err = doublestar.PathMatch(pattern, entryPath)
-			if err == nil && isIncluded {
-				break
-			}
-		}
-		if !isIncluded {
+		if !isIncluded(entryPath) {
 			continue
 		}
 
@@ -184,4 +170,24 @@ func createFile(dirPath string) (newFilePath string, err error) {
 	}
 
 	return
+}
+
+func isExcluded(filePath string) bool {
+	for _, pattern := range common.Exclude_Patterns_Env {
+		isExcluded, err := doublestar.PathMatch(pattern, filePath)
+		if err == nil && isExcluded {
+			return true
+		}
+	}
+	return false
+}
+
+func isIncluded(filePath string) bool {
+	for _, pattern := range common.Include_Patterns_Env {
+		isIncluded, err := doublestar.PathMatch(pattern, filePath)
+		if err == nil && isIncluded {
+			return true
+		}
+	}
+	return false
 }

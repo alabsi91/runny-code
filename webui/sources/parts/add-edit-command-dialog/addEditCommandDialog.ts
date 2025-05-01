@@ -62,8 +62,10 @@ function updateCommandInputSize() {
     return;
   }
 
-  cmdInput.style.removeProperty("height");
-  cmdInput.style.height = cmdInput.scrollHeight + 2 + "px";
+  setTimeout(() => {
+    cmdInput.style.removeProperty("height");
+    cmdInput.style.height = cmdInput.scrollHeight + 2 + "px";
+  }, 0);
 }
 
 /** Prepare the groups datalist for autocomplete list */
@@ -93,6 +95,16 @@ function insertVariable() {
   // Basic validation
   if (!formData.name) {
     errorMsg("Variable name is required.");
+    return;
+  }
+
+  if (formData.type === "password" && formData.defaultValue) {
+    errorMsg("Password variables cannot have default value.");
+    return;
+  }
+
+  if (formData.type === "password" && formData.values) {
+    errorMsg("Password variables cannot have values.");
     return;
   }
 

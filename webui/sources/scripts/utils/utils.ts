@@ -14,26 +14,50 @@ export function ImportCSS(relativeCssPath: string, metaUrl: string) {
   document.head.appendChild(link);
 }
 
-export function errorMsg(msg: string) {
+export function errorMsg(msg: string, duration = 5000) {
   console.error(msg);
   const alertComponent = document.querySelector("alert-component");
   if (!alertComponent) return;
   alertComponent.alert({
     type: "error",
     message: msg,
-    duration: 5000,
+    duration,
     closeBtn: true,
   });
 }
 
-export function successMsg(msg: string) {
+export function successMsg(msg: string, duration = 5000) {
   console.log(msg);
   const alertComponent = document.querySelector("alert-component");
   if (!alertComponent) return;
   alertComponent.alert({
     type: "success",
     message: msg,
-    duration: 5000,
+    duration,
+    closeBtn: true,
+  });
+}
+
+export function warningMsg(msg: string, duration = 5000) {
+  console.warn(msg);
+  const alertComponent = document.querySelector("alert-component");
+  if (!alertComponent) return;
+  alertComponent.alert({
+    type: "warning",
+    message: msg,
+    duration,
+    closeBtn: true,
+  });
+}
+
+export function infoMsg(msg: string, duration = 5000) {
+  console.info(msg);
+  const alertComponent = document.querySelector("alert-component");
+  if (!alertComponent) return;
+  alertComponent.alert({
+    type: "info",
+    message: msg,
+    duration,
     closeBtn: true,
   });
 }

@@ -28,6 +28,8 @@ func InitServer() error {
 	mux.HandleFunc("DELETE /delete-path/", apiFiles.DeletePathHandle)
 	mux.HandleFunc("PUT /create-folder/", apiFiles.CreateFolderHandle)
 	mux.HandleFunc("PUT /create-file/", apiFiles.CreateFileHandle)
+	mux.HandleFunc("POST /upload-files/", apiFiles.UploadHandle)
+	mux.HandleFunc("GET /download-path/", apiFiles.DownloadHandle)
 
 	mux.HandleFunc("GET /command/", apiCommands.GetCommandsListHandle)
 	mux.HandleFunc("POST /command/", apiCommands.ExecuteCommandHandle)

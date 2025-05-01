@@ -1,8 +1,18 @@
 import path from "path-browserify-esm";
 
-import { createFile, createFolder, deletePath, getFilesList, moveToPath, type File, type Folder } from "@scripts/api/files";
+import {
+  createFile,
+  createFolder,
+  deletePath,
+  downloadPath,
+  getFilesList,
+  moveToPath,
+  uploadFiles,
+  type File,
+  type Folder,
+} from "@scripts/api/files";
 import { $files, $selectedFilePath } from "@scripts/stores";
-import { errorMsg, getElement } from "@scripts/utils/utils";
+import { errorMsg, getElement, infoMsg, successMsg, warningMsg } from "@scripts/utils/utils";
 import { confirmDialog } from "../confirm-dialog/confirmDialog";
 
 const elements = {
@@ -12,8 +22,10 @@ const elements = {
   layout: getElement<HTMLButtonElement>(".layout"),
   refreshBtn: getElement<HTMLButtonElement>(".file-navigator-refresh-btn"),
   collapseBtn: getElement<HTMLButtonElement>(".file-navigator-collapse-btn"),
-  trashArea: getElement<HTMLDivElement>(".file-navigator-trash-aria"),
+  deleteArea: getElement<HTMLDivElement>(".file-navigator-drop-aria-container .delete-drop-aria"),
+  downloadArea: getElement<HTMLDivElement>(".file-navigator-drop-aria-container .download-drop-aria"),
   toggleBtn: getElement<HTMLButtonElement>(".toggle-navigator-btn"),
+  searchEl: getElement<HTMLInputElement>(".file-navigator-search"),
 };
 
 class FileNavigator {
@@ -104,6 +116,10 @@ class FileNavigator {
   openedFolders = new Set<string>();
 
   constructor() {
+    // saved layout size
+    const fileNavigatorWidth = localStorage.getItem("file-navigator-width");
+    if (fileNavigatorWidth) elements.layout.style.gridTemplateColumns = `${fileNavigatorWidth} 1fr`;
+
     // on files update
     $files.subscribe(files => {
       this.render(files);
@@ -121,28 +137,52 @@ class FileNavigator {
       }
     });
 
+    // search
+    elements.searchEl.addEventListener("input", this.searchHandler);
+
+    // toggle navigator
     elements.toggleBtn.addEventListener("click", this.toggle);
 
-    elements.trashArea.addEventListener("dragover", e => {
+    // delete drop area
+    elements.deleteArea.addEventListener("dragover", e => {
       e.preventDefault();
-      elements.trashArea.classList.add("drag-over");
+      elements.deleteArea.classList.add("drag-over");
     });
-
-    elements.trashArea.addEventListener("dragleave", () => {
-      elements.trashArea.classList.remove("drag-over");
+    elements.deleteArea.addEventListener("dragleave", () => {
+      elements.deleteArea.classList.remove("drag-over");
     });
+    elements.deleteArea.addEventListener("drop", this.deleteAriaDropHandler);
 
-    elements.trashArea.addEventListener("drop", this.trashAriaDropHandler);
+    // download drop area
+    elements.downloadArea.addEventListener("dragover", e => {
+      e.preventDefault();
+      elements.downloadArea.classList.add("drag-over");
+    });
+    elements.downloadArea.addEventListener("dragleave", () => {
+      elements.downloadArea.classList.remove("drag-over");
+    });
+    elements.downloadArea.addEventListener("drop", this.downloadAriaDropHandler);
   }
 
   /** - Toggles the file navigator with animation */
   toggle = () => {
     elements.layout.style.transition = "grid-template-columns var(--anim-duration-md) ease-in-out";
+
+    const isClosing = !elements.aside.classList.contains("closed");
     elements.aside.classList.toggle("closed");
-    elements.layout.style.removeProperty("grid-template-columns");
+
+    if (isClosing) {
+      elements.layout.style.removeProperty("grid-template-columns");
+    } else {
+      const fileNavigatorWidth = localStorage.getItem("file-navigator-width");
+      if (fileNavigatorWidth) elements.layout.style.gridTemplateColumns = `${fileNavigatorWidth} 1fr`;
+    }
+
     elements.aside.addEventListener("transitionend", e => {
       if (e.target !== elements.aside) return;
       elements.layout.style.removeProperty("transition");
+
+      if (isClosing) return;
     });
   };
 
@@ -240,10 +280,14 @@ class FileNavigator {
       if (!e.dataTransfer) return;
       e.dataTransfer.clearData();
       e.dataTransfer.setData("text/plain", content.path);
-      elements.trashArea.classList.add("show");
+      elements.deleteArea.classList.add("show");
+      elements.downloadArea.classList.add("show");
     };
 
-    const ondragend = () => elements.trashArea.classList.remove("show");
+    const ondragend = () => {
+      elements.deleteArea.classList.remove("show");
+      elements.downloadArea.classList.remove("show");
+    };
 
     const accordionEl = (
       <accordion-component
@@ -298,9 +342,13 @@ class FileNavigator {
       if (!e.dataTransfer) return;
       e.dataTransfer.clearData();
       e.dataTransfer.setData("text/plain", file.path);
-      elements.trashArea.classList.add("show");
+      elements.deleteArea.classList.add("show");
+      elements.downloadArea.classList.add("show");
     };
-    const dragend = () => elements.trashArea.classList.remove("show");
+    const dragend = () => {
+      elements.deleteArea.classList.remove("show");
+      elements.downloadArea.classList.remove("show");
+    };
 
     // file icon
     const ext = file.name.split(".").pop() ?? "";
@@ -373,20 +421,39 @@ class FileNavigator {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!e.dataTransfer) return;
+
     const accordionEl = e.currentTarget as AccordionComponent | null;
     if (!accordionEl) return;
 
-    if (!e.dataTransfer) return;
-    const fromPath = e.dataTransfer.getData("text");
-    const toPath = accordionEl.dataset.path;
-
     accordionEl.classList.remove("drag-over");
+
+    const toPath = accordionEl.dataset.path;
+    const fromPath = e.dataTransfer.getData("text");
+    const files = e.dataTransfer?.files;
+
+    // upload files
+    if (files && files.length && toPath) {
+      infoMsg(`Dropped ${files.length} file${files.length > 1 ? "s" : ""}, uploading...`);
+
+      const [res, error] = await uploadFiles(files, toPath);
+      if (error !== null) return errorMsg(error.message);
+      if (res.warnings.length) {
+        warningMsg(res.warnings.join("\n"), -1);
+      } else {
+        successMsg(`Uploaded ${files.length} file${files.length > 1 ? "s" : ""}`);
+      }
+
+      this.refreshFiles();
+      return;
+    }
 
     if (!fromPath || !toPath) return errorMsg("No path provided.");
 
     const withName = path.join(toPath, path.basename(fromPath));
-    const [, error] = await moveToPath(fromPath, withName);
+    const [res, error] = await moveToPath(fromPath, withName);
     if (error !== null) return errorMsg(error.message);
+    if (res.warning) warningMsg(res.warning, -1);
 
     this.refreshFiles();
 
@@ -405,7 +472,7 @@ class FileNavigator {
    * - Refetch and re-renders the file navigator
    * - Updates the selected file path if effected
    */
-  trashAriaDropHandler = async (e: DragEvent) => {
+  deleteAriaDropHandler = async (e: DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -431,6 +498,65 @@ class FileNavigator {
     if (!selectedFilePath.startsWith(pathToDelete)) return;
 
     $selectedFilePath.set("");
+  };
+
+  /** - Download the dropped file/folder */
+  downloadAriaDropHandler = async (e: DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!e.dataTransfer) return;
+    const pathToDownload = e.dataTransfer.getData("text");
+
+    const [response, error] = await downloadPath(pathToDownload);
+    if (error !== null) return errorMsg(error.message);
+
+    // Extract the file name from the Content-Disposition header
+    const contentDisposition = response.headers.get("Content-Disposition");
+    let fileName = path.basename(pathToDownload); // Default
+
+    if (contentDisposition) {
+      const matches = contentDisposition.match(/filename=['"]?(.+)['"]?/);
+      if (matches && matches[1]) fileName = matches[1];
+    }
+
+    const blob = await response.blob();
+
+    // Create a link element to trigger the download
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = fileName; // You can specify a different filename if needed
+    link.click();
+
+    // Cleanup the URL object
+    URL.revokeObjectURL(url);
+  };
+
+  searchHandler = async (e: Event) => {
+    const rootFolder = $files.get();
+
+    const searchStr = (e.currentTarget as HTMLInputElement)?.value?.trim();
+    if (!searchStr) {
+      this.render(rootFolder);
+      return;
+    }
+
+    let filteredRootFolder = structuredClone(rootFolder);
+
+    const filterFolders = (folder: Folder, isRoot = false) => {
+      folder.files = folder.files.filter(file => file.name.toLowerCase().includes(searchStr.toLowerCase()));
+      folder.folders = folder.folders.filter(f => filterFolders(f));
+      if (!folder.files.length && !folder.folders.length && !isRoot) return null;
+      return folder;
+    };
+
+    filteredRootFolder = filterFolders(filteredRootFolder, true)!;
+    this.render(filteredRootFolder);
+
+    // open expand all folders
+    const expandAll = document.querySelectorAll<AccordionComponent>(".file-navigator .folder");
+    expandAll.forEach(el => el.open());
   };
 
   /** Starts the file renaming process on key press (Enter/F2) */
@@ -486,12 +612,13 @@ class FileNavigator {
       const fromPath = target.dataset.path!;
       const toPath = path.join(path.dirname(fromPath), newName);
 
-      const [, error] = await moveToPath(fromPath, toPath);
+      const [res, error] = await moveToPath(fromPath, toPath);
       if (error !== null) {
         this.cancelEditing(target, editable);
         errorMsg(error.message);
         return;
       }
+      if (res.warning) warningMsg(res.warning, -1);
 
       this.refreshFiles();
 
@@ -506,15 +633,15 @@ class FileNavigator {
     // start editing
     editable.contentEditable = "true";
     editable.focus();
+
     const selection = window.getSelection();
     if (!selection) return;
-    const range = document.createRange();
-    // range.selectNodeContents(editable);
 
     const fileName = target.dataset.name;
     if (!fileName) return;
-
     const ext = path.extname(fileName);
+
+    const range = document.createRange();
     range.setStart(editable.firstChild!, 0);
     range.setEnd(editable.firstChild!, fileName.length - ext.length);
     selection.removeAllRanges();
@@ -636,12 +763,23 @@ export function initFileNavigator() {
   elements.collapseBtn.addEventListener("click", fileNavigator.collapseFolders);
 }
 
+let isResizing = false;
 function resizePointerDownHandler() {
+  isResizing = true;
   document.addEventListener("pointermove", resizeHandler);
 }
 
 function resizePointerUpHandler() {
   document.removeEventListener("pointermove", resizeHandler);
+
+  // save width
+  if (!isResizing) return;
+  isResizing = false;
+  const fileNavigatorWidth = getComputedStyle(elements.aside).width;
+  const widthFloat = parseFloat(fileNavigatorWidth);
+  if (!widthFloat || isNaN(widthFloat) || !isFinite(widthFloat)) return;
+  if (widthFloat < 150 || widthFloat > window.innerWidth * 0.9) return;
+  localStorage.setItem("file-navigator-width", fileNavigatorWidth);
 }
 
 function resizeHandler(e: PointerEvent) {
