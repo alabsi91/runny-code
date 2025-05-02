@@ -39,14 +39,19 @@ export function getCommandsList(): Promise<[null, Error] | [Command[], null]> {
   );
 }
 
-export function executeCommand(
-  command: string,
-  name: string,
-  args: { [key: string]: string }
-): Promise<[string, null] | [null, Error]> {
+export function executeCommand(command: string, name: string, args: { [key: string]: string }) {
   return safeFetch(
     "text",
-    `${baseUrl}/command/?command=${encodeURIComponent(command)}&name=${encodeURIComponent(name)}`,
+    `${baseUrl}/command/?command=${encodeURIComponent(command)}&name=${encodeURIComponent(name)}&streamOutput=false`,
+    { method: "POST", body: JSON.stringify(args), credentials: "include" },
+    `Failed to execute command "${command}"`
+  );
+}
+
+export function executeCommandStream(command: string, name: string, args: { [key: string]: string }) {
+  return safeFetch(
+    "response",
+    `${baseUrl}/command/?command=${encodeURIComponent(command)}&name=${encodeURIComponent(name)}&streamOutput=true`,
     { method: "POST", body: JSON.stringify(args), credentials: "include" },
     `Failed to execute command "${command}"`
   );

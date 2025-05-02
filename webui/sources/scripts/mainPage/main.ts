@@ -44,7 +44,7 @@ await initCommandsMenu();
 initSaveFileBtn();
 initCommandActionsDialog();
 initAddEditCommandDialog();
-initConfirmDialog(); 
+initConfirmDialog();
 
 // ----
 

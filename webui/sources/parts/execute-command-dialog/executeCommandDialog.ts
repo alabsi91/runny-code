@@ -1,9 +1,10 @@
 import hljs from "highlight.js/lib/core";
 
-import { executeCommand, type Command } from "@scripts/api/commands";
+import { executeCommand, executeCommandStream, type Command } from "@scripts/api/commands";
 import { getWebhook } from "@scripts/api/webhooks";
 import { errorMsg, getElement, successMsg, wrapInQuotes } from "@scripts/utils/utils";
 import { createArgInput } from "./createArgInput";
+import { $performingActionsOnCommand } from "~/sources/scripts/stores";
 
 export async function openExecuteCommandDialog(cmd: Command) {
   const cmdDialog = getElement<DialogComponent>("#exec-cmd-dialog");
@@ -12,6 +13,8 @@ export async function openExecuteCommandDialog(cmd: Command) {
   const cmdDisplay = getElement(cmdDialog, "#cmd-display");
   const cmdDesc = getElement<HTMLParagraphElement>(cmdDialog, ".cmd-desc");
   const inputsContainer = getElement<HTMLFormElement>(cmdDialog, ".cmd-dialog-inputs-container");
+  const openActionBtn = getElement<HTMLButtonElement>(cmdDialog, ".cmd-dialog-open-action-btn");
+  const streamOutputToggle = getElement<ToggleCheckbox>(cmdDialog, "#cmd-stream-output-toggle");
 
   const abortController = new AbortController();
   const signal = abortController.signal;
@@ -58,21 +61,54 @@ export async function openExecuteCommandDialog(cmd: Command) {
   outputEl.innerHTML = "Execute the command to see its output";
   outputEl.classList.remove("error", "success");
 
+  // execute the command button handler
   const executeCmdButtonHandler = async () => {
     inputsContainer.reportValidity();
     execCmdBtn.disabled = true;
 
-    const [output, error] = await executeCommand(cmd.command, cmd.name, args);
-    const isSuccess = output !== null;
+    const onDone = (msg: string, success: boolean) => {
+      if (!success) errorMsg(msg);
+      if (success) successMsg(msg);
+      execCmdBtn.disabled = false;
+      outputEl!.classList.toggle("error", !success);
+      outputEl!.classList.toggle("success", success);
+      outputEl!.innerHTML = msg;
+    };
 
-    if (isSuccess) successMsg("Command executed");
-    else errorMsg("Command execution failed");
+    const useStreamOutput = streamOutputToggle.checked;
+
+    if (!useStreamOutput) {
+      const [output, error] = await executeCommand(cmd.command, cmd.name, args);
+      if (error !== null) return onDone(error.message, false);
+      if (output === "") return onDone("Command execution failed", false);
+
+      outputEl!.innerHTML = output;
+      execCmdBtn.disabled = false;
+      successMsg("Command executed successfully");
+      return;
+    }
+
+    const [response, error] = await executeCommandStream(cmd.command, cmd.name, args);
+    if (error !== null) return onDone(error.message, false);
+
+    const reader = response.body?.getReader();
+    if (!reader) return onDone("Stream not supported in this environment", false);
+
+    const decoder = new TextDecoder();
+    let output = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      output = decoder.decode(value, { stream: true });
+      outputEl!.innerHTML = output;
+    }
+
+    if (output === "") return onDone("Command execution failed", false);
 
     execCmdBtn.disabled = false;
-
-    outputEl!.classList.toggle("error", !isSuccess);
-    outputEl!.classList.toggle("success", isSuccess);
-    outputEl!.innerHTML = output ?? error.message;
+    successMsg("Command executed successfully");
   };
 
   // copy the webhook URL
@@ -91,8 +127,14 @@ export async function openExecuteCommandDialog(cmd: Command) {
     copyWebhookUrlBtn.addEventListener("click", () => copyWebhookUrlHandler(webhookUrl, args), { signal });
   });
 
+  const openActionBtnHandler = () => {
+    $performingActionsOnCommand.set(cmd);
+    cmdDialog.close();
+  };
+
   execCmdBtn.addEventListener("click", executeCmdButtonHandler, { signal });
   cmdDialog.addEventListener("close", () => abortController.abort(), { signal });
+  openActionBtn.addEventListener("click", openActionBtnHandler, { signal });
   cmdDialog.open();
 }
 

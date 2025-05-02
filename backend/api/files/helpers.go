@@ -1,12 +1,14 @@
 package apiFiles
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"os"
 	"path"
 	"runny-code/common"
 	"strings"
+	"unicode"
 
 	"github.com/bmatcuk/doublestar"
 )
@@ -39,6 +41,7 @@ func (f *Folder) RemoveLeading(leadingPath string) {
 	}
 }
 
+// readFiles reads the files and folders in the given directory
 func readFiles(dirPath string) (rootFolder Folder, err error) {
 	rootFolder = Folder{
 		Name:    path.Base(dirPath),
@@ -80,6 +83,7 @@ func readFiles(dirPath string) (rootFolder Folder, err error) {
 	return
 }
 
+// moveToPath moves/renames the file or folder at the given fromPath to the given toPath
 func moveToPath(fromPath string, toPath string) (err error) {
 	// Check if the destination file or folder already exists
 	if _, err := os.Stat(toPath); !errors.Is(err, os.ErrNotExist) {
@@ -94,6 +98,7 @@ func moveToPath(fromPath string, toPath string) (err error) {
 	return nil
 }
 
+// deletePath deletes the file or folder at the given path
 func deletePath(path string) (err error) {
 	// Check if the file or folder exists
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
@@ -108,6 +113,7 @@ func deletePath(path string) (err error) {
 	return nil
 }
 
+// createFolder creates a new folder (New Folder) in the given directory and returns its path
 func createFolder(dirPath string) (newDirPath string, err error) {
 	dirName := "New Folder"
 	dirNum := 0
@@ -140,8 +146,9 @@ func createFolder(dirPath string) (newDirPath string, err error) {
 	return newDirPath, nil
 }
 
+// createFile creates a new file (New File.txt) in the given directory and returns its path
 func createFile(dirPath string) (newFilePath string, err error) {
-	fileName := "New Folder"
+	fileName := "New File"
 	ext := ".txt"
 	fileNum := 0
 
@@ -172,6 +179,7 @@ func createFile(dirPath string) (newFilePath string, err error) {
 	return
 }
 
+// isExcluded returns true if the file path matches any of the exclude patterns
 func isExcluded(filePath string) bool {
 	for _, pattern := range common.Exclude_Patterns_Env {
 		isExcluded, err := doublestar.PathMatch(pattern, filePath)
@@ -182,6 +190,7 @@ func isExcluded(filePath string) bool {
 	return false
 }
 
+// isIncluded returns true if the file path matches any of the include patterns
 func isIncluded(filePath string) bool {
 	for _, pattern := range common.Include_Patterns_Env {
 		isIncluded, err := doublestar.PathMatch(pattern, filePath)
@@ -190,4 +199,37 @@ func isIncluded(filePath string) bool {
 		}
 	}
 	return false
+}
+
+// readTextFile reads the content of a file if it is a text file, returning an error otherwise.
+func readTextFile(filePath string) ([]byte, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read a small chunk to check if it's a text file
+	reader := bufio.NewReader(file)
+	buffer := make([]byte, 1024)
+	n, err := reader.Read(buffer)
+	if err != nil && err.Error() != "EOF" {
+		return nil, err
+	}
+
+	// Check if the bytes are mostly printable characters
+	for _, b := range buffer[:n] {
+		if b == 0 || (!unicode.IsPrint(rune(b)) && !unicode.IsSpace(rune(b))) {
+			return nil, errors.New("file is not a text file")
+		}
+	}
+
+	// If the check passes, read the full file
+	file.Seek(0, 0) // Reset file pointer to the beginning
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	return content, nil
 }

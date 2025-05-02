@@ -20,6 +20,8 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	streamOutput := r.URL.Query().Get("streamOutput") == "true"
+
 	// Find the command
 	var parsedCommand *commands.ParsedCommand
 	for _, cmd := range commands.ParsedCommandsList {
@@ -29,13 +31,13 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// not found
+	// Not found
 	if parsedCommand == nil {
 		http.Error(w, fmt.Sprintf("Command '%s' not found", commandName), http.StatusNotFound)
 		return
 	}
 
-	// get command arguments (input)
+	// Get command arguments (input)
 	var data map[string]string
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
@@ -43,16 +45,44 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Prepare the command to execute
 	commandToExecute, err := commands.FillCommand(parsedCommand.Command, parsedCommand.Variables, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	output, err := commands.SShExecute(commandToExecute)
+	if !streamOutput {
+		output, err := commands.SShExecute(commandToExecute)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to execute command '%s': %s", commandToExecute, err.Error()), http.StatusInternalServerError)
+		}
+		w.Write(output)
+		return
+	}
+
+	// Set response headers for streaming
+	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Transfer-Encoding", "chunked")
+
+	// Use http.Flusher to stream output
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		http.Error(w, "Streaming not supported", http.StatusInternalServerError)
+		return
+	}
+
+	// Execute the command and stream output
+	err = commands.SShExecuteStream(commandToExecute, func(line string, isError bool) {
+		if isError {
+			fmt.Fprintf(w, "ERROR: %s\n", line)
+		} else {
+			fmt.Fprintln(w, line)
+		}
+		flusher.Flush() // Send data immediately to the client
+	})
+
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to execute command '%s': %s", commandToExecute, err.Error()), http.StatusInternalServerError)
 	}
-
-	w.Write(output)
 }

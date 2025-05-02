@@ -1,10 +1,32 @@
 .execute-command-dialog {
+  .primary-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+  }
+
   .cmd-dialog-container {
     color: var(--clr-text);
     display: flex;
     flex-direction: column;
     gap: 1em;
     max-height: 70svh;
+  }
+
+  .cmd-dialog-open-action-btn {
+    float: inline-start;
+    flex: unset;
+    width: unset;
+    margin: 0;
+    padding: 0.2em;
+
+    svg {
+      display: block;
+      margin: auto;
+      width: 1.2em;
+      height: 1.2em;
+      fill: currentcolor;
+    }
   }
 
   .cmd-dialog-title {
@@ -64,6 +86,13 @@
     }
   }
 
+  .cmd-stream-output-container {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-block-start: 1em;
+  }
+
   .cmd-output,
   .cmd-display {
     color: var(--clr-text-dim);
@@ -89,12 +118,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-  }
-
-  .primary-btn {
-    display: block;
-    width: 100%;
-    margin-top: 1em;
   }
 
   .cmd-input-menu {

@@ -71,6 +71,9 @@ async function updateCodeEditor() {
   const [fileContent, error] = await readFile(filePath);
   if (error !== null) {
     errorMsg(error.message);
+    $selectedFilePath.set("");
+    codeEditorEls.editorTitle.textContent = "Code Editor";
+    codeEditorEls.codeEditor.value = "";
     return;
   }
 

@@ -2,7 +2,6 @@ package apiFiles
 
 import (
 	"net/http"
-	"os"
 	"path"
 	"runny-code/common"
 )
@@ -12,9 +11,9 @@ func ReadFileHandle(w http.ResponseWriter, r *http.Request) {
 	requestedFilePath = path.Join(common.FilesDir, requestedFilePath)
 
 	// read the file
-	content, err := os.ReadFile(requestedFilePath)
+	content, err := readTextFile(requestedFilePath)
 	if err != nil {
-		http.Error(w, "Error reading file", http.StatusInternalServerError)
+		http.Error(w, "Error reading file: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
