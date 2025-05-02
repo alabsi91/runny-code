@@ -48,7 +48,7 @@ func SShExecute(command string) (outputByte []byte, err error) {
 	return
 }
 
-func SShExecuteStream(command string, outputHandler func(output string, isError bool)) error {
+func SShExecuteStream(command string, outputHandler func(output string)) error {
 	client, session, err := createSession()
 	if err != nil {
 		return err
@@ -73,8 +73,8 @@ func SShExecuteStream(command string, outputHandler func(output string, isError 
 
 	// Stream stdout and stderr concurrently
 	errChan := make(chan error, 2)
-	go streamOutput(stdout, outputHandler, false, errChan)
-	go streamOutput(stderr, outputHandler, true, errChan)
+	go streamOutput(stdout, outputHandler, errChan)
+	go streamOutput(stderr, outputHandler, errChan)
 
 	// Wait for both streams to finish
 	for range 2 {
@@ -88,7 +88,7 @@ func SShExecuteStream(command string, outputHandler func(output string, isError 
 }
 
 // Stream output by sending the entire accumulated output on each update
-func streamOutput(reader io.Reader, outputHandler func(output string, isError bool), isError bool, errChan chan error) {
+func streamOutput(reader io.Reader, outputHandler func(output string), errChan chan error) {
 	var currentOutput string
 	buffer := make([]byte, 1024)
 
@@ -105,7 +105,7 @@ func streamOutput(reader io.Reader, outputHandler func(output string, isError bo
 				currentOutput += chunk
 			}
 
-			outputHandler(currentOutput, isError)
+			outputHandler(currentOutput)
 		}
 
 		if err != nil {

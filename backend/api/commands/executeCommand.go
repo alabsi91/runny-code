@@ -73,12 +73,8 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Execute the command and stream output
-	err = commands.SShExecuteStream(commandToExecute, func(line string, isError bool) {
-		if isError {
-			fmt.Fprintf(w, "ERROR: %s\n", line)
-		} else {
-			fmt.Fprintln(w, line)
-		}
+	err = commands.SShExecuteStream(commandToExecute, func(line string) {
+		fmt.Fprintln(w, line)
 		flusher.Flush() // Send data immediately to the client
 	})
 
