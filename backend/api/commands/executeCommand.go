@@ -69,6 +69,9 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 	// Set response headers for streaming
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Connection", "keep-alive")
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("X-Accel-Buffering", "no")
 	w.Header().Set("Transfer-Encoding", "chunked")
 
 	// Use http.Flusher to stream output
@@ -80,14 +83,17 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 
 	// Execute the command and stream output
 	err = commands.SShExecuteStream(commandToExecute, func(stdout string, stderr string) {
-		toJson, _ := json.Marshal(ExecuteCommandResponse{Stdout: stdout, Stderr: stderr})
-		fmt.Fprint(w, string(toJson))
-		flusher.Flush() // Send data immediately to the client
+		response := ExecuteCommandResponse{Stdout: stdout, Stderr: stderr}
+		toJson, _ := json.Marshal(response)
+
+		// Explicitly write the JSON object followed by a newline
+		w.Write(toJson)
+		flusher.Flush()
 	})
 
 	if err != nil {
 		// do nothing just respond with empty string
-		fmt.Fprint(w, "")
+		fmt.Fprint(w, "{}")
 		flusher.Flush()
 	}
 }
