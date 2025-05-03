@@ -67,7 +67,8 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Set response headers for streaming
-	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Connection", "keep-alive")
 	w.Header().Set("Transfer-Encoding", "chunked")
 
 	// Use http.Flusher to stream output

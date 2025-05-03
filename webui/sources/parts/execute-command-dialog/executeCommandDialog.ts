@@ -102,11 +102,17 @@ export async function openExecuteCommandDialog(cmd: Command) {
       if (done) break;
 
       const jsonOutput = decoder.decode(value, { stream: true });
-      const { stdout, stderr } = JSON.parse(jsonOutput) as { stdout: string; stderr: string };
 
-      output = stdout || stderr;
-      errored = Boolean(stderr);
-      outputEl!.innerHTML = output;
+      try {
+        const { stdout, stderr } = JSON.parse(jsonOutput) as { stdout: string; stderr: string };
+        output = stdout || stderr;
+        errored = Boolean(stderr);
+        outputEl!.innerHTML = output;
+      } catch (error) {
+        console.error(error);
+        onDone("Failed to parse the command output", false);
+        return;
+      }
     }
 
     if (errored) return onDone("Command execution failed", false);
