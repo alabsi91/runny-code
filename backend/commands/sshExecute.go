@@ -2,8 +2,8 @@ package commands
 
 import (
 	"io"
+	"regexp"
 	"runny-code/common"
-	"strings"
 
 	"golang.org/x/crypto/ssh"
 )
@@ -48,7 +48,7 @@ func SShExecute(command string) (outputByte []byte, err error) {
 	return
 }
 
-func SShExecuteStream(command string, outputHandler func(output string)) error {
+func SShExecuteStream(command string, outputHandler func(stdout string, stderr string)) error {
 	client, session, err := createSession()
 	if err != nil {
 		return err
@@ -72,48 +72,42 @@ func SShExecuteStream(command string, outputHandler func(output string)) error {
 	}
 
 	// Stream stdout and stderr concurrently
-	errChan := make(chan error, 2)
-	go streamOutput(stdout, outputHandler, errChan)
-	go streamOutput(stderr, outputHandler, errChan)
+	doneChan := make(chan error, 2)
+	go streamOutput(stdout, outputHandler, doneChan, false)
+	go streamOutput(stderr, outputHandler, doneChan, true)
 
 	// Wait for both streams to finish
 	for range 2 {
-		if streamErr := <-errChan; streamErr != nil {
-			return streamErr
-		}
+		<-doneChan
 	}
 
 	// Wait for the command to finish
 	return session.Wait()
 }
 
+var rmLnRe = regexp.MustCompile(`.*?\r`)
+
 // Stream output by sending the entire accumulated output on each update
-func streamOutput(reader io.Reader, outputHandler func(output string), errChan chan error) {
-	var currentOutput string
+func streamOutput(reader io.Reader, outputHandler func(stdout string, stderr string), doneChan chan error, isError bool) {
+	currentOutput := ""
 	buffer := make([]byte, 1024)
 
 	for {
 		n, err := reader.Read(buffer)
+
 		if n > 0 {
-			chunk := string(buffer[:n])
+			currentOutput += string(buffer[:n])
+			currentOutput = rmLnRe.ReplaceAllString(currentOutput, "")
 
-			// Handle carriage return and newline logic
-			if strings.Contains(chunk, "\r") {
-				parts := strings.Split(chunk, "\r")
-				currentOutput = parts[len(parts)-1] // Keep only the last line after `\r`
+			if isError {
+				outputHandler("", currentOutput)
 			} else {
-				currentOutput += chunk
+				outputHandler(currentOutput, "")
 			}
-
-			outputHandler(currentOutput)
 		}
 
 		if err != nil {
-			if err == io.EOF {
-				errChan <- nil // Signal normal completion for EOF
-			} else {
-				errChan <- err // Signal an actual error
-			}
+			doneChan <- nil
 			return
 		}
 	}

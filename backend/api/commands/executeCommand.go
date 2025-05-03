@@ -7,6 +7,11 @@ import (
 	"runny-code/commands"
 )
 
+type ExecuteCommandResponse struct {
+	Stdout string `json:"stdout"`
+	Stderr string `json:"stderr"`
+}
+
 func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 	commandName := r.URL.Query().Get("name")
 	if commandName == "" {
@@ -73,12 +78,15 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Execute the command and stream output
-	err = commands.SShExecuteStream(commandToExecute, func(line string) {
-		fmt.Fprintln(w, line)
+	err = commands.SShExecuteStream(commandToExecute, func(stdout string, stderr string) {
+		toJson, _ := json.Marshal(ExecuteCommandResponse{Stdout: stdout, Stderr: stderr})
+		fmt.Fprint(w, string(toJson))
 		flusher.Flush() // Send data immediately to the client
 	})
 
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to execute command '%s': %s", commandToExecute, err.Error()), http.StatusInternalServerError)
+		// do nothing just respond with empty string
+		fmt.Fprint(w, "")
+		flusher.Flush()
 	}
 }

@@ -72,7 +72,6 @@ export async function openExecuteCommandDialog(cmd: Command) {
       execCmdBtn.disabled = false;
       outputEl!.classList.toggle("error", !success);
       outputEl!.classList.toggle("success", success);
-      outputEl!.innerHTML = msg;
     };
 
     const useStreamOutput = streamOutputToggle.checked;
@@ -96,19 +95,23 @@ export async function openExecuteCommandDialog(cmd: Command) {
 
     const decoder = new TextDecoder();
     let output = "";
+    let errored = false;
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
-      output = decoder.decode(value, { stream: true });
+      const jsonOutput = decoder.decode(value, { stream: true });
+      const { stdout, stderr } = JSON.parse(jsonOutput) as { stdout: string; stderr: string };
+
+      output = stdout || stderr;
+      errored = Boolean(stderr);
       outputEl!.innerHTML = output;
     }
 
-    if (output === "") return onDone("Command execution failed", false);
+    if (errored) return onDone("Command execution failed", false);
 
-    execCmdBtn.disabled = false;
-    successMsg("Command executed successfully");
+    onDone("Command executed successfully", true);
   };
 
   // copy the webhook URL
