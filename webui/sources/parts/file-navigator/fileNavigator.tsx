@@ -356,7 +356,7 @@ class FileNavigator {
 
     const fileEl = (
       <button
-        className={"file" + (file.path === $selectedFilePath.get() ? " selected" : "")}
+        className={["file", file.path === $selectedFilePath.get() ? "selected" : ""]}
         data-path={file.path}
         data-name={file.name}
         tabIndex={0}

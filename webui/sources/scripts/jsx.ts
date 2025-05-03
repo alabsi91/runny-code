@@ -23,9 +23,12 @@ export function createElement(tag: string, props: Record<string, any>, ...childr
     }
 
     if (propKey === "className" || propKey === "class") {
-      const classList = propValue.split(" ").filter(Boolean);
-      if (classList.length === 0) continue;
-      element.classList.add(...classList);
+      if (Array.isArray(propValue)) {
+        element.classList.add(...propValue.filter(Boolean));
+        continue;
+      }
+
+      element.setAttribute("class", propValue);
       continue;
     }
 

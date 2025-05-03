@@ -2,21 +2,11 @@
 
 type Booleanish = boolean | "true" | "false";
 
-type DomElement = Element;
+type DomElement = Element | DocumentFragment;
 
 declare global {
   namespace JSX {
-    interface IntrinsicAttributes {
-      key?: any;
-    }
-
-    interface ElementAttributesProperty {
-      props: any;
-    }
-
-    interface ElementChildrenAttribute {
-      children: any;
-    }
+    type Element = DomElement;
 
     type DOMCSSProperties = {
       [key in keyof Omit<
@@ -24,9 +14,11 @@ declare global {
         "item" | "setProperty" | "removeProperty" | "getPropertyValue" | "getPropertyPriority"
       >]?: string | number | null | undefined;
     };
+
     type AllCSSProperties = {
       [key: string]: string | number | null | undefined;
     };
+
     interface CSSProperties extends AllCSSProperties, DOMCSSProperties {
       cssText?: string | null;
     }
@@ -413,8 +405,6 @@ declare global {
     interface VNode<P = object> {
       props: P & { children: ComponentChildren };
     }
-
-    type Element = DomElement | DocumentFragment;
 
     type ComponentChild = VNode<any> | object | string | number | bigint | boolean | null | undefined;
     type ComponentChildren = ComponentChild[] | ComponentChild;
@@ -980,8 +970,8 @@ declare global {
       challenge?: string | undefined;
       checked?: boolean | undefined;
       cite?: string | undefined;
-      class?: string | undefined;
-      className?: string | undefined;
+      class?: string | (string | boolean | null | undefined)[] | undefined;
+      className?: string | (string | boolean | null | undefined)[] | undefined;
       cols?: number | undefined;
       colSpan?: number | undefined;
       colspan?: number | undefined;
@@ -1195,8 +1185,8 @@ declare global {
       autoCorrect?: string | undefined;
       autofocus?: boolean | undefined;
       autoFocus?: boolean | undefined;
-      class?: string | undefined;
-      className?: string | undefined;
+      class?: string | (string | boolean | null | undefined)[] | undefined;
+      className?: string | (string | boolean | null | undefined)[] | undefined;
       contenteditable?: Booleanish | "" | "plaintext-only" | "inherit" | undefined;
       contentEditable?: Booleanish | "" | "plaintext-only" | "inherit" | undefined;
       dir?: "auto" | "rtl" | "ltr" | undefined;
