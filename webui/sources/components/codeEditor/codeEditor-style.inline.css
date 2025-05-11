@@ -54,15 +54,15 @@
 }
 
 .wrapper {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border-radius: var(--sz-border-radius);
+  block-size: 100%;
+  overflow: clip;
   background-color: var(--clr-background);
   border: 1px solid var(--clr-border);
+  border-radius: var(--sz-border-radius);
   box-shadow: 0 0.1rem 1rem -0.5rem #0006;
-  box-sizing: border-box;
-  overflow: clip;
 
   /* transition: background-color 100ms linear; */
 
@@ -73,27 +73,27 @@
 
 .container {
   position: relative;
-  flex: 1;
   display: flex;
+  flex: 1;
   padding: var(--sz-padding);
 }
 
 .floating-container {
+  position: absolute;
+  inset-block-start: 0.4rem;
+  inset-inline-end: 1rem;
   display: flex;
   flex-direction: row;
   gap: 0.5em;
-  position: absolute;
-  inset-inline-end: 1rem;
-  inset-block-start: 0.4rem;
 }
 
 .floating-btn {
   place-items: center;
-  border: solid 1px var(--clr-border);
   padding: 0.4rem;
-  border-radius: 8px;
-  background-color: hsl(from var(--clr-background) h s calc(l * 0.9));
   cursor: pointer;
+  background-color: hsl(from var(--clr-background) h s calc(l * 0.9));
+  border: solid 1px var(--clr-border);
+  border-radius: 8px;
   opacity: 0.5;
   transition: opacity 200ms linear;
 
@@ -102,8 +102,8 @@
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    inline-size: 20px;
+    block-size: 20px;
     fill: currentcolor;
   }
 }
@@ -120,11 +120,11 @@
   flex: 1;
   padding: 0;
   margin: 0;
-  background-color: transparent;
+  overscroll-behavior: none;
   color: transparent;
   caret-color: #cacaca;
   resize: none;
-  overscroll-behavior: none;
+  background-color: transparent;
 
   &:focus {
     outline: none;
@@ -144,22 +144,22 @@
 
 .highlight {
   position: absolute;
-  top: 0;
+  inset-block-start: 0;
   overflow: hidden;
   pointer-events: none;
 }
 
 .box {
-  border: none;
-  text-align: left;
+  font-family: var(--font-family);
+  font-size: var(--sz-font);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
   vertical-align: middle;
-  white-space: pre;
+  text-align: start;
   word-break: break-all;
   overflow-wrap: break-word;
-  font-family: var(--font-family);
-  font-weight: var(--font-weight);
-  font-size: var(--sz-font);
-  line-height: var(--line-height);
+  white-space: pre;
+  border: none;
 }
 
 .wrap {
@@ -167,17 +167,17 @@
 }
 
 .line-numbers-placeholder {
-  display: none;
   position: relative;
-  width: var(--sz-line-numbers-width);
+  display: none;
+  inline-size: var(--sz-line-numbers-width);
   background-color: var(--clr-line-numbers-background);
 }
 
 .lines {
   .line {
     display: inline-block;
+    inline-size: 100%;
     padding-inline-end: var(--sz-padding);
-    width: 100%;
   }
 
   .line.active {
@@ -203,14 +203,14 @@
   }
 
   .box {
-    padding-left: var(--sz-padding);
     padding-block: var(--sz-padding);
+    padding-inline-start: var(--sz-padding);
   }
 
   .lines {
-    margin: 0;
     padding: 0;
-    padding-left: var(--sz-line-numbers-width);
+    padding-inline-start: var(--sz-line-numbers-width);
+    margin: 0;
     counter-reset: list-item;
 
     .line {
@@ -219,35 +219,34 @@
     }
 
     .line::before {
-      content: counter(list-item) " ";
       position: sticky;
-      left: calc(var(--sz-padding) * -1);
+      inset-inline-start: calc(var(--sz-padding) * -1);
       display: inline-block;
-      height: 100%;
-      text-align: right;
-      width: calc(var(--sz-line-numbers-width) - var(--sz-padding));
-      margin-right: var(--sz-padding);
-      margin-left: calc((var(--sz-line-numbers-width) + var(--sz-padding)) * -1);
-      padding-left: var(--sz-padding);
+      inline-size: calc(var(--sz-line-numbers-width) - var(--sz-padding));
+      block-size: 100%;
+      padding-inline-start: var(--sz-padding);
+      margin-inline: calc((var(--sz-line-numbers-width) + var(--sz-padding)) * -1) var(--sz-padding);
       font-family: var(--font-family);
-      font-weight: var(--font-weight);
       font-size: var(--sz-font);
+      font-weight: var(--font-weight);
       line-height: var(--line-height);
       color: var(--clr-line-numbers-txt);
+      text-align: end;
+      content: counter(list-item) " ";
       background-color: var(--clr-line-numbers-background);
-      transition-property: color;
-      transition-duration: 100ms;
       transition-timing-function: linear;
+      transition-duration: 100ms;
+      transition-property: color;
     }
 
     .line:first-child::before {
-      margin-top: calc(var(--sz-padding) * -1);
-      padding-top: var(--sz-padding);
+      padding-block-start: var(--sz-padding);
+      margin-block-start: calc(var(--sz-padding) * -1);
     }
 
     .line:last-child::before {
-      margin-bottom: calc(var(--sz-padding) * -1);
-      padding-bottom: var(--sz-padding);
+      padding-block-end: var(--sz-padding);
+      margin-block-end: calc(var(--sz-padding) * -1);
     }
 
     .line.active::before {
@@ -260,8 +259,8 @@
 @media (hover: hover) and (pointer: fine) {
   @supports (scrollbar-width: thin) {
     .textarea {
-      scrollbar-width: thin;
       scrollbar-color: var(--clr-scrollbar);
+      scrollbar-width: thin;
       scrollbar-base-color: #3a3a9e;
       scrollbar-track-color: #3a3a9e;
     }
@@ -272,8 +271,8 @@
   }
 
   .textarea::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    inline-size: 6px;
+    block-size: 6px;
   }
 
   .textarea::-webkit-scrollbar-track {
@@ -281,23 +280,23 @@
   }
 
   .textarea::-webkit-scrollbar-thumb {
-    background: var(--clr-scrollbar);
-    border-radius: 10px;
-    border: none;
     cursor: pointer;
+    background: var(--clr-scrollbar);
+    border: none;
+    border-radius: 10px;
   }
 }
 
 .hidden-scrollbar {
   &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    inline-size: 0;
+    block-size: 0;
   }
 
   &::-webkit-scrollbar-thumb {
+    pointer-events: none;
+    cursor: unset;
     background: transparent;
     border: none;
-    cursor: unset;
-    pointer-events: none;
   }
 }

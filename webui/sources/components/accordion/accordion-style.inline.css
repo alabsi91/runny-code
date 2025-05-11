@@ -22,28 +22,28 @@
 }
 
 .container {
-  background-color: var(--clr-content-background);
-  border-radius: var(--rad-border);
-  border: 1px solid #ffffff1a;
-  box-shadow: 0 0.1rem 1rem -0.5rem #0006;
   overflow: hidden;
+  background-color: var(--clr-content-background);
+  border: 1px solid #ffffff1a;
+  border-radius: var(--rad-border);
+  box-shadow: 0 0.1rem 1rem -0.5rem #0006;
 }
 
 .accordion-trigger {
   display: flex;
   align-items: center;
-  border: none;
-  width: 100%;
-  color: inherit;
+  inline-size: 100%;
   font-size: inherit;
+  color: inherit;
   cursor: pointer;
-  border-radius: var(--rad-border);
   background-color: var(--clr-summary-background);
+  border: none;
+  border-radius: var(--rad-border);
 }
 
 .marker {
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   fill: currentcolor;
   rotate: -90deg;
   transition: rotate var(--dur-anim) var(--ease-anim);
@@ -56,13 +56,13 @@
 .expander {
   display: grid;
   grid-template-rows: 0fr;
-  will-change: grid-template-rows;
   transition: grid-template-rows var(--dur-anim) var(--ease-anim);
+  will-change: grid-template-rows;
 }
 
 .content {
-  padding-left: 2.2rem;
-  min-height: 0;
+  min-block-size: 0;
+  padding-inline-start: 2.2rem;
 }
 
 .accordion-trigger[aria-expanded="true"] + .expander {

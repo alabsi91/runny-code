@@ -85,22 +85,22 @@
 html {
   --width: min(0.3906vw, 6px);
 
+  overscroll-behavior: contain;
   font-size: calc(var(--base-font-size) + var(--width));
   color-scheme: light dark;
-  overscroll-behavior: contain;
 }
 
 body {
   --clr-pattern: light-dark(hsl(from var(--clr-bg) h s calc(l * 0.8)), hsl(from var(--clr-bg) h s calc(l * 2)));
 
+  min-block-size: 100vh;
   margin: 0;
-  min-height: 100vh;
+  overscroll-behavior: contain;
   font-family: var(--typ-font-family-base);
   color: var(--clr-text);
   background-color: var(--clr-bg);
   background-image: radial-gradient(var(--clr-pattern) 0.75px, var(--clr-bg) 0.75px);
   background-size: 15px 15px;
-  overscroll-behavior: contain;
 }
 
 button,
@@ -110,9 +110,9 @@ input {
 }
 
 h1 {
-  text-align: center;
+  margin-block-end: 4rem;
   font-size: var(--typ-font-size-huge);
-  margin-bottom: 4rem;
+  text-align: center;
 }
 
 * {
@@ -123,19 +123,19 @@ menu-component {
   --clr-background: var(--clr-surface-1);
 
   &::part(container) {
-    border-radius: var(--brd-radius-md);
     border-color: var(--clr-border);
+    border-radius: var(--brd-radius-md);
   }
 
   &::part(trigger) {
-    background-color: var(--clr-accent);
     color: var(--clr-btn-txt);
-    border-radius: var(--brd-radius-md);
+    background-color: var(--clr-accent);
     border-color: var(--clr-accent-border);
     border-width: var(--brd-width-thin);
-    transition-property: background-color, border-color;
-    transition-duration: var(--anim-duration-short);
+    border-radius: var(--brd-radius-md);
     transition-timing-function: ease-out;
+    transition-duration: var(--anim-duration-short);
+    transition-property: background-color, border-color;
   }
 
   &::part(trigger):hover {
@@ -151,10 +151,10 @@ select-option {
   --clr-hover: var(--clr-surface-0);
 
   &::part(option) {
-    font-family: var(--typ-font-family-base);
-    border-radius: 0;
-    text-align: left;
     padding: 0.5em;
+    font-family: var(--typ-font-family-base);
+    text-align: start;
+    border-radius: 0;
   }
 }
 
@@ -191,24 +191,24 @@ alert-component {
 
 .primary-btn {
   flex: 1;
-  background-color: var(--clr-accent);
-  color: var(--clr-btn-txt);
-  border-radius: var(--brd-radius-md);
-  border-color: var(--clr-accent-border);
-  border-width: var(--brd-width-thin);
-  border-style: solid;
   padding: 0.5rem 1rem;
-  cursor: pointer;
+  color: var(--clr-btn-txt);
   white-space: nowrap;
-  transition-property: background-color, border-color;
-  transition-duration: var(--anim-duration-short);
+  cursor: pointer;
+  background-color: var(--clr-accent);
+  border-color: var(--clr-accent-border);
+  border-style: solid;
+  border-width: var(--brd-width-thin);
+  border-radius: var(--brd-radius-md);
   transition-timing-function: ease-out;
+  transition-duration: var(--anim-duration-short);
+  transition-property: background-color, border-color;
 
   &:disabled {
-    background-color: var(--clr-accent-disabled);
-    border-color: var(--clr-accent-border-disabled);
     color: var(--clr-btn-txt-dim);
     cursor: not-allowed;
+    background-color: var(--clr-accent-disabled);
+    border-color: var(--clr-accent-border-disabled);
   }
 }
 
@@ -223,9 +223,9 @@ alert-component {
 }
 
 .gray-btn {
+  color: var(--clr-text-dim);
   background-color: var(--clr-surface-2);
   border-color: var(--clr-border);
-  color: var(--clr-text-dim);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -249,27 +249,27 @@ alert-component {
 }
 
 .required-input-label::after {
-  content: "*";
   position: absolute;
-  top: 0;
-  left: 0;
-  translate: -75% -75%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   font-size: var(--typ-font-size-xs);
   color: #c0172d;
+  content: "*";
+  translate: -75% -75%;
 }
 
 .color-scheme-btn {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5em;
+  inset-block-start: 1rem;
+  inset-inline-end: 1rem;
   aspect-ratio: 1;
+  padding: 0.5em;
   border-radius: var(--brd-radius-full);
 
   svg {
     display: none;
-    width: 1.5em;
-    height: 1.5em;
+    inline-size: 1.5em;
+    block-size: 1.5em;
     fill: currentcolor;
   }
 }

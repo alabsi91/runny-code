@@ -19,14 +19,14 @@
 
 .option {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
+  align-items: center;
   padding: 0.5rem;
-  border-radius: 6px;
+  color: var(--clr-txt);
+  word-break: break-all;
   cursor: pointer;
   user-select: none;
-  word-break: break-all;
-  color: var(--clr-txt);
+  border-radius: 6px;
   transition: background-color 300ms ease;
 
   @media (prefers-reduced-motion) {
@@ -35,14 +35,14 @@
 }
 
 .option[aria-disabled="true"] {
-  opacity: 0.5;
   cursor: unset;
+  opacity: 0.5;
 }
 
 .option[aria-selected="true"],
 .option[aria-checked="true"] {
-  background-color: var(--clr-active);
   color: var(--clr-active-txt);
+  background-color: var(--clr-active);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -52,7 +52,7 @@
 }
 
 ::slotted(svg) {
-  width: 24px;
-  height: 24px;
+  inline-size: 24px;
+  block-size: 24px;
   fill: currentcolor;
 }

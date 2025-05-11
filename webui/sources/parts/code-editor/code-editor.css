@@ -14,38 +14,38 @@
   --clr-line-numbers-active-txt: var(--clr-accent);
   --sz-border-radius: var(--brd-radius-lg);
 
-  height: calc(100% - 2em);
+  block-size: calc(100% - 2em);
 
   .editor-header {
     display: flex;
-    align-items: center;
     gap: 0.5em;
+    align-items: center;
     padding: 0 0.2em;
-    border-bottom: solid 1px var(--clr-border);
     background-color: var(--clr-surface-1);
+    border-block-end: solid 1px var(--clr-border);
 
     p {
       flex: 1;
       padding: 0.6em 0;
-      text-align: center;
-      color: var(--clr-text-accent);
-      overflow-wrap: anywhere;
       margin: 0;
+      color: var(--clr-text-accent);
+      text-align: center;
+      overflow-wrap: anywhere;
       pointer-events: none;
     }
 
     .editor-header-reload-btn {
+      float: inline-start;
       display: none;
       flex: unset;
-      float: inline-start;
-      border-radius: var(--brd-radius-lg);
       padding: 0.4em;
+      border-radius: var(--brd-radius-lg);
 
       svg {
         display: block;
+        inline-size: 1em;
+        block-size: 1em;
         margin: auto;
-        width: 1em;
-        height: 1em;
         fill: currentcolor;
       }
     }

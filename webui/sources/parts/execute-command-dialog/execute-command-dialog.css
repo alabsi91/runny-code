@@ -1,46 +1,46 @@
 .execute-command-dialog {
   .primary-btn {
     display: block;
-    width: 100%;
-    margin-top: 1em;
+    inline-size: 100%;
+    margin-block-start: 1em;
   }
 
   .cmd-dialog-container {
-    color: var(--clr-text);
     display: flex;
     flex-direction: column;
     gap: 1em;
-    max-height: 70svh;
+    max-block-size: 70svh;
+    color: var(--clr-text);
   }
 
   .cmd-dialog-open-action-btn {
     float: inline-start;
     flex: unset;
-    width: unset;
-    margin: 0;
+    inline-size: unset;
     padding: 0.2em;
+    margin: 0;
 
     svg {
       display: block;
+      inline-size: 1.2em;
+      block-size: 1.2em;
       margin: auto;
-      width: 1.2em;
-      height: 1.2em;
       fill: currentcolor;
     }
   }
 
   .cmd-dialog-title {
-    text-align: center;
+    margin-block-start: 0;
     font-size: var(--typ-font-size-2xl);
     font-weight: bold;
-    margin-top: 0;
+    text-align: center;
   }
 
   .dialog-sub-title {
+    margin: 0;
+    margin-block-start: 1em;
     font-size: var(--typ-font-size-md);
     font-weight: bold;
-    margin: 0;
-    margin-top: 1em;
   }
 
   &:not(:has(label)) .arg-title.dialog-sub-title {
@@ -50,23 +50,23 @@
   .cmd-dialog-inputs-container {
     display: grid;
     grid-template-columns: auto minmax(100px, 1fr);
-    align-items: center;
     gap: 1em;
+    align-items: center;
 
     input {
       flex: 1;
-      color: var(--clr-text);
-      background-color: var(--clr-surface-2);
-      border-radius: var(--brd-radius-md);
-      border-color: var(--clr-accent-border);
-      border-width: 1px;
-      border-style: solid;
-      outline: none;
-      margin: 0;
       padding: 0.5em;
-      transition-property: border-color;
-      transition-duration: var(--anim-duration-short);
+      margin: 0;
+      color: var(--clr-text);
+      outline: none;
+      background-color: var(--clr-surface-2);
+      border-color: var(--clr-accent-border);
+      border-style: solid;
+      border-width: 1px;
+      border-radius: var(--brd-radius-md);
       transition-timing-function: ease-out;
+      transition-duration: var(--anim-duration-short);
+      transition-property: border-color;
 
       &:focus {
         border-color: var(--clr-accent-border-hover);
@@ -75,7 +75,7 @@
   }
 
   .cmd-param-input-container:last-child {
-    margin-bottom: 2em;
+    margin-block-end: 2em;
   }
 
   .cmd-desc {
@@ -88,22 +88,22 @@
 
   .cmd-stream-output-container {
     display: flex;
-    align-items: center;
     gap: 1em;
+    align-items: center;
     margin-block-start: 1em;
   }
 
   .cmd-output,
   .cmd-display {
-    color: var(--clr-text-dim);
-    background-color: var(--clr-surface-0);
+    min-block-size: 1.2em;
     padding: 1em;
-    border-radius: var(--brd-radius-md);
-    border: solid 1px var(--clr-text-dim);
     margin: 0;
     overflow: auto;
-    min-height: 1.2em;
+    color: var(--clr-text-dim);
     scrollbar-width: thin;
+    background-color: var(--clr-surface-0);
+    border: solid 1px var(--clr-text-dim);
+    border-radius: var(--brd-radius-md);
   }
 
   .cmd-output.success {
@@ -124,13 +124,13 @@
     --clr-background: var(--clr-surface-2);
 
     &::part(trigger) {
-      background-color: var(--clr-surface-2);
       color: var(--clr-text);
       text-align: start;
+      background-color: var(--clr-surface-2);
     }
 
     &::part(container) {
-      margin-top: 0.4em;
+      margin-block-start: 0.4em;
     }
   }
 }

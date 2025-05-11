@@ -1,21 +1,21 @@
 .commands-menu {
   .add-command-container {
     display: flex;
-    align-items: stretch;
     gap: 0.5em;
+    align-items: stretch;
   }
 
   .add-command {
+    box-sizing: border-box;
     display: block;
     text-align: center;
-    box-sizing: border-box;
     border-color: var(--clr-accent-border);
 
     svg {
       display: block;
+      inline-size: 1em;
+      block-size: 1em;
       margin: auto;
-      width: 1em;
-      height: 1em;
       fill: currentcolor;
     }
   }
@@ -24,15 +24,14 @@
     padding-block: 0.5em;
 
     .cmd-menu-group-title {
+      margin-block: 0 0.2em;
+      margin-inline-start: 0.5em;
       color: var(--clr-text);
-      margin-top: 0;
-      margin-left: 0.5em;
-      margin-bottom: 0.2em;
     }
 
     &:not(:last-child) {
-      border-bottom: solid 1px var(--clr-border);
-      margin-bottom: 0.5em;
+      margin-block-end: 0.5em;
+      border-block-end: solid 1px var(--clr-border);
     }
 
     &[data-hidden="true"] {
@@ -40,16 +39,16 @@
     }
 
     &:has(+ .cmd-menu-group[data-hidden="true"]) {
-      border-bottom: none;
+      border-block-end: none;
     }
   }
 
   .cmd-menu-option-container {
     display: flex;
     align-items: center;
-    transition-property: background-color;
-    transition-duration: var(--anim-duration-short);
     transition-timing-function: ease-out;
+    transition-duration: var(--anim-duration-short);
+    transition-property: background-color;
   }
 
   .cmd-menu-option-action-btn {
@@ -59,9 +58,9 @@
 
     svg {
       display: block;
+      inline-size: 1.2em;
+      block-size: 1.2em;
       margin: auto;
-      width: 1.2em;
-      height: 1.2em;
       fill: currentcolor;
     }
   }
@@ -84,7 +83,7 @@
     flex: 1;
 
     &::part(option) {
-      padding-left: 0.8em;
+      padding-inline-start: 0.8em;
     }
 
     &[data-hidden="true"] {

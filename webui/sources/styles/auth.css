@@ -2,24 +2,24 @@ main {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 1em;
-  min-width: 100dvw;
-  min-height: 100dvh;
   align-items: center;
+  min-inline-size: 100dvw;
+  min-block-size: 100dvh;
 }
 
 .card {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1em;
+  inline-size: 100%;
+  max-inline-size: 400px;
   padding: 1em;
+  margin: auto;
+  color: var(--clr-text);
+  background-color: var(--clr-surface-1);
   border: 1px solid var(--clr-border);
   border-radius: var(--brd-radius-lg);
-  background-color: var(--clr-surface-1);
-  color: var(--clr-text);
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin: auto;
   backdrop-filter: blur(0.5px);
 }
 
@@ -30,17 +30,17 @@ form {
 
 input {
   flex: 1;
-  background-color: var(--clr-surface-2);
-  border-radius: var(--brd-radius-md);
-  border-color: var(--clr-accent-border);
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  margin: 0;
   padding: 0.5em;
-  transition-property: border-color;
-  transition-duration: var(--anim-duration-short);
+  margin: 0;
+  outline: none;
+  background-color: var(--clr-surface-2);
+  border-color: var(--clr-accent-border);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: var(--brd-radius-md);
   transition-timing-function: ease-out;
+  transition-duration: var(--anim-duration-short);
+  transition-property: border-color;
 
   &:focus {
     border-color: var(--clr-accent-border-hover);

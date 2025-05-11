@@ -4,18 +4,17 @@
   }
 
   .command-actions-title {
+    margin-block: 0 1em;
     font-size: var(--typ-font-size-3xl);
     font-weight: bold;
     text-align: start;
-    margin-top: 0;
-    margin-bottom: 1em;
   }
 
   .command-actions-input-container {
     display: grid;
     grid-template-columns: auto 200px;
-    align-items: center;
     gap: 1em;
+    align-items: center;
     margin-block: 1em;
 
     p {
@@ -29,17 +28,17 @@
 
   .command-actions-webhook-url-view {
     display: flex;
-    align-items: center;
     gap: 1em;
-    background-color: var(--clr-surface-0);
+    align-items: center;
     padding: 1em;
+    margin-block-start: 1em;
+    background-color: var(--clr-surface-0);
     border-radius: var(--brd-radius-md);
-    margin-top: 1em;
 
     a {
-      text-decoration: none;
       color: var(--clr-text-dim);
       overflow-wrap: anywhere;
+      text-decoration: none;
 
       &:visited {
         color: var(--clr-text-dim);
