@@ -46,7 +46,6 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
 
   readonly #internals: ElementInternals;
   readonly #triggerEl: HTMLButtonElement;
-  readonly #contentEl: HTMLDivElement;
   readonly #expanderEl: HTMLDivElement;
 
   /** Emitted when the accordion changes the expand state open/close. */
@@ -98,18 +97,12 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
       console.error("[accordion-component]: couldn't find the element with the class `accordion-trigger`.");
     }
 
-    const contentEl = shadow.querySelector<HTMLDivElement>(".content");
-    if (!contentEl) {
-      console.error("[accordion-component]: couldn't find the element with the class `content`.");
-    }
-
     const expanderEl = shadow.querySelector<HTMLDivElement>(".expander");
     if (!expanderEl) {
       console.error("[accordion-component]: couldn't find the element with the class `expander`.");
     }
 
     this.#triggerEl = triggerEl!;
-    this.#contentEl = contentEl!;
     this.#expanderEl = expanderEl!;
   }
 
@@ -150,9 +143,12 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
   //#region Public Methods
   /** Expand the accordion component. */
   open = () => {
-    this.#contentEl.style.visibility = "visible";
-    this.#internals.states.add("open");
-    this.#triggerEl.setAttribute("aria-expanded", "true");
+    this.#expanderEl.style.removeProperty("display");
+
+    requestAnimationFrame(() => {
+      this.#internals.states.add("open");
+      this.#triggerEl.setAttribute("aria-expanded", "true");
+    });
 
     // close other details with the same group
     if (!this.#group) return;
@@ -166,11 +162,11 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
 
   /** Collapse the accordion component. */
   close = () => {
-    this.#expanderEl.ontransitionend = () => {
+    this.#expanderEl.ontransitionend = this.#expanderEl.ontransitionend = () => {
+      this.#expanderEl.ontransitionend = this.#expanderEl.ontransitionend = null;
       if (this.isExpanded) return;
-      this.#contentEl.style.visibility = "collapse";
+      this.#expanderEl.style.display = "none";
       this.#internals.states.delete("open");
-      this.#expanderEl.ontransitionend = null;
     };
 
     this.#triggerEl.setAttribute("aria-expanded", "false");
