@@ -122,6 +122,7 @@ class FileNavigator {
 
     // on files update
     $files.subscribe(files => {
+      if (!files) return;
       this.render(files);
     });
 
@@ -272,8 +273,7 @@ class FileNavigator {
     const folderName = content.name;
 
     const onstateChange = () => {
-      if (accordionEl.isExpanded) return this.openedFolders.add(content.path);
-      this.openedFolders.delete(content.path);
+      this.openedFolders[accordionEl.isExpanded ? "add" : "delete"](content.path);
     };
 
     const ondragstart = (e: DragEvent) => {
@@ -289,9 +289,10 @@ class FileNavigator {
       elements.downloadArea.classList.remove("show");
     };
 
+    const isEmpty = content.files.length === 0 && content.folders.length === 0;
     const accordionEl = (
       <accordion-component
-        className="folder"
+        className={["folder", isEmpty ? "empty" : ""]}
         data-name={folderName}
         data-path={content.path}
         tabIndex={0}
@@ -729,14 +730,24 @@ class FileNavigator {
   recursiveRender(folder: Folder, isRoot: boolean) {
     const rootFolderEl = this.createFolderEl(folder, isRoot);
 
-    for (const entry of folder.folders) {
-      const folderEl = this.recursiveRender(entry, false);
-      rootFolderEl.appendChild(folderEl);
-    }
+    const renderNested = () => {
+      for (const entry of folder.folders) {
+        const folderEl = this.recursiveRender(entry, false);
+        rootFolderEl.appendChild(folderEl);
+      }
 
-    for (const file of folder.files) {
-      const fileEl = this.createFileEl(file);
-      rootFolderEl.appendChild(fileEl);
+      for (const file of folder.files) {
+        const fileEl = this.createFileEl(file);
+        rootFolderEl.appendChild(fileEl);
+      }
+    };
+
+    // render opened folders content immediately
+    if (rootFolderEl.initialState === "open") {
+      renderNested();
+    } else {
+      // render folder content when the folder is opened
+      rootFolderEl.addEventListener("statechange", renderNested, { once: true });
     }
 
     return rootFolderEl;

@@ -148,6 +148,7 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
     requestAnimationFrame(() => {
       this.#internals.states.add("open");
       this.#triggerEl.setAttribute("aria-expanded", "true");
+      this.dispatchEvent(this.#change);
     });
 
     // close other details with the same group
@@ -170,6 +171,7 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
     };
 
     this.#triggerEl.setAttribute("aria-expanded", "false");
+    this.dispatchEvent(this.#change);
   };
 
   /** Toggle the accordion component between expand and collapse. */
@@ -179,8 +181,6 @@ class AccordionComponent extends HTMLElement implements IWebComponent {
     } else {
       this.open();
     }
-
-    this.dispatchEvent(this.#change);
   };
   //#endregion
 }

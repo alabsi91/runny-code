@@ -15,11 +15,14 @@ const isAuthenticated = await isLoggedIn();
 if (!isAuthenticated) {
   window.location.href = "/auth/";
 }
-const [availableFiles, getFilesListError] = await getFilesList();
-if (getFilesListError !== null) {
-  errorMsg(getFilesListError.message);
-  throw getFilesListError;
-}
+
+getFilesList().then(([availableFiles, getFilesListError]) => {
+  if (getFilesListError !== null) {
+    errorMsg(getFilesListError.message);
+    throw getFilesListError;
+  }
+  $files.set(availableFiles);
+});
 
 const [availableCommands, error] = await getCommandsList();
 if (error !== null) {
@@ -33,7 +36,6 @@ if (error2 !== null) {
   throw error2;
 }
 
-$files.set(availableFiles);
 $commands.set(availableCommands);
 $isCommandManipulationAllowed.set(isAllowed);
 

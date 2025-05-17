@@ -239,7 +239,7 @@
       border-inline-start: solid var(--brd-width-thin) var(--clr-border);
     }
 
-    &:not(:has(.file, .folder)) {
+    &.empty {
       &::part(marker) {
         display: none;
         pointer-events: none;
