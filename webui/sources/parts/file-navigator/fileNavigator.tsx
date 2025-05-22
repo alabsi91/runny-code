@@ -5,7 +5,7 @@ import {
   createFolder,
   deletePath,
   downloadPath,
-  getFilesList,
+  readDir,
   moveToPath,
   uploadFiles,
   type File,
@@ -217,6 +217,7 @@ class FileNavigator {
       path: createdPath,
       files: [],
       folders: [],
+      isEmpty: true,
     };
 
     target.open();
@@ -289,10 +290,9 @@ class FileNavigator {
       elements.downloadArea.classList.remove("show");
     };
 
-    const isEmpty = content.files.length === 0 && content.folders.length === 0;
     const accordionEl = (
       <accordion-component
-        className={["folder", isEmpty ? "empty" : ""]}
+        className={["folder", content.isEmpty ? "empty" : ""]}
         data-name={folderName}
         data-path={content.path}
         tabIndex={0}
@@ -708,7 +708,7 @@ class FileNavigator {
 
   /** Refetch files list causing re-render */
   async refreshFiles() {
-    const [availableFiles, getFilesListError] = await getFilesList();
+    const [availableFiles, getFilesListError] = await readDir("");
     if (getFilesListError !== null) {
       errorMsg(getFilesListError.message);
       throw getFilesListError;
@@ -730,7 +730,16 @@ class FileNavigator {
   recursiveRender(folder: Folder, isRoot: boolean) {
     const rootFolderEl = this.createFolderEl(folder, isRoot);
 
-    const renderNested = () => {
+    const renderNested = async () => {
+      const [folderContent, error] = await readDir(folder.path);
+      if (error !== null) {
+        errorMsg(error.message);
+        return;
+      }
+
+      folder.folders = folderContent.folders;
+      folder.files = folderContent.files;
+
       for (const entry of folder.folders) {
         const folderEl = this.recursiveRender(entry, false);
         rootFolderEl.appendChild(folderEl);
@@ -745,7 +754,7 @@ class FileNavigator {
     // render opened folders content immediately
     if (rootFolderEl.initialState === "open") {
       renderNested();
-    } else {
+    } else if (!folder.isEmpty) {
       // render folder content when the folder is opened
       rootFolderEl.addEventListener("statechange", renderNested, { once: true });
     }
@@ -754,7 +763,7 @@ class FileNavigator {
   }
 
   /** Renders the file navigator */
-  render(rootFolder: Folder) {
+  async render(rootFolder: Folder) {
     // clear
     const filesFolderEl = elements.asideContent.querySelector(":scope > accordion-component");
     if (filesFolderEl) filesFolderEl.remove();

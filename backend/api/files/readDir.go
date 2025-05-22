@@ -3,11 +3,15 @@ package apiFiles
 import (
 	"encoding/json"
 	"net/http"
+	"path"
 	"runny-code/common"
 )
 
 func ReadDirHandle(w http.ResponseWriter, r *http.Request) {
-	rootFolder, err := readFiles(common.FilesDir)
+	dirPath := r.URL.Query().Get("directory")
+	dirPath = path.Join(common.FilesDir, dirPath)
+
+	rootFolder, err := readDir(dirPath)
 	if err != nil {
 		http.Error(w, "Error reading the files directory", http.StatusInternalServerError)
 		return

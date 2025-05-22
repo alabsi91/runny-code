@@ -7,7 +7,7 @@ import { confirmDialog, initConfirmDialog } from "@parts/confirm-dialog/confirmD
 import { initFileNavigator } from "@parts/file-navigator/fileNavigator";
 import { isLoggedIn } from "@scripts/api/auth";
 import { getCommandsList, isCommandManipulationAllowed } from "@scripts/api/commands";
-import { getFilesList, writeFile } from "@scripts/api/files";
+import { readDir, writeFile } from "@scripts/api/files";
 import { $commands, $files, $isCommandManipulationAllowed, $selectedFilePath } from "@scripts/stores";
 import { errorMsg, getElement, successMsg } from "@scripts/utils/utils";
 
@@ -16,13 +16,11 @@ if (!isAuthenticated) {
   window.location.href = "/auth/";
 }
 
-getFilesList().then(([availableFiles, getFilesListError]) => {
-  if (getFilesListError !== null) {
-    errorMsg(getFilesListError.message);
-    throw getFilesListError;
-  }
-  $files.set(availableFiles);
-});
+const [availableFiles, getFilesListError] = await readDir("");
+if (getFilesListError !== null) {
+  errorMsg(getFilesListError.message);
+  throw getFilesListError;
+}
 
 const [availableCommands, error] = await getCommandsList();
 if (error !== null) {
@@ -36,6 +34,7 @@ if (error2 !== null) {
   throw error2;
 }
 
+$files.set(availableFiles);
 $commands.set(availableCommands);
 $isCommandManipulationAllowed.set(isAllowed);
 

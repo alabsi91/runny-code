@@ -10,10 +10,16 @@ export type Folder = {
   path: string;
   files: File[];
   folders: Folder[];
+  isEmpty: boolean;
 };
 
-export function getFilesList(): Promise<[null, Error] | [Folder, null]> {
-  return safeFetch<Folder>("json", `${baseUrl}/files-list`, { credentials: "include" }, "Failed to get list of files.");
+export function readDir(dirPath: string): Promise<[null, Error] | [Folder, null]> {
+  return safeFetch<Folder>(
+    "json",
+    `${baseUrl}/read-dir/?directory=${encodeURIComponent(dirPath)}`,
+    { credentials: "include" },
+    "Failed to get list of files."
+  );
 }
 
 export async function writeFile(fileContent: string, filePath: string): Promise<[null, Error] | [string, null]> {

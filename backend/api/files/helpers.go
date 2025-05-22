@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"runny-code/common"
@@ -28,6 +29,7 @@ type Folder struct {
 	Path    string   `json:"path"`
 	Folders []Folder `json:"folders"`
 	Files   []File   `json:"files"`
+	IsEmpty bool     `json:"isEmpty"`
 }
 
 func (f *Folder) RemoveLeading(leadingPath string) {
@@ -42,16 +44,27 @@ func (f *Folder) RemoveLeading(leadingPath string) {
 }
 
 // readFiles reads the files and folders in the given directory
-func readFiles(dirPath string) (rootFolder Folder, err error) {
+func readDir(dirPath string) (rootFolder Folder, err error) {
 	rootFolder = Folder{
 		Name:    path.Base(dirPath),
 		Path:    dirPath,
 		Folders: make([]Folder, 0),
 		Files:   make([]File, 0),
+		IsEmpty: false,
+	}
+
+	if isExcluded(dirPath) || !isIncluded(dirPath) {
+		err = fmt.Errorf("path is excluded: %s", dirPath)
+		return
 	}
 
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
+		return
+	}
+
+	if len(entries) == 0 {
+		rootFolder.IsEmpty = true
 		return
 	}
 
@@ -60,17 +73,19 @@ func readFiles(dirPath string) (rootFolder Folder, err error) {
 		entryName := entry.Name()
 		entryPath := path.Join(dirPath, entryName)
 
-		if isExcluded(entryPath) {
+		if !isIncluded(entryPath) || isExcluded(entryPath) {
 			continue
 		}
 
 		if entry.IsDir() {
-			innerFolders, _ := readFiles(entryPath)
+			innerFolders := Folder{
+				Name:    path.Base(entryName),
+				Path:    entryPath,
+				Folders: make([]Folder, 0),
+				Files:   make([]File, 0),
+				IsEmpty: isFolderEmpty(entryPath),
+			}
 			rootFolder.Folders = append(rootFolder.Folders, innerFolders)
-			continue
-		}
-
-		if !isIncluded(entryPath) {
 			continue
 		}
 
@@ -232,4 +247,23 @@ func readTextFile(filePath string) ([]byte, error) {
 	}
 
 	return content, nil
+}
+
+// isFolderEmpty checks if the given directory is empty
+func isFolderEmpty(path string) bool {
+	dir, err := os.Open(path)
+	if err != nil {
+		return false
+	}
+	defer dir.Close()
+
+	_, err = dir.Readdirnames(1)
+	if err == nil {
+		return false
+	}
+	if err == io.EOF {
+		return true
+	}
+
+	return false
 }

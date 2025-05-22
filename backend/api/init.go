@@ -21,7 +21,7 @@ func InitServer() error {
 	mux.HandleFunc("GET /logout", apiAuth.LogoutHandle)
 	mux.HandleFunc("GET /is-authenticated", apiAuth.IsAuthenticatedHandle)
 
-	mux.HandleFunc("GET /files-list", apiFiles.ReadDirHandle)
+	mux.HandleFunc("GET /read-dir/", apiFiles.ReadDirHandle)
 	mux.HandleFunc("GET /file/", apiFiles.ReadFileHandle)
 	mux.HandleFunc("PUT /file/", apiFiles.WriteFileHandle)
 	mux.HandleFunc("POST /move-path/", apiFiles.MoveToPathHandle)
