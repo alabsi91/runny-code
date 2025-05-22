@@ -83,17 +83,12 @@ func ExecuteCommandHandle(w http.ResponseWriter, r *http.Request) {
 
 	// Execute the command and stream output
 	err = commands.SShExecuteStream(commandToExecute, func(stdout string, stderr string) {
-		response := ExecuteCommandResponse{Stdout: stdout, Stderr: stderr}
-		toJson, _ := json.Marshal(response)
-
-		// Explicitly write the JSON object followed by a newline
-		w.Write(toJson)
+		w.Write([]byte(stdout + stderr) )
 		flusher.Flush()
 	})
 
 	if err != nil {
-		// do nothing just respond with empty string
-		fmt.Fprint(w, "{}")
+		fmt.Fprint(w, "")
 		flusher.Flush()
 	}
 }
