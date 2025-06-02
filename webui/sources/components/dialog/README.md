@@ -18,9 +18,9 @@ A dialog web component.
 
 **Props**
 
-- `backdropClose` (Get/Set) Dismiss the dialog when clicking outside the dialog. Defaults to `true`.
-- `escapeClose` (Get/Set) Dismiss the dialog when pressing the escape key. Defaults to `true`.
-- `closeButton` (Get/Set) Show a close button. Defaults to `true`.
+- `backdropClose` (Get/Set) Dismiss the dialog when clicking outside the dialog. Defaults to `true`. (default: `true`)
+- `escapeClose` (Get/Set) Dismiss the dialog when pressing the escape key. Defaults to `true`. (default: `true`)
+- `closeButton` (Get/Set) Show a close button. Defaults to `true`. (default: `true`)
 - `isOpen` (Get) True when the dialog is open.
 - `dialog` (Get) The underlying dialog element.
 
@@ -36,9 +36,9 @@ A dialog web component.
 
 **Attributes**
 
-- `"backdrop-close"` Dismiss the dialog when clicking outside the dialog. Defaults to `true`.
-- `"escape-close"` Dismiss the dialog when pressing the escape key. Defaults to `true`.
-- `"close-button"` Show a close button. Defaults to `true`.
+- `"backdrop-close"` Dismiss the dialog when clicking outside the dialog. Defaults to `true`. (default: `true`)
+- `"escape-close"` Dismiss the dialog when pressing the escape key. Defaults to `true`. (default: `true`)
+- `"close-button"` Show a close button. Defaults to `true`. (default: `true`)
 
 **CSS Properties**
 

@@ -1,65 +1,18 @@
 {
-  "root": ".",
-  "pagesDir": "pages",
-  "jsx": "custom",
-  "customJSX": {
-    "autoImport": {
-      "module": "@jsx",
-      "import": "createElement",
-      "export": "createElement"
-    },
-    "transformJsx": {
-      "pragma": "createElement",
-      "pragmaFrag": "\"fragment\""
-    }
-  },
-  "ignorePatterns": ["dist/**", "backend/**"],
-  "browserslist": [
-    "last 2 Chrome versions",
-    "last 2 Firefox versions",
-    "last 2 Safari versions",
-    "last 2 Edge versions",
-    "not op_mini all"
-  ],
-
-  "dev": {
-    "host": "0.0.0.0",
-    "port": "3000",
-    "entry": "/"
-  },
+  "ignore": ["dist/**", "backend/**"],
 
   "build": {
-    "outDir": "dist",
     "minify": true,
     "cleanOutDir": true,
-    "removeUnusedFiles": true,
-    "unusedIgnorePatterns": ["**/sitemap.xml", "**/robots.txt", "sources/assets/icons/*"],
-    "nodeModulesOutDir": "sources/packages",
-    "webP": {
+    "analyzeOutput": {
+      "enabled": true,
+      "deleteUnused": true,
+      "exclude": ["sources/assets/icons/*"]
+    },
+    "convertImages": {
       "enabled": true,
       "quality": 100,
       "preset": "default"
     }
-  },
-
-  "generate": {
-    "serviceWorker": {
-      "enabled": false
-    }
-  },
-
-  "packages": {
-    "react": {
-      ".": { "path": "./cjs/react.production.min.js", "esm": false }
-    },
-    "react-dom": {
-      "./client": { "path": "./cjs/react-dom.production.min.js", "esm": false }
-    },
-    "scheduler": {
-      ".": { "path": "./cjs/scheduler.production.min.js", "esm": false }
-    }
-  },
-
-  "babelPlugins": [],
-  "postcssPlugins": []
+  }
 }

@@ -21,12 +21,11 @@ The select option component is made to be used with `menu-component` but also it
 
 **Props**
 
-- `type` (Get/Set) The type for accessibility. Defaults to `option`.
 - `value` (Get/Set) The value of the option.
 - `valueAsType` (Get/Set) The parsed value from the `value` attribute string.
-- `valueType` (Get/Set) The type of the value. Defaults to `string`.
-- `selected` (Get/Set) Selected. Defaults to `false`.
-- `disabled` (Get/Set) Disabled. Defaults to `false`.
+- `valueType` (Get/Set) The type of the value. Defaults to `string`. (default: `"string"`)
+- `selected` (Get/Set) Selected. Defaults to `false`. (default: `false`)
+- `disabled` (Get/Set) Disabled. Defaults to `false`. (default: `false`)
 - `label` (Get/Set) The label of the option.
 - `onclick` (Set) Set the click event handler.
 - `onkeydown` (Set) Set the keydown event handler.
@@ -43,11 +42,11 @@ The select option component is made to be used with `menu-component` but also it
 **Attributes**
 
 - `"value"` The value of the option.
-- `"value-type"` The type of the value. Defaults to `string`.
+- `"value-type"` The type of the value. Defaults to `string`. (default: `"string"`)
 - `"label"` The label of the option.
-- `"selected"` Selected. Defaults to `false`.
-- `"disabled"` Disabled. Defaults to `false`.
-- `"type"` The type for accessibility. Defaults to `option`.
+- `"selected"` Selected. Defaults to `false`. (default: `false`)
+- `"disabled"` Disabled. Defaults to `false`. (default: `false`)
+- `"type"` The type for accessibility. Defaults to `option`. (default: `"option"`)
 
 **CSS Properties**
 

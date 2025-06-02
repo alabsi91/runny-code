@@ -15,10 +15,9 @@ presented in a series, giving the user multiple choices to make.
 
 **Props**
 
-- `checked` (Get/Set) Checked. Defaults to `false`.
-- `disabled` (Get/Set) Disabled. Defaults to `false`.
+- `checked` (Get/Set) Checked. Defaults to `false`. (default: `false`)
+- `disabled` (Get/Set) Disabled. Defaults to `false`. (default: `false`)
 - `label` (Get/Set) Add a label to the toggle switch.
-- `type` (Get)
 - `value` (Get/Set)
 
 **Events**
@@ -27,8 +26,8 @@ presented in a series, giving the user multiple choices to make.
 
 **Attributes**
 
-- `"checked"` Checked. Defaults to `false`.
-- `"disabled"` Disabled. Defaults to `false`.
+- `"checked"` Checked. Defaults to `false`. (default: `false`)
+- `"disabled"` Disabled. Defaults to `false`. (default: `false`)
 - `"label"` Add a label to the toggle switch.
 - `"aria-label"` Forwarded to the `<button>` element.
 

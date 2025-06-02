@@ -27,14 +27,14 @@ editor.highlighter = code => hljs.highlight(code, { language: "typescript" }).va
 
 - `value` (Get/Set) The code string.
 - `highlighter` (Get/Set) - The highlighter function, takes the current code string and returns the highlighted code as html string.
-- `tabsize` (Get/Set) The empty space counted as one tab.
-- `readonly` (Get/Set) Disable user input.
-- `linenumbers` (Get/Set) Show line numbers.
-- `expand` (Get/Set) Expand the text area to fit the content, only for newlines wont work for warping text.
-- `wrap` (Get/Set) Wrap the text area to fit the content.
-- `copyButton` (Get/Set) Show copy button.
+- `tabsize` (Get/Set) The empty space counted as one tab. (default: `2`)
+- `readonly` (Get/Set) Disable user input. (default: `false`)
+- `linenumbers` (Get/Set) Show line numbers. (default: `false`)
+- `expand` (Get/Set) Expand the text area to fit the content, only for newlines wont work for warping text. (default: `true`)
+- `wrap` (Get/Set) Wrap the text area to fit the content. (default: `false`)
+- `copyButton` (Get/Set) Show copy button. (default: `false`)
 - `stylesheet` (Get/Set) The CSS style sheet selector for code styling, it can be a `link[rel="stylesheet"]` or a `style` element.
-- `oneLine` (Get/Set) Mimic regular input element by forcing one line.
+- `oneLine` (Get/Set) Mimic regular input element by forcing one line. (default: `false`)
 
 **Events**
 
@@ -50,14 +50,14 @@ editor.highlighter = code => hljs.highlight(code, { language: "typescript" }).va
 **Attributes**
 
 - `"value"` The code string.
-- `"readonly"` Disable user input.
-- `"tabsize"` The empty space counted as one tab.
+- `"readonly"` Disable user input. (default: `false`)
+- `"tabsize"` The empty space counted as one tab. (default: `2`)
 - `"stylesheet"` The CSS style sheet selector for code styling, it can be a `link[rel="stylesheet"]` or a `style` element.
-- `"expand"` Expand the text area to fit the content, only for newlines wont work for warping text.
-- `"wrap"` Wrap the text area to fit the content.
-- `"linenumbers"` Show line numbers.
-- `"copy-button"` Show copy button.
-- `"one-line"` Mimic regular input element by forcing one line.
+- `"expand"` Expand the text area to fit the content, only for newlines wont work for warping text. (default: `true`)
+- `"wrap"` Wrap the text area to fit the content. (default: `false`)
+- `"linenumbers"` Show line numbers. (default: `false`)
+- `"copy-button"` Show copy button. (default: `false`)
+- `"one-line"` Mimic regular input element by forcing one line. (default: `false`)
 
 **CSS Properties**
 

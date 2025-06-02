@@ -26,8 +26,8 @@ A tooltip component that displays a message when hovered over.
 **Props**
 
 - `for` (Get/Set) The element to attach the tooltip to.
-- `preferDirection` (Get/Set) Open the tooltip in the preferred direction if possible. Defaults to `top`.
-- `revealDelay` (Get/Set) The delay before the tooltip is revealed.
+- `preferDirection` (Get/Set) Open the tooltip in the preferred direction if possible. Defaults to `top`. (default: `"top"`)
+- `revealDelay` (Get/Set) The delay before the tooltip is revealed. (default: `500`)
 - `isOpen` (Get) Returns `true` if the tooltip is open.
 
 **Events**
@@ -42,8 +42,8 @@ A tooltip component that displays a message when hovered over.
 **Attributes**
 
 - `"for"` The element to attach the tooltip to.
-- `"prefer-direction"` Open the tooltip in the preferred direction if possible. Defaults to `top`.
-- `"reveal-delay"` The delay before the tooltip is revealed.
+- `"prefer-direction"` Open the tooltip in the preferred direction if possible. Defaults to `top`. (default: `"top"`)
+- `"reveal-delay"` The delay before the tooltip is revealed. (default: `500`)
 
 **CSS Properties**
 

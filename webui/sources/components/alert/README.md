@@ -30,13 +30,13 @@ const closeFn = alertComponent.alert({
 
 **Props**
 
-- `duration` (Get/Set) The time before dismissing the alert in milliseconds. use `-1` to disable auto dismiss. Default `5000`.
-- `stackStyle` (Get/Set) The style of stacking alerts: `list` or `3d`. Defaults to `3d`.
+- `duration` (Get/Set) The time before dismissing the alert in milliseconds. use `-1` to disable auto dismiss. Default `5000`. (default: `5000`)
+- `stackStyle` (Get/Set) The style of stacking alerts: `list` or `3d`. Defaults to `3d`. (default: `"3d"`)
 
 **Attributes**
 
-- `"duration"` The time before dismissing the alert in milliseconds. use `-1` to disable auto dismiss. Default `5000`.
-- `"stack-style"` The style of stacking alerts: `list` or `3d`. Defaults to `3d`.
+- `"duration"` The time before dismissing the alert in milliseconds. use `-1` to disable auto dismiss. Default `5000`. (default: `5000`)
+- `"stack-style"` The style of stacking alerts: `list` or `3d`. Defaults to `3d`. (default: `"3d"`)
 
 **CSS Properties**
 

@@ -23,21 +23,20 @@ The menu web component is a versatile dropdown like that can be use in different
 
 **Props**
 
-- `type` (Get/Set) An easy way to setup the accessibility. Defaults to `menu`.
-- `preferUpwards` (Get/Set) Prefer to open the menu above the trigger button when possible. Defaults to `false`.
-- `preferRight` (Get/Set) Prefer to open the menu to the right of the trigger button when possible. Defaults to `false`.
-- `matchTriggerWidth` (Get/Set) Match the width of the trigger button. Defaults to `false`.
-- `disabled` (Get/Set) Disable the menu trigger button. Defaults to `false`.
-- `required` (Get/Set) When used with forms.
-- `backdropClose` (Get/Set) Dismiss the menu when clicking outside the menu. Defaults to `true`.
-- `escapeClose` (Get/Set) Dismiss the menu when pressing the escape key. Defaults to `true`.
-- `closeButton` (Get/Set) Show a close button. Defaults to `false`.
-- `multiselect` (Get/Set) Enable multiselect. Defaults to `false`.
+- `preferUpwards` (Get/Set) Prefer to open the menu above the trigger button when possible. Defaults to `false`. (default: `false`)
+- `preferRight` (Get/Set) Prefer to open the menu to the right of the trigger button when possible. Defaults to `false`. (default: `false`)
+- `matchTriggerWidth` (Get/Set) Match the width of the trigger button. Defaults to `false`. (default: `false`)
+- `disabled` (Get/Set) Disable the menu trigger button. Defaults to `false`. (default: `false`)
+- `required` (Get/Set) When used with forms. (default: `false`)
+- `backdropClose` (Get/Set) Dismiss the menu when clicking outside the menu. Defaults to `true`. (default: `true`)
+- `escapeClose` (Get/Set) Dismiss the menu when pressing the escape key. Defaults to `true`. (default: `true`)
+- `closeButton` (Get/Set) Show a close button. Defaults to `false`. (default: `false`)
+- `multiselect` (Get/Set) Enable multiselect. Defaults to `false`. (default: `false`)
 - `value` (Get/Set) The selected value.
 - `values` (Get/Set) The selected values. when `multiselect` is `true`.
 - `valueAsType` (Get) The parsed value from the `value` attribute string.
 - `valuesAsTypes` (Get) The parsed values from the `values` attribute string.
-- `closeOnSelect` (Get/Set) Close the menu when an option is selected. Defaults to `false`.
+- `closeOnSelect` (Get/Set) Close the menu when an option is selected. Defaults to `false`. (default: `true`)
 - `isOpen` (Get) Whether the menu is open
 - `trigger` (Get) Get the trigger button element
 
@@ -54,23 +53,23 @@ The menu web component is a versatile dropdown like that can be use in different
 
 **Attributes**
 
-- `"prefer-upwards"` Prefer to open the menu above the trigger button when possible. Defaults to `false`.
-- `"prefer-right"` Prefer to open the menu to the right of the trigger button when possible. Defaults to `false`.
-- `"match-trigger-width"` Match the width of the trigger button. Defaults to `false`.
-- `"disabled"` Disable the menu trigger button. Defaults to `false`.
-- `"required"` When used with forms.
-- `"backdrop-close"` Dismiss the menu when clicking outside the menu. Defaults to `true`.
-- `"escape-close"` Dismiss the menu when pressing the escape key. Defaults to `true`.
-- `"close-button"` Show a close button. Defaults to `false`.
+- `"prefer-upwards"` Prefer to open the menu above the trigger button when possible. Defaults to `false`. (default: `false`)
+- `"prefer-right"` Prefer to open the menu to the right of the trigger button when possible. Defaults to `false`. (default: `false`)
+- `"match-trigger-width"` Match the width of the trigger button. Defaults to `false`. (default: `false`)
+- `"disabled"` Disable the menu trigger button. Defaults to `false`. (default: `false`)
+- `"required"` When used with forms. (default: `false`)
+- `"backdrop-close"` Dismiss the menu when clicking outside the menu. Defaults to `true`. (default: `true`)
+- `"escape-close"` Dismiss the menu when pressing the escape key. Defaults to `true`. (default: `true`)
+- `"close-button"` Show a close button. Defaults to `false`. (default: `false`)
 - `"popover-role"`
 - `"popover-label"`
 - `"trigger-label"`
-- `"close-on-select"` Close the menu when an option is selected. Defaults to `false`.
+- `"close-on-select"` Close the menu when an option is selected. Defaults to `false`. (default: `true`)
 - `"style"`
-- `"multiselect"` Enable multiselect. Defaults to `false`.
+- `"multiselect"` Enable multiselect. Defaults to `false`. (default: `false`)
 - `"value"` The selected value.
 - `"values"` The selected values separated by `;`. when `multiselect` is `true`
-- `"type"` An easy way to setup the accessibility. Defaults to `menu`.
+- `"type"` An easy way to setup the accessibility. Defaults to `menu`. (default: `"menu"`)
 
 **CSS Properties**
 
