@@ -2,7 +2,9 @@
   "ignore": ["dist/**", "backend/**"],
 
   "build": {
-    "minify": true,
+    "minify": {
+      "enabled": true
+    },
     "cleanOutDir": true,
     "analyzeOutput": {
       "enabled": true,

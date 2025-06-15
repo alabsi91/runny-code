@@ -5,18 +5,13 @@
       "name": "markdown",
       "description": "Process the element content as markdown.",
       "valueSet": "v"
-    },
-    {
-      "name": "md",
-      "description": "Process the element content as markdown.",
-      "valueSet": "v"
     }
   ],
   "tags": [
     {
       "name": "script",
       "attributes": [
-        { "name": "server", "description": "Executes the script tag at build time only.", "valueSet": "v" },
+        { "name": "build-time", "description": "Executes the script tag at build time only.", "valueSet": "v" },
         {
           "name": "inline",
           "description": "Inline the referenced script file by the `src` attribute inside the script tag",
@@ -25,7 +20,19 @@
         {
           "name": "bundle",
           "description": "Bundle the referenced script file by the `src` attribute inside the script tag",
-          "values": [{ "name": "true" }, { "name": "include-packages" }]
+          "valueSet": "v"
+        },
+        {
+          "name": "bundle-out",
+          "description": "The output path of the bundled script file."
+        },
+        {
+          "name": "bundle-externals",
+          "description": "A glob pattern separated by space to match external dependencies for the bundled script file. Default is the packages."
+        },
+        {
+          "name": "bundle-externals-ignore",
+          "description": "A glob pattern separated by space to ignore `bundle-externals`."
         },
         {
           "name": "minify",

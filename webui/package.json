@@ -24,7 +24,6 @@
   ],
   "devDependencies": {
     "@babel/preset-react": "^7.27.1",
-    "@emotion/babel-plugin-jsx-pragmatic": "^0.3.0",
     "@eslint/js": "^9.26.0",
     "@html-eslint/eslint-plugin": "^0.41.0",
     "@html-eslint/parser": "^0.41.0",

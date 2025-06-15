@@ -11,7 +11,7 @@
       "@parts/*": ["./sources/parts/*"],
       "@components/*": ["./sources/components/*"],
       "@utils/*": ["./sources/scripts/utils/*"],
-      "@jsx": ["./sources/scripts/jsx"],
+      "@jsx/jsx-runtime": ["./sources/scripts/jsx-runtime/jsx-runtime"],
       "@types": ["./sources/types"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
