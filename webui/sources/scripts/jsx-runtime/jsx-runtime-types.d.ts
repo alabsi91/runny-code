@@ -24,6 +24,12 @@ export type StyleObject = {
 
 export type Element = HTMLElement | SVGElement | MathMLElement | DocumentFragment;
 
+export type ElementWithType =
+  | [HTMLElement, "HTMLElement"]
+  | [MathMLElement, "MathMLElement"]
+  | [SVGElement, "SVGElement"]
+  | [DocumentFragment, "DocumentFragment"];
+
 export type Component = (props: Record<string, any>) => Element;
 
 export type Child = Element | string | undefined | null;

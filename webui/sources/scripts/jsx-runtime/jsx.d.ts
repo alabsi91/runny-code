@@ -411,9 +411,7 @@ declare global {
 
     interface DOMAttributes {
       children?: ComponentChildren;
-      dangerouslySetInnerHTML?: {
-        __html: string;
-      };
+      setInnerHTML?: string;
       onabort?: EventHandlers<UIEvent>;
       onanimationcancel?: EventHandlers<AnimationEvent>;
       onanimationend?: EventHandlers<AnimationEvent>;

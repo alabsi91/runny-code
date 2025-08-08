@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Child, Component, Element, OmitReadonlyProps, StyleObject } from "./jsx-runtime-types.d.ts";
+import type { Child, Component, Element, ElementWithType, OmitReadonlyProps, StyleObject } from "./jsx-runtime-types.d.ts";
 
 export function jsx(tagOrComponent: string | Component, childrenAndProps: { children: Child | Child[]; [key: string]: any }) {
   if (typeof tagOrComponent === "function") return tagOrComponent(childrenAndProps);
 
   const { children, ...props } = childrenAndProps;
 
-  const element = createNativeElement(tagOrComponent);
-  if (element instanceof DocumentFragment) return element;
+  const [element, elementType] = createNativeElement(tagOrComponent);
+
+  if (elementType === "DocumentFragment") {
+    handleChild(children).forEach(n => element.appendChild(n));
+    return element;
+  }
 
   for (const [propKey, propValue] of Object.entries(props)) {
     if (propKey === "ref" || propKey === "key") continue;
@@ -77,11 +81,11 @@ const svgNamespaces = new Set(["svg","circle","rect","line","path","polygon","po
 // prettier-ignore
 const mathMlNamespaces = new Set(["math","mrow","mfrac","msqrt","mroot","mi","mo","mn","ms","mtext","msub","msup","msubsup","munder","mover","munderover","mmultiscripts","mtable","mtr","mtd","mstyle","merror","mpadded","mphantom","mfenced"]);
 
-function createNativeElement(tag: string): Element {
-  if (tag === "fragment") return document.createDocumentFragment();
-  if (svgNamespaces.has(tag)) return document.createElementNS("http://www.w3.org/2000/svg", tag);
-  if (mathMlNamespaces.has(tag)) return document.createElementNS("http://www.w3.org/1998/Math/MathML", tag);
-  return document.createElement(tag);
+function createNativeElement(tag: string): ElementWithType {
+  if (tag === "fragment") return [document.createDocumentFragment(), "DocumentFragment"];
+  if (svgNamespaces.has(tag)) return [document.createElementNS("http://www.w3.org/2000/svg", tag), "SVGElement"];
+  if (mathMlNamespaces.has(tag)) return [document.createElementNS("http://www.w3.org/1998/Math/MathML", tag), "MathMLElement"];
+  return [document.createElement(tag), "HTMLElement"];
 }
 
 function setAttributes(element: HTMLElement | MathMLElement | SVGElement, propKey: string, propValue: any) {
